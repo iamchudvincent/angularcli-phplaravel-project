@@ -1,0 +1,511 @@
+<!--component html goes here -->
+<div class="filter-reversation">
+  <div class="filter-first-block flex-justify-space-around aligin-center">
+    <div class="before-bar flex-container aligin-center w-20">
+      <div (click)="showMoreFilter()" class="filter-button flex-justify-center flex-direction-column" *ngIf="saveDataLoadEvent.stayPlanId !== 2">
+        <div class="title">Filter</div>
+        <img src="./assets/img/Filter.svg">
+      </div>
+      <div class="second-block" *ngIf="saveDataLoadEvent.stayPlanId !== 2">
+        <div>
+          <div>
+            | From
+          </div>
+          <div>
+            | To
+          </div>
+          <div>
+            | Status
+          </div>
+          <div>
+            | Country
+          </div>
+        </div>
+        <div class="filter-block">
+          <div>
+            {{displayFilter && displayFilter.dateFrom ? displayFilter.dateFrom : ''}}
+          </div>
+          <div>
+            {{displayFilter && displayFilter.dateTo ? displayFilter.dateTo : ''}}
+          </div>
+          <div>
+            {{displayFilter && displayFilter.status[0] ? displayFilter.status[0].text : ''}}
+          </div>
+          <div>
+            {{displayFilter && displayFilter.country[0] ? displayFilter.country[0].text : ''}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-bar flex-container w-60 aligin-center justify-center">
+      <div class="col-lg-3 col-md-3">
+        <div class="title">School</div>
+        <ng-select *ngIf="schoolOptions.length > 0" [items]="schoolOptions" placeholder="Select school" [active]="[activeFilter.building]"
+          (selected)="saveDataLoadEvent.buildingId = $event.id">
+        </ng-select>
+      </div>
+      <div class="col-lg-3 col-md-3">
+        <div class="title">Stay plan</div>
+        <ng-select *ngIf="stayPlanOptions.length > 0" [items]="stayPlanOptions" placeholder="Select stay plan" [active]="[activeFilter.stayPlan]"
+          (selected)="saveDataLoadEvent.stayPlanId = $event.id">
+        </ng-select>
+      </div>
+      <div class="col-lg-3 col-md-3">
+        <div class="title">Gender</div>
+        <ng-select *ngIf="genderOptions.length > 0" [items]="genderOptions" placeholder="Select gender" [active]="[activeFilter.gender]"
+          (selected)="saveDataLoadEvent.gender = $event.id" [disabled]="saveDataLoadEvent.stayPlanId == 2">
+        </ng-select>
+      </div>
+      <div class="col-lg-3 col-md-3">
+        <div class="title">Room Type</div>
+        <ng-select *ngIf="roomTypeOptions.length > 0" [items]="roomTypeOptions" placeholder="Select room type" [active]="[activeFilter.roomType]"
+          (selected)="saveDataLoadEvent.roomTypeId = $event.id" [disabled]="saveDataLoadEvent.stayPlanId == 2">
+        </ng-select>
+      </div>
+    </div>
+    <div class="right-block w-20 justify-center">
+      <div class="show-result-block">
+        <button class="show-result-button" (click)="showResultFilter()">Show result</button>
+      </div>
+    </div>
+  </div>
+  <div class="filter-second-block flex-justify-space-around aligin-center" [hidden]="!isShowMoreFilter">
+    <div class="before-bar flex-container aligin-center w-20">
+      <div (click)="resetFilter()" class="filter-button flex-justify-center flex-direction-column" [hidden]="saveDataLoadEvent.stayPlanId == 2">
+        <div class="title">Reset</div>
+        <img src="./assets/img/Reset.svg">
+      </div>
+    </div>
+    <div class="content-bar flex-container w-60 aligin-center justify-center">
+      <div class="col-lg-3 col-md-3">
+        <div class="title">From</div>
+        <form class="date-picker">
+          <div class="input-group">
+            <input class="form-control date-input" placeholder="Select a date" ngx-mydatepicker name="mydate" [options]="selectDatePickerOptions"
+              #filterDateFrom="ngx-mydatepicker" (dateChanged)="saveDataLoadEvent.dateFrom = $event;" (click)="filterDateFrom.toggleCalendar()"
+              [(ngModel)]="saveDataLoadEvent.dateFrom" readonly />
+            <img src="./assets/img/Calendar.svg" class="btn-calendar" (click)="filterDateFrom.toggleCalendar()" />
+          </div>
+        </form>
+      </div>
+      <div class="col-lg-3 col-md-3">
+        <div class="title">To</div>
+        <form class="date-picker">
+          <div class="input-group">
+            <input class="form-control date-input" placeholder="Select a date" ngx-mydatepicker name="mydate" [options]="selectDatePickerOptions"
+              #filterDateTo="ngx-mydatepicker" (dateChanged)="saveDataLoadEvent.dateTo = $event" (click)="filterDateTo.toggleCalendar()"
+              [(ngModel)]="saveDataLoadEvent.dateTo" readonly />
+            <img src="./assets/img/Calendar.svg" class="btn-calendar" (click)="filterDateTo.toggleCalendar()" />
+          </div>
+        </form>
+      </div>
+      <div class="col-lg-3 col-md-3">
+        <div class="title">Status</div>
+        <ng-select *ngIf="statusOptions.length > 0" [items]="statusOptions" placeholder="Select status" [active]="activeFilter.status"
+          (selected)="saveDataLoadEvent.status = $event.id">
+        </ng-select>
+      </div>
+      <div class="col-lg-3 col-md-3">
+        <div class="title">Country</div>
+        <ng-select *ngIf="countryOptions.length > 0" [items]="countryOptions" placeholder="Select country" [active]="activeFilter.country"
+          (selected)="saveDataLoadEvent.nationalityId = $event.id">
+        </ng-select>
+      </div>
+    </div>
+    <div class="right-block w-20 justify-center">
+      <div class="show-result-block">
+        <button (click)="cancelMoreFilter()" class="cancel-filter-button">Cancel</button>
+        <button (click)="applyMoreFilter()" class="apply-filter-button">Apply</button>
+      </div>
+    </div>
+  </div>
+  <div class="date-select">
+    <form class="date-picker">
+      <div class="input-group">
+        <input class="form-control date-input" placeholder="Select a date" ngx-mydatepicker name="mydate" [options]="selectDatePickerOptions"
+          #dp="ngx-mydatepicker" (dateChanged)="onSelectDateChanged($event)" (click)="dp.toggleCalendar()" [(ngModel)]="selectDateModel"
+          readonly />
+        <img src="./assets/img/Calendar.svg" class="btn-calendar" (click)="dp.toggleCalendar()" />
+      </div>
+    </form>
+    <button type="button" class="btn btn-white" (click)="previousMonth()"><<</button>
+    <button type="button" class="btn btn-white" (click)="previousWeek()"><</button>
+    <button type="button" class="btn btn-white btn-today" (click)="today()">Today</button>
+    <button type="button" class="btn btn-white" (click)="nextWeek()">></button>
+    <button type="button" class="btn btn-white" (click)="nextMonth()">>></button>
+  </div>
+  <!--DIV new table-->
+  <!--Table-->
+  <div class="ln-table">
+    <!--header-->
+    <div class="ln-table-header">
+      <div class="ln-table-header-left">
+        <div class="ln-table-header-left-up border-bottom-1px" [ngClass]="{'h-100': accommodations?.length > 0 && isOtherReservation}">
+          <div class="ln-table-last-modified">
+            <div class="dot-dot-dot">Last Modified <br>on {{lastModified | date: 'd MMMM'}} at {{ lastModified | date: 'HH:mm'}} <br>by {{lastModifiedBy}}</div>
+          </div>
+          <div class="ln-table-month-day">
+            <div class="flex-aligin-center px-2 border-bottom-1px h-30px">
+              Month
+            </div>
+            <div class="flex-aligin-center px-2 h-30px" [ngClass]="{'border-bottom-1px': roomsAndBeds?.length > 0 && !isOtherReservation}">
+              Day
+            </div>
+            <div class="flex-aligin-center px-2 h-30px" *ngIf="roomsAndBeds?.length > 0 && !isOtherReservation">
+              Open
+            </div>
+          </div>
+        </div>
+        <div class="ln-table-header-left-down border-bottom-1px h-30px" *ngIf="roomsAndBeds?.length > 0 && !isOtherReservation">
+          <div class="ln-table-cell-group-4 border-right-1px w-15">
+            <!--<div class="dot-dot-dot">Gender</div>-->
+            <div>
+              <img src="./assets/img/men.svg" alt="">
+              <img src="./assets/img/Women.svg" alt="">
+            </div>
+          </div>
+          <div class="ln-table-cell-group-4 border-right-1px w-25">
+            <div class="dot-dot-dot">Type</div>
+          </div>
+          <div class="ln-table-cell-group-4 border-right-1px w-45">
+            <div class="dot-dot-dot">Room No.</div>
+          </div>
+          <div class="ln-table-cell-group-4 w-15">
+            <div class="dot-dot-dot">Bed</div>
+          </div>
+        </div>
+      </div>
+      <!--days-->
+      <div class="ln-table-header-right linked-scrollbar-fixed" [ngClass]="{'border-bottom-1px': accommodations?.length > 0 && isOtherReservation}">
+        <!--month-->
+        <div class="ln-table-month border-bottom-1px h-30px" [ngStyle]="{'min-width': 'calc(35px * ' + config.totalDays + ')'}">
+          <div class="flex-aligin-center px-2 h-30px" [ngClass]="{'border-left-1px': !f}" [ngStyle]="{'width': 'calc((100% / ' + config.totalDays + ')*' + group.colspan + ')'}"
+            *ngFor="let group of groupMonths; let f = first;">
+            <div class="dot-dot-dot">{{group.month}}</div>
+          </div>
+        </div>
+        <!--/month-->
+        <!--day-->
+        <div class="ln-table-day h-30px" [ngClass]="{'border-bottom-1px': roomsAndBeds?.length > 0 && !isOtherReservation}" [ngStyle]="{'min-width': 'calc(35px * ' + config.totalDays + ')'}">
+          <div class="flex-aligin-center flex-justify-center h-30px" [ngClass]="{'border-left-1px': !f && accommodations?.length > 0 && isOtherReservation || !f && roomsAndBeds?.length > 0 && !isOtherReservation && day.day === 'Sun', 'today': day.isToday, 'sat': day.day === 'Sat', 'sun': day.day === 'Sun'}"
+            [ngStyle]="{'width': 'calc(100% / ' + config.totalDays + ')'}" *ngFor="let day of days; let f = first;">
+            {{day.date}}
+          </div>
+        </div>
+        <!--/day-->
+        <!--open-->
+        <div class="ln-table-open border-bottom-1px" *ngIf="roomsAndBeds?.length > 0 && !isOtherReservation" [ngStyle]="{'min-width': 'calc(35px * ' + config.totalDays + ')'}">
+          <div class="flex-aligin-center flex-justify-center h-30px" [ngClass]="{'border-left-1px': !f}" [ngStyle]="{'width': 'calc((100% / ' + config.totalDays + ')*' + group.colspan + ')'}"
+            *ngFor="let group of groupWeeks; let f = first;">
+            {{group.open}}
+          </div>
+        </div>
+        <!--/open-->
+        <!--gender, roomtype-->
+        <div class="ln-table-empty border-bottom-1px h-30px" *ngIf="roomsAndBeds?.length > 0 && !isOtherReservation" [ngStyle]="{'min-width': 'calc(35px * ' + config.totalDays + ')'}">
+          <div [ngClass]="{'border-left-1px': !f}" [ngStyle]="{'width': 'calc((100% / ' + config.totalDays + ')*' + group.colspan + ')'}"
+            *ngFor="let group of groupWeeks; let f = first;">
+          </div>
+        </div>
+        <!--/gender, roomtype-->
+      </div>
+      <!--/days-->
+    </div>
+    <!--/header-->
+    <!--body-->
+    <perfect-scrollbar>
+      <!--Dormitory-->
+      <div class="ln-table-body" *ngIf="roomsAndBeds?.length > 0 && !isOtherReservation">
+        <div class="ln-table-body-left">
+          <div class="ln-table-room-row" [ngClass]="{'border-bottom-1px': !l}" *ngFor="let roomAndBed of roomsAndBeds; let l = last;">
+            <!--<td class="gender" [hidden]="roomAndBed.rowspan === 0" attr.rowspan="{{roomAndBed.rowspan}}">
+            <div [ngClass]="{'male': roomAndBed.gender === 1, 'female': roomAndBed.gender === 2}"></div>
+          </td>-->
+            <div class="gender ln-table-cell-group-4 h-30px border-right-1px w-15">
+              <div [ngClass]="{'male': roomAndBed.gender === 1, 'female': roomAndBed.gender === 2}"></div>
+            </div>
+            <!--<td class="text-center" [hidden]="roomAndBed.rowspan === 0" attr.rowspan="{{roomAndBed.rowspan}}" >{{roomAndBed.roomType}}</td>-->
+            <div class="text-center ln-table-cell-group-4 h-30px border-right-1px w-25">
+              <div class="dot-dot-dot">{{roomAndBed.roomType}}</div>
+            </div>
+            <div class="text-center ln-table-cell-group-4 h-30px border-right-1px w-45">
+              <div class="dot-dot-dot">{{roomAndBed.dormitoryRoomName}}</div>
+            </div>
+            <div class="text-center ln-table-cell-group-4 h-30px w-15">
+              <div>{{roomAndBed.bed}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="ln-table-body-right linked-scrollbar-fixed">
+          <div class="ln-table-room-row" [ngClass]="{'border-bottom-1px': !l}" *ngFor="let roomAndBed of roomsAndBeds; let l = last;"
+            [ngStyle]="{'min-width': 'calc(35px * ' + config.totalDays + ')'}">
+            <div class="text-center h-30px" [ngStyle]="{'width': 'calc((100% / ' + config.totalDays + ')*' + groupEvent.colspan + ')'}"
+              *ngFor="let groupEvent of roomAndBed.events; let _i = index; let _l = last; let f = first;" [ngClass]="{
+          'have-event': !groupEvent.isEmpty,
+          'tentative-event' : !groupEvent.isEmpty && !groupEvent.isDupplicate && groupEvent.info.reservationDate.reservationStatusId === tentativeIcon.id,
+          'reserved-event': !groupEvent.isEmpty && !groupEvent.isDupplicate && groupEvent.info.reservationDate.reservationStatusId === reservedIcon.id,
+          'present-event': !groupEvent.isEmpty && !groupEvent.isDupplicate && groupEvent.info.reservationDate.reservationStatusId === presentIcon.id,
+          'close-event': !groupEvent.isEmpty && !groupEvent.isDupplicate && groupEvent.info.reservationDate.reservationStatusId === 5,
+          'maintenance-event': !groupEvent.isEmpty && !groupEvent.isDupplicate && groupEvent.info.reservationDate.reservationStatusId === 6,
+          'empty': groupEvent.isEmpty,
+          'dupplicate': groupEvent.isDupplicate,
+          'border-left-1px': !f,
+          'before-today-event': !groupEvent.isEmpty && groupEvent.isBeforeToday && !groupEvent.isDupplicate && groupEvent.info.reservationDate.reservationStatusId === reservedIcon.id || !groupEvent.isEmpty && groupEvent.isBeforeToday && !groupEvent.isDupplicate && groupEvent.info.reservationDate.reservationStatusId === tentativeIcon.id}">
+              <ng-template #tolTemplate>
+                <div class="tooltip-container">
+                  <div class="tooltip-memo" *ngIf="groupEvent.info.reservationDate.memo">{{groupEvent.info.reservationDate.memo}}</div>
+                  <img [src]="groupEvent.info.reservationDate.nationalityFlagUrl ? groupEvent.info.reservationDate.nationalityFlagUrl : './assets/img/Flag_Other.svg'"
+                  />
+                </div>
+              </ng-template>
+              <div class="wrap-memo" *ngIf="!groupEvent.isEmpty && !groupEvent.isDupplicate" (click)="openModal(groupEvent.info)" container="body"
+                [tooltip]="tolTemplate" placement="{{(roomAndBed.events?.length > 1 && _i === (roomAndBed.events?.length - 2)) || (_l && roomAndBed.events?.length > 1) ? 'left' : 'top'}}">
+                <div class="flex-aligin-center" *ngIf="groupEvent.info.reservationDate.reservationStatusId === tentativeIcon.id">
+                  <div class="dot-dot-dot">
+                    <img [src]="tentativeIcon.src" /> {{ groupEvent.colspan > 1 ? groupEvent.info.reservationDate.memo :
+                    ''}}
+                  </div>
+                  <img class="flag-memo" *ngIf="groupEvent.colspan > 1" [src]="groupEvent.info.reservationDate.nationalityFlagUrl ? groupEvent.info.reservationDate.nationalityFlagUrl : './assets/img/Flag_Other.svg'"
+                  />
+                </div>
+                <div class="flex-aligin-center" *ngIf="groupEvent.info.reservationDate.reservationStatusId === reservedIcon.id">
+                  <div class="dot-dot-dot">
+                    <img [src]="reservedIcon.src" /> {{ groupEvent.colspan > 1 ? groupEvent.info.reservationDate.memo : ''}}
+                  </div>
+                  <img class="flag-memo" *ngIf="groupEvent.colspan > 1" [src]="groupEvent.info.reservationDate.nationalityFlagUrl ? groupEvent.info.reservationDate.nationalityFlagUrl : './assets/img/Flag_Other.svg'"
+                  />
+                </div>
+                <div class="flex-aligin-center" *ngIf="groupEvent.info.reservationDate.reservationStatusId === presentIcon.id">
+                  <div class="dot-dot-dot">
+                    <img [src]="presentIcon.src" /> {{ groupEvent.colspan > 1 ? groupEvent.info.reservationDate.memo : ''}}
+                  </div>
+                  <img class="flag-memo" *ngIf="groupEvent.colspan > 1" [src]="groupEvent.info.reservationDate.nationalityFlagUrl ? groupEvent.info.reservationDate.nationalityFlagUrl : './assets/img/Flag_Other.svg'"
+                  />
+                </div> {{ groupEvent.info.reservationDate.reservationStatusId === 5 ? loadStatus(groupEvent.info.reservationDate.reservationStatusId,
+                1).name : ''}} {{ groupEvent.info.reservationDate.reservationStatusId === 6 ? loadStatus(groupEvent.info.reservationDate.reservationStatusId,
+                1).name : ''}}
+              </div>
+              <div *ngIf="groupEvent.isEmpty && !groupEvent.isDupplicate" (click)="openModal(null, groupEvent.dateFrom, groupEvent.dateTo, groupEvent.reservationInfo)"></div>
+              <div *ngIf="groupEvent.isDupplicate" (click)="openModal(groupEvent.info)" [tooltip]="tolTemplate" container="body" placement="{{_l ? 'left' : 'top'}}"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!---->
+      <!--Other reservation-->
+      <div class="ln-table-body" *ngIf="accommodations?.length > 0 && isOtherReservation">
+        <div class="ln-table-body-left">
+          <div class="ln-table-room-row" [ngClass]="{'border-bottom-1px': !l}" *ngFor="let accommodation of accommodations; let l = last;">
+            <div class="flex-aligin-center px-2 h-30px w-100">
+              <div class="dot-dot-dot">{{accommodation.name}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="ln-table-body-right linked-scrollbar-fixed">
+          <div class="ln-table-room-row" [ngStyle]="{'min-width': 'calc(35px * ' + config.totalDays + ')'}" [ngClass]="{'border-bottom-1px': !l}"
+            *ngFor="let accommodation of accommodations; let l = last; let _i = index;">
+            <div class="flex-justify-center h-30px" [ngClass]="{'border-left-1px': !f}" [ngStyle]="{'width': 'calc((100% / ' + config.totalDays + ')'}"
+              *ngFor="let day of accommodation.days; let i = index; let f = first;">
+              <ng-template #tipContent>
+                <div class="popover-content-other-reservation">
+                  <div class="header">
+                    <div class="memo">Memo</div>
+                    <div class="reservation">Reservation</div>
+                    <div class="hotel">Hotel</div>
+                    <div class="flag"></div>
+                  </div>
+                  <perfect-scrollbar class="popover-perfect-scroll">
+                    <div *ngFor="let otherReservation of day.otherReservations" class="row-accommodation" (click)="openModal({
+            accommodationId: accommodation.accommodationId,
+            name: accommodation.name,
+            otherReservationDate: otherReservation}); pop.hide()">
+                      <div class="memo">{{otherReservation.memo}}</div>
+                      <div class="status">{{ loadStatus(otherReservation.reservationStatusId, 1).name }}</div>
+                      <div class="status">{{ loadStatus(otherReservation.hotelStatusId, 2).name }}</div>
+                      <img [src]="otherReservation.nationalityFlagUrl ? otherReservation.nationalityFlagUrl : './assets/img/Flag_Other.svg'" alt="">
+                    </div>
+                  </perfect-scrollbar>
+                </div>
+                <button *ngIf="user.role.name !== 'read only'" class="btn btn-primary btn-add" [ngClass]="{'disable-event': user.role.name == 'read only'}"
+                  (click)="openModal(null, day.week.from, day.week.to, {accommodationId: accommodation.accommodationId, name: accommodation.name}); pop.hide()">Add</button>
+              </ng-template>
+              <button class="btn-other-reservation" type="button" [popover]="tipContent" placement="{{i < 29 ? 'top' : 'left'}}" triggers=""
+                #pop="bs-popover" container="body" id="{{_i + '-' + i}}" (click)="hidePopover(pop, (_i + '-' + i))">
+                  {{day.otherReservations?.length}}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!---->
+    </perfect-scrollbar>
+    <!--/body-->
+  </div>
+  <!--/table-->
+  <div class="scroll">
+    <div class="left"></div>
+    <div class="right linked-scrollbar-fixed">
+      <div class="content" [ngStyle]="{'min-width': 'calc(35px * ' + config.totalDays + ')'}"></div>
+    </div>
+  </div>
+  <!--............MODAL..............-->
+  <div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"
+    (onHidden)="onPopupHidden()" [config]="{keyboard: false, ignoreBackdropClick: true}">
+    <div class="modal-dialog modal-lg reservation-modal">
+      <div class="modal-content">
+        <div class="reservation-status" *ngIf="!isOtherReservation">
+          {{filterObj.stayPlanId}}
+          <div *ngFor='let status of statusArr; let index = index' class="{{status.className}} item" [ngClass]="{'active' : status.active}"
+            (click)="selectStatus(index)">
+            <div>
+              <div class="icon"></div>
+              <div>{{status.name}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="reservation-status other-reservation" *ngIf="isOtherReservation">
+          <div [hidden]="status.name == 'Closed' || status.name == 'Maintenance'" *ngFor='let status of statusArr; let index = index'
+            class="{{status.className}} item" [ngClass]="{'active' : status.active}" (click)="selectStatus(index)">
+            <div>
+              <div class="icon"></div>
+              <div>{{status.name}}</div>
+            </div>
+          </div>
+          <div class="hotel-status flex-container flex-direction-column">
+            <img src="assets/img/Hotel-Icon.svg">
+            <ng-template ngFor let-hotelStatus [ngForOf]="hotelStatusList" let-index="index" let-f="first">
+              <div *ngIf="!f">
+                <div (click)="selectHotelStatus(index)" [ngClass]="{'active' : hotelStatus.active}">{{hotelStatus.name}}</div>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+        <perfect-scrollbar id="input-popup">
+          <div class="modal-body">
+            <div class="title"><span>{{titlePopup}},</span> {{subTitlePopup}}</div>
+            <div class="row date-picker-block">
+              <div class="left-side col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                <datepicker [(ngModel)]="checkIn" (ngModelChange)="onChangeCheckIn($event)" (activeDateChange)="onActiveDateChange($event, 'left')"
+                  [showWeeks]="false" [customClass]="todayStyling"></datepicker>
+                <div class="footer-calendar check-in-title">CHECK IN</div>
+                <div class="result-selected-date" [ngClass]="{'checkout-active': dupplicateCheckIn}">
+                  <div *ngIf="checkIn">{{getDate(checkIn) | date: 'EEEE'}}</div>
+                  <div *ngIf="checkIn">{{getDate(checkIn) | date: 'd MMM'}}</div>
+                  <div class="double-people" *ngIf="dupplicateCheckIn"></div>
+                </div>
+              </div>
+              <div class="right-side col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                <div>
+                  <datepicker [(ngModel)]="checkOut" (ngModelChange)="onChangeCheckOut($event)" (activeDateChange)="onActiveDateChange($event, 'right')"
+                    [showWeeks]="false" [customClass]="todayStyling"></datepicker>
+                </div>
+                <div class="footer-calendar check-out-title">CHECK OUT</div>
+                <div class="result-selected-date" [ngClass]="{'checkout-active': dupplicateCheckOut}">
+                  <div *ngIf="checkOut">{{getDate(checkOut) | date: 'EEEE'}}</div>
+                  <div *ngIf="checkOut">{{getDate(checkOut) | date: 'd MMM'}}</div>
+                  <div class="double-people" *ngIf="dupplicateCheckOut"></div>
+                </div>
+              </div>
+            </div>
+            <div class="row description">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <textarea [(ngModel)]="reservation.memo" maxlength="1000">{{reservation.memo}}</textarea>
+                <div class="row">
+                  <div class="last-modify-text col-md-7">
+                    <span *ngIf="reservation.lastUpdated">Last modified on {{reservation.lastUpdated | date: 'd MMMM'}} at {{ reservation.lastUpdated |
+                                  date: 'HH:mm'}} by {{reservation.lastUpdatedBy}}. </span> <br>
+                    <span *ngIf="reservation.created">Created on {{reservation.created | date: 'd MMMM'}} at {{ reservation.created |
+                                  date: 'HH:mm'}} by {{reservation.createdBy}}. </span>
+                  </div>
+                  <div class="col-md-5 flex-aligin-center">
+                    <span class="nationality-text">Nationality:</span>
+                    <div class="select-nation" [popover]="nationalList" placement="bottom" #popNationalList="bs-popover" container="body" (click)="selectNationality(popNationalList);">
+                      <img class="flag-selected" [src]="nationalSelected ? nationalSelected.flagUrl : 'assets/img/National.svg'">
+                      <span class="nation-text">{{nationalSelected ? nationalSelected.name : 'Select'}}</span>
+                    </div>
+                    <ng-template #nationalList>
+                      <div class="national-flag-list flex-container">
+                        <div (click)="selectNation(flag);popNationalList.hide()" class="national-flag" *ngFor='let flag of flagFromDb'>
+                          <img [src]="flag.flagUrl">
+                        </div>
+                      </div>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 button-block">
+                <div class="row">
+                  <div class="col-md-3">
+                    <button [ngClass]="{'disable-button': checkRole(reservation.createdByUserId, reservation.id) == false}" [disabled]="!reservation.id || checkRole(reservation.createdByUserId, reservation.id) == false"
+                      class="delete-btn" (click)="staticModal.show()"><img src="assets/img/Delete.svg">Delete</button>
+                  </div>
+                  <div class="col-md-6 button-block-center">
+                    <button class="cancel-btn" (click)="lgModal.hide()">Cancel</button>
+                    <button [ngClass]="{'disable-button': checkRole(reservation.createdByUserId, reservation.id) == false}" [disabled]="checkRole(reservation.createdByUserId, reservation.id) == false"
+                      class="apply-btn" (click)="applyReservation(reservation)">Apply</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <alert *ngIf="errorString" type="danger">
+              {{errorString}}
+            </alert>
+          </div>
+        </perfect-scrollbar>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade confirm-delete" bsModal #staticModal="bs-modal" (onShow)="isStaticPopupShown = true" (onHide)="isStaticPopupShown = false" [config]="{backdrop: false, keyboard: false, ignoreBackdropClick: true}"
+    tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Confirm</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete this reservation?
+        </div>
+        <div class="button-footer row">
+          <button class="col-md-6" (click)="deleteReservation(reservation.id)">Yes</button>
+          <button class="col-md-6" (click)="staticModal.hide()">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade confirm-delete" bsModal #warningModal="bs-modal" (onShow)="isWarningPopupShown = true" (onHide)="isWarningPopupShown = false" [config]="{backdrop: false, keyboard: false, ignoreBackdropClick: true}"
+    tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Warning</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="warningModal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+        <div class="modal-body">
+          The check-in(or out) date has the previous(or next) reservation
+        </div>
+        <div class="button-footer row">
+          <button class="col-md-6" (click)="acceptWarning(reservation)">Yes</button>
+          <button class="col-md-6" (click)="warningModal.hide()">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isModalShown" [config]="{ show: true , keyboard: false, focus: true, ignoreBackdropClick: true, backdrop: false}"
+    (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal" class="modal fade modal-loading" tabindex="-1" role="dialog"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content uil-poi-css">
+        <img src="/assets/images/favicon/favicon.ico">
+      </div>
+    </div>
+  </div>

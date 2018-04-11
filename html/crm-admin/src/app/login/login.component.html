@@ -1,0 +1,26 @@
+<div class="login">
+  <div class="page-form">
+    <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
+      <div class="Sign-in-to-Dormitory">
+        <div class="text-style-1">Sign in to DormitoryCRM.</div>
+        Enter your details below
+      </div>
+      <em class="text-danger" *ngIf="errMess">Email or password is incorrect</em>
+      <div class="body-content">
+        <div class="form-group">
+          <label for="email-address" class="input-label">EMAIL ADDRESS</label>
+          <input type="text" class="form-control input-form" id="email-address" placeholder="Enter your email" formControlName="email">
+        </div>
+        <div class="form-group">
+          <label for="password" class="input-label">PASSWORD</label>
+          <input type="password" class="form-control input-form" id="password" placeholder="Enter your password" formControlName="password">
+        </div>
+        <div class="button-sign-in">
+          <button class="btn btn-signin" type="submit">
+            <span class="SIGN-IN">SIGN IN</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

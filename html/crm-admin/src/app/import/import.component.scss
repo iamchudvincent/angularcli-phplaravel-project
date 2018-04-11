@@ -1,0 +1,166 @@
+// component css goes here
+.import-layout {
+  font-family: AvenirNextLTW01Regular;
+  .menu {
+    background-color: #2196f3;
+    color: white;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    align-items: center;
+    .Data-Upload {
+      font-size: 24px;
+      color: #ffffff;
+      padding-top: 22px;
+      padding-bottom: 17px;
+      margin-left: 65px;
+    }
+    .div-select-file {
+      padding-top: 16px;
+      padding-bottom: 16px;
+      margin-left: 28px;
+      .btn-select-file {
+        border-radius: 20px;
+        background-color: #ffffff;
+        padding: 11px 30px 10px 33px;
+        margin-bottom: 0;
+        cursor: pointer;
+        input[type="file"] {
+          display: none;
+        }
+        .select-file {
+          font-size: 14px;
+          font-weight: 500;
+          color: #2196f3;
+        }
+      }
+    }
+    .file-path {
+      margin: 30px 0 23px 36px;
+      color: white;
+      font-size: 14px;
+    }
+    .div-data-upload {
+      padding-top: 12px;
+      padding-right: 32px;
+      padding-bottom: 12px;
+      margin-left: auto;
+      .btn-data-upload {
+        cursor: pointer;
+        background-color: #ffffff;
+        box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2);
+        padding: 10px 16px;
+        img {
+          height: 24px;
+          width: 24px;
+          vertical-align: middle;
+        }
+        .label-data-upload {
+          vertical-align: middle;
+          font-size: 18px;
+          font-weight: 500;
+          text-align: center;
+          color: #2196f3;
+        }
+      }
+    }
+  }
+  .bar-download {
+    background-color: #D9D9D9;
+    display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    width: 100%;
+    .download-template,
+    .download-bedId {
+      text-align: left;
+      color: #7F7F7F;
+      margin-left: 300px;
+      text-decoration: underline;
+      cursor: pointer;
+      outline: none;
+    }
+    .download-template {
+      margin-top: 15px;
+    }
+  }
+  .scrollbar {
+    max-height: 230px;
+    overflow-y: auto;
+    width: 100%;
+    .bar-error {
+      background-color: rgba(246, 137, 146, 0.4);
+      display: flex;
+      min-height: 48px;
+      width: 100%;
+      .Placeholder {
+        margin: 12px 0 12px 40px;
+        text-align: center;
+        .error {
+          font-size: 18px;
+          font-weight: 600;
+          text-align: left;
+          color: #333333;
+          vertical-align: middle;
+          margin: 10px 0 13px 8px;
+        }
+      }
+      .Validation-Error {
+        margin-left: 126px;
+        margin-top: 12px;
+        margin-bottom: 11px;
+        font-size: 18px;
+        color: #b7141f;
+        .display_error {
+          display: block;
+        }
+      }
+    }
+  }
+  .bar-success {
+    background-color: #dff0d8;
+    display: flex;
+    height: 48px;
+    .Placeholder {
+      margin: 12px 0 12px 40px;
+      text-align: center;
+      .success {
+        font-size: 18px;
+        font-weight: 600;
+        text-align: left;
+        color: #333333;
+        vertical-align: middle;
+        margin: 10px 0 13px 8px;
+      }
+    }
+  }
+  .custom-col {
+    max-height: 600px;
+    overflow-y: scroll;
+    padding: 0;
+    .bed_id {
+      background-color: #f5f5f5;
+      font-size: 15px;
+      margin-left: 0 !important;
+      text-align: center;
+      &.data-bed-id {
+        text-align: right;
+        padding: 12px;
+      }
+    }
+    .table-header {
+      display: flex;
+      justify-content: flex-start;
+      color: black;
+      .custom-header {
+        font-weight: normal;
+        font-size: 14px;
+        border: 1px solid #e6e6e6;
+        letter-spacing: -0.2px;
+        padding: 12px
+      }
+    }
+  }
+}

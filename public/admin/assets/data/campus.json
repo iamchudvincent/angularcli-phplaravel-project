@@ -1,0 +1,12 @@
+[
+    {
+        "name": "IT Park",
+        "value": "ITP",
+        "id": "1"
+    },
+    {
+        "name": "Sea Front",
+        "value": "SFC",
+        "id":"2"
+    }
+]

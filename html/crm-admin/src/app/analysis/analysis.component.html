@@ -1,0 +1,66 @@
+<!--component html goes here -->
+<div class="header">
+  <div class="title">Analysis</div>
+  <div class="btn-analysis" (click)="downloadFile()">
+    <button class="btn btn-download" type="button">
+        <span for="" class="label">Analysis</span>
+    </button>
+  </div>
+</div>
+<div class="body">
+  <div class="analysis-container">
+    <div class="summary">
+      <div class="weekly" (click)="filterObj.type = 1">
+        <input type="radio" name="optradio" [checked]="filterObj.type === 1" (click)="filterObj.type = 1">
+        <span>Weekly</span>
+      </div>
+      <div class="monthly" (click)="filterObj.type = 2">
+        <input type="radio" name="optradio" [checked]="filterObj.type === 2" (click)="filterObj.type = 2">
+        <span>Monthly</span>
+      </div>
+    </div>
+    <div class="building">
+      <div class="form-group">
+        <label for="genderType" class="input-label">building</label>
+        <select name="" id="building" class="form-control input-form" [(ngModel)]="filterObj.buildingId">
+            <option *ngFor="let building of buildingOptions" [ngValue]="building.id">{{building.text}}</option>
+          </select>
+        <em class="text-danger" *ngIf="!filterObj.buildingId">{{errorMessage.buildingRequried}}</em>
+      </div>
+    </div>
+    <div class="from-to">
+      <div class="form-group">
+        <label for="dateFrom" class="input-label">from</label>
+        <form class="date-picker">
+          <div class="input-group input-form">
+            <input class="form-control date-input " placeholder="Select a date" ngx-mydatepicker name="mydate" [options]="selectDatePickerOptions"
+              #filterDateFrom="ngx-mydatepicker" (dateChanged)="checkDateValidation(saveDataLoadEvent.dateFrom, $event, dateType.dateFrom)"
+              (click)="filterDateFrom.toggleCalendar()" [(ngModel)]="saveDataLoadEvent.dateFrom" readonly/>
+            <img src="./assets/img/Calendar.svg" class="btn-calendar" (click)="filterDateFrom.toggleCalendar()" />
+          </div>
+          <em class="text-danger" *ngIf="dateInvalid.dateFrom">{{errorMessage.dateFromAfterDateTo}}</em>
+        </form>
+      </div>
+      <div class="form-group">
+        <label for="dateTo" class="input-label">to</label>
+        <form class="date-picker">
+          <div class="input-group input-form">
+            <input class="form-control date-input " placeholder="Select a date" ngx-mydatepicker name="mydate" [options]="selectDatePickerOptions"
+              #filterDateTo="ngx-mydatepicker" (dateChanged)="checkDateValidation(saveDataLoadEvent.dateTo, $event, dateType.dateTo)"
+              (click)="filterDateTo.toggleCalendar()" [(ngModel)]="saveDataLoadEvent.dateTo" readonly/>
+            <img src="./assets/img/Calendar.svg" class="btn-calendar" (click)="filterDateTo.toggleCalendar()" />
+          </div>
+          <em class="text-danger" *ngIf="dateInvalid.dateTo">{{errorMessage.dateToBeforeDateFrom}}</em>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="isModalShown" [config]="{ show: true , keyboard: false, focus: true, ignoreBackdropClick: true, backdrop: false}"
+  (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal" class="modal fade modal-loading" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content uil-poi-css">
+      <img src="/assets/images/favicon/favicon.ico">
+    </div>
+  </div>
+</div>

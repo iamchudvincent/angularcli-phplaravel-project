@@ -1,0 +1,96 @@
+<div class="export-layout">
+  <div class="menu">
+    <div class="Data-Download">Data Download</div>
+    <div class="div-data-download">
+      <button class="btn btn-data-download" type="button" (click)="downloadFile()">
+        <img src="assets/img/Download.svg" alt="">
+        <span for="" class="label-data-upload">Data Download</span>
+    </button>
+    </div>
+  </div>
+  <div class="export-filter">
+    <div class="container">
+      <div class="row  justify-content-md-center">
+        <div class="col col-lg-3 col-left">
+          <div class="form-group">
+            <label for="dateFrom" class="input-label">from</label>
+            <form class="date-picker">
+              <div class="input-group input-form">
+                <input class="form-control date-input " placeholder="Select a date" ngx-mydatepicker name="mydate" [options]="selectDatePickerOptions"
+                  #filterDateFrom="ngx-mydatepicker" (dateChanged)="checkDateValidation(saveDataLoadEvent.dateFrom, $event, dateType.dateFrom)"
+                  (click)="filterDateFrom.toggleCalendar()" [(ngModel)]="saveDataLoadEvent.dateFrom" readonly/>
+                <img src="./assets/img/Calendar.svg" class="btn-calendar" (click)="filterDateFrom.toggleCalendar()" />
+              </div>
+              <em class="text-danger" *ngIf="dateInvalie.dateFrom">{{errorMessage.dateFromAfterDateTo}}</em>
+            </form>
+          </div>
+        </div>
+        <div class="col col-lg-3 col-right">
+          <div class="form-group">
+            <label for="dateTo" class="input-label">to</label>
+            <form class="date-picker">
+              <div class="input-group input-form">
+                <input class="form-control date-input " placeholder="Select a date" ngx-mydatepicker name="mydate" [options]="selectDatePickerOptions"
+                  #filterDateTo="ngx-mydatepicker" (dateChanged)="checkDateValidation(saveDataLoadEvent.dateTo, $event, dateType.dateTo)"
+                  (click)="filterDateTo.toggleCalendar()" [(ngModel)]="saveDataLoadEvent.dateTo" readonly/>
+                <img src="./assets/img/Calendar.svg" class="btn-calendar" (click)="filterDateTo.toggleCalendar()" />
+              </div>
+              <em class="text-danger" *ngIf="dateInvalie.dateTo">{{errorMessage.dateToBeforeDateFrom}}</em>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="row  justify-content-md-center">
+        <div class="col col-lg-3 col-left">
+          <div class="form-group">
+            <label for="genderType" class="input-label">building</label>
+            <select name="" id="building" class="form-control input-form" [(ngModel)]="filterObj.buildingId">
+            <option *ngFor="let building of buildingOptions" [ngValue]="building.id">{{building.text}}</option>
+          </select>
+            <em class="text-danger" *ngIf="!filterObj.buildingId">{{errorMessage.buildingRequried}}</em>
+          </div>
+        </div>
+        <div class="col col-lg-3 col-right">
+          <div class="form-group">
+            <label for="roomType" class="input-label">stay type</label>
+            <select name="" id="stayType" class="form-control input-form" [(ngModel)]="filterObj.stayType">
+            <option *ngFor="let stayType of stayTypeOptions" [ngValue]="stayType.id">{{stayType.text}}</option>
+          </select>
+            <em class="text-danger" *ngIf="!filterObj.stayType">{{errorMessage.stayTypeRequired}}</em>
+          </div>
+        </div>
+      </div>
+      <div class="row  justify-content-md-center">
+        <div class="col col-lg-3 col-left">
+          <div class="form-group">
+            <label for="genderType" class="input-label">gender</label>
+            <select name="" id="genderType" class="form-control input-form" [(ngModel)]="filterObj.gender" [disabled]="filterObj.stayType != stayTypeOptions[0].id">
+            <option *ngFor="let gender of genderOptions" [ngValue]="gender.id">{{gender.text}}</option>
+          </select>
+          </div>
+        </div>
+        <div class="col col-lg-3 col-right">
+          <div class="form-group">
+            <label for="roomType" class="input-label">room type</label>
+            <select name="" id="roomType" class="form-control input-form" [(ngModel)]="filterObj.roomTypeId" [disabled]="filterObj.stayType != stayTypeOptions[0].id">
+            <option *ngFor="let roomType of roomTypeOptions; let  i = index" [ngValue]="roomType.id" 
+              [disabled]="i == (roomTypeOptions.length - 1) && filterObj.buildingId == buildingOptions[0].id">
+              {{roomType.text}}
+            </option>
+          </select>
+            <em class="text-danger" *ngIf="!filterObj.roomTypeId">{{errorMessage.roomTypeRequired}}</em>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isModalShown" [config]="{ show: true , keyboard: false, focus: true, ignoreBackdropClick: true, backdrop: false}"
+    (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal" class="modal fade modal-loading" tabindex="-1" role="dialog"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content uil-poi-css">
+        <img src="/assets/images/favicon/favicon.ico">
+      </div>
+    </div>
+  </div>
+</div>

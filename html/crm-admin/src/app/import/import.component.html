@@ -1,0 +1,83 @@
+<div class="import-layout">
+  <div class="menu">
+    <div class="Data-Upload">Data Upload</div>
+    <div class="div-select-file">
+      <label for="upload-file" class="btn btn-select-file">
+        <input type="file" id="upload-file" (change)="onChange($event)">
+        <span class="select-file">SELECT FILE</span>
+      </label>
+    </div>
+    <div class="file-path" *ngIf="file">{{filePath}}</div>
+    <div class="div-data-upload">
+      <button class="btn btn-data-upload" type="button" (click)="uploadFile()" [disabled]="!isRegister">
+        <img src="assets/img/Upload.svg" alt="">
+        <span for="" class="label-data-upload">Data Upload</span>
+    </button>
+    </div>
+  </div>
+  <div class="bar-download flex-direction-column">
+    <button class="btn-link download-template" (click)="downloadTemplate()">Download Template</button>
+    <br>
+    <button class="btn-link download-bedId" (click)="downloadBedIds()">Download BedID List</button>
+  </div>
+  <div class="row">
+    <div class="scrollbar" *ngIf="error_data.errors.length > 0 && !import_success">
+      <div class="" *ngFor="let error of error_data.errors">
+        <div class="bar-error" *ngIf="error_data.errors.length > 0 && !import_success">
+          <div class="Placeholder">
+            <img src="assets/img/Alert.svg" alt="" height="24px" width="24px">
+            <span class="error">Error</span>
+          </div>
+          <div class="Validation-Error">
+            <span class="display_error" *ngFor="let err_mess of error.errors ">{{error.row}}: {{error_code[err_mess]}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bar-success" *ngIf="import_success">
+    <div class="Placeholder">
+      <!--<img src="assets/img/Alert.svg" alt="" height="24px" width="24px">-->
+      <span class="success">Success</span>
+    </div>
+  </div>
+  <div class="row" *ngIf="error_data.errors.length > 0 && !import_success">
+    <div class="col-md-12 custom-col">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th width="5%" class="custom-header bed_id">bed_id</th>
+            <th width="15%" class="custom-header date_from">Date_From</th>
+            <th width="15%" class="custom-header date_to">Date_To</th>
+            <th width="7%" class="custom-header data_status">status</th>
+            <th width="50%" class="custom-header data_memo">Memo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let content of error_data.data">
+            <td class="bed_id data-bed-id">{{content.bed_id}}</td>
+            <td class="table-data date_from">
+              <span *ngIf="checkDate(content.date_from)">{{content.date_from | date:'yyyy/MM/dd'}}</span>
+              <span *ngIf="!checkDate(content.date_from)">{{content.date_from}}</span>
+            </td>
+            <td class="table-data date_to">
+              <span *ngIf="checkDate(content.date_to)">{{content.date_to | date:'yyyy/MM/dd'}}</span>
+              <span *ngIf="!checkDate(content.date_to)">{{content.date_to}}</span>
+            </td>
+            <td class="table-data data_status">{{content.reservation_status_id}}</td>
+            <td class="table-data data_memo">{{content.memo}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div *ngIf="isModalShown" [config]="{ show: true , keyboard: false, focus: true, ignoreBackdropClick: true, backdrop: false}"
+    (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal" class="modal fade modal-loading" tabindex="-1" role="dialog"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content uil-poi-css">
+        <img src="/assets/images/favicon/favicon.ico">
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+[
+    {
+        "name": "New",
+        "id": "1"
+    },
+    {
+        "name": "Reserved",
+        "id":"2"
+    },
+    {
+        "name": "Paid",
+        "id":"3"
+    },
+    {
+        "name": "Cancel",
+        "id":"4"
+    },
+    {
+        "name": "Present",
+        "id":"5"
+    },
+    {
+        "name": "Graduate",
+        "id":"6"
+    },
+    {
+        "name": "Sample Invoice",
+        "id":"7"
+    },
+    {
+        "name": "Arrange",
+        "id":"8"
+    }
+]

@@ -1,0 +1,120 @@
+.menu {
+  background-color: #2196f3;
+  color: white;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  align-items: center;
+  .Data-Download {
+    font-size: 24px;
+    color: #ffffff;
+    padding-top: 22px;
+    padding-bottom: 17px;
+    margin-left: 65px;
+  }
+  .div-data-download {
+    padding-top: 12px;
+    padding-right: 32px;
+    padding-bottom: 12px;
+    margin-left: auto;
+    .btn-data-download {
+      cursor: pointer;
+      background-color: #ffffff;
+      box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2);
+      padding: 10px 16px;
+      img {
+        height: 24px;
+        width: 24px;
+        vertical-align: middle;
+      }
+      .label-data-upload {
+        vertical-align: middle;
+        font-size: 18px;
+        font-weight: 500;
+        text-align: center;
+        color: #2196f3;
+      }
+    }
+  }
+}
+.import-layout {
+  font-family: AvenirNextLTW01Regular;
+  .menu {
+    background-color: white;
+    color: white;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    align-items: center;
+    .Data-Upload {
+      font-size: 24px;
+      color: #ffffff;
+      padding-top: 22px;
+      padding-bottom: 17px;
+      margin-left: 65px;
+    }
+    .div-select-file {
+      padding-top: 16px;
+      padding-bottom: 16px;
+      margin-left: 28px;
+      .btn-select-file {
+        border-radius: 20px;
+        background-color: #E86E08;
+        padding: 11px 30px 10px 33px;
+        margin-bottom: 0;
+        cursor: pointer;
+        input[type="file"] {
+          display: none;
+        }
+        .select-file {
+          font-size: 14px;
+          font-weight: 500;
+          color: #F8F9FB;
+        }
+      }
+    }
+  }
+}
+
+.export-layout {
+  font-family: AvenirNextLTW01Regular;
+  .menu {
+    background-color: white;
+    color: white;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    align-items: center;
+    .Data-Download {
+      font-size: 24px;
+      color: #ffffff;
+      padding-top: 22px;
+      padding-bottom: 17px;
+      margin-left: 65px;
+    }
+    .div-data-download {
+      padding-top: 12px;
+      padding-right: 32px;
+      padding-bottom: 12px;
+      margin-left: auto;
+      .btn-data-download {
+        cursor: pointer;
+        background-color: #ffffff;
+        box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2);
+        padding: 10px 16px;
+        img {
+          height: 24px;
+          width: 24px;
+          vertical-align: middle;
+        }
+        .label-data-upload {
+          vertical-align: middle;
+          font-size: 18px;
+          font-weight: 500;
+          text-align: center;
+          color: #2196f3;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+.log-layout {
+  font-family: AvenirNextLTW01Regular;
+  .menu {
+    background-color: #2196f3;
+    color: white;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    align-items: center;
+    .Data-Download {
+      font-size: 24px;
+      color: #ffffff;
+      padding-top: 22px;
+      padding-bottom: 17px;
+      margin-left: 65px;
+    }
+  }
+  .list-logs {
+    margin-top: 100px;
+    margin-bottom: 100px;
+    .logs-table {
+      th {
+        text-align: center;
+      }
+      .text-align-center {
+        text-align: center;
+      }
+      .btn-link {
+        cursor: pointer;
+      }
+    }
+  }
+}

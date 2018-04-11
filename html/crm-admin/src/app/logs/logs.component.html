@@ -1,0 +1,32 @@
+<div class="log-layout">
+  <div class="menu">
+    <div class="Data-Download">Logs Download</div>
+  </div>
+  <div class="list-logs container">
+      <table class="table table-bordered logs-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>File name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let content of listLogs; let i = index" class="content">
+            <td class="text-align-center">{{i + 1}}</td>
+            <td>
+              <button class="btn-link" (click)="download(content)" id="{{content.startDateOfWeek}}">{{content.name}}</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+  <div *ngIf="isModalShown" [config]="{ show: true , keyboard: false, focus: true, ignoreBackdropClick: true, backdrop: false}"
+    (onHidden)="onHidden()" bsModal #autoShownModal="bs-modal" class="modal fade modal-loading" tabindex="-1" role="dialog"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content uil-poi-css">
+        <img src="/assets/images/favicon/favicon.ico">
+      </div>
+    </div>
+  </div>
+</div>

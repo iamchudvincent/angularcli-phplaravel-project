@@ -1,0 +1,13 @@
+{
+  "API_ENDPOINT": "/",
+  "Role": {
+    "Admin": "administrator",
+    "Register": "register",
+    "Readonly": "read only"
+  },
+  "RoleId": {
+    "Admin": 1,
+    "Readonly": 2,
+    "Register": 3
+  }
+}

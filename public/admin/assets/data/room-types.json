@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Single",
+        "value": "1"
+    },
+    {
+        "name": "Twin",
+        "value": "2"
+    },
+    {
+        "name": "Triple",
+        "value": "3"
+    },
+    {
+        "name": "Quad",
+        "value": "4"
+    },
+    {
+        "name": "Hex",
+        "value": "5"
+    }
+]

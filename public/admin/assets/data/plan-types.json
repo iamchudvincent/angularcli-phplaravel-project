@@ -1,0 +1,338 @@
+[
+  {
+    "name": "スタンダードプラン",
+    "value": "1",
+    "type": "1",
+    "country": "JP"
+  },
+  {
+    "name": "スーペリアプラン",
+    "value": "2",
+    "type": "1",
+    "country": "JP"
+  },
+  {
+    "name": "ライトプラン",
+    "value": "3",
+    "type": "1",
+    "country": "JP"
+  },
+  {
+    "name": "超短期7プラン",
+    "value": "4",
+    "type": "2",
+    "country": "JP"
+  },
+  {
+    "name": "超短期10プラン",
+    "value": "5",
+    "type": "2",
+    "country": "JP"
+  },
+  {
+    "name": "超短期+オンライン120",
+    "value": "6",
+    "type": "2",
+    "country": "JP"
+  },
+  {
+    "name": "ビジネスプラン",
+    "value": "7",
+    "type": "1",
+    "country": "JP"
+  },
+  {
+    "name": "TOEICテスト特訓プラン",
+    "value": "8",
+    "type": "1",
+    "country": "JP"
+  },
+  {
+    "name": "TOEICテスト特訓点数保証プラン",
+    "value": "9",
+    "type": "1",
+    "country": "JP"
+  },
+  {
+    "name": "IELTS特訓プラン",
+    "value": "10",
+    "type": "1",
+    "country": "JP"
+  },
+  {
+    "name": "親子留学プラン",
+    "value": "11",
+    "type": "1",
+    "country": "JP"
+  },
+  {
+    "name": "Standard Plan",
+    "value": "1",
+    "type": "1",
+    "country": "IT"
+  },
+  {
+    "name": "Light Plan",
+    "value": "3",
+    "type": "1",
+    "country": "IT"
+  },
+  {
+    "name": "TOEIC",
+    "value": "8",
+    "type": "1",
+    "country": "IT"
+  },
+  {
+    "name": "Standard Plan",
+    "value": "1",
+    "type": "1",
+    "country": "BH"
+  },
+  {
+    "name": "Light Plan",
+    "value": "3",
+    "type": "1",
+    "country": "BH"
+  },
+  {
+    "name": "TOEIC",
+    "value": "8",
+    "type": "1",
+    "country": "BH"
+  },
+  {
+    "name": "Standard Plan",
+    "value": "1",
+    "type": "1",
+    "country": "BR"
+  },
+  {
+    "name": "Light Plan",
+    "value": "3",
+    "type": "1",
+    "country": "BR"
+  },
+  {
+    "name": "TOEIC",
+    "value": "8",
+    "type": "1",
+    "country": "BR"
+  },
+  {
+    "name": "Standard ( 六堂一对一＋两堂团体课）",
+    "value": "1",
+    "type": "1",
+    "country": "CH"
+  },
+  {
+    "name": "Light ( 四堂一对一＋两堂团体课）",
+    "value": "3",
+    "type": "1",
+    "country": "CH"
+  },
+  {
+    "name": "TOEIC (前四周要求需上Standard课程四周，四周后调整为多益专业课程）",
+    "value": "8",
+    "type": "1",
+    "country": "CH"
+  },
+  {
+    "name": "Standard Plan",
+    "value": "1",
+    "type": "1",
+    "country": "IR"
+  },
+  {
+    "name": "Light Plan",
+    "value": "3",
+    "type": "1",
+    "country": "IR"
+  },
+  {
+    "name": "TOEIC",
+    "value": "8",
+    "type": "1",
+    "country": "IR"
+  },
+  {
+    "name": "Standard Plan",
+    "value": "1",
+    "type": "1",
+    "country": "KR"
+  },
+  {
+    "name": "Light Plan",
+    "value": "3",
+    "type": "1",
+    "country": "KR"
+  },
+  {
+    "name": "TOEIC",
+    "value": "8",
+    "type": "1",
+    "country": "KR"
+  },
+  {
+    "name": "Standard Plan",
+    "value": "1",
+    "type": "1",
+    "country": "MY"
+  },
+  {
+    "name": "Light Plan",
+    "value": "3",
+    "type": "1",
+    "country": "MY"
+  },
+  {
+    "name": "TOEIC",
+    "value": "8",
+    "type": "1",
+    "country": "MY"
+  },
+  {
+    "name": "Standard Plan",
+    "value": "1",
+    "type": "1",
+    "country": "RU"
+  },
+  {
+    "name": "Light Plan",
+    "value": "3",
+    "type": "1",
+    "country": "RU"
+  },
+  {
+    "name": "TOEIC",
+    "value": "8",
+    "type": "1",
+    "country": "RU"
+  },
+  {
+    "name": "Standard Plan",
+    "value": "1",
+    "type": "1",
+    "country": "SAU"
+  },
+  {
+    "name": "Light Plan",
+    "value": "3",
+    "type": "1",
+    "country": "SAU"
+  },
+  {
+    "name": "TOEIC",
+    "value": "8",
+    "type": "1",
+    "country": "SAU"
+  },
+  {
+    "name": "Standard Plan",
+    "value": "1",
+    "type": "1",
+    "country": "SP"
+  },
+  {
+    "name": "Light Plan",
+    "value": "3",
+    "type": "1",
+    "country": "SP"
+  },
+  {
+    "name": "TOEIC",
+    "value": "8",
+    "type": "1",
+    "country": "SP"
+  },
+  {
+    "name": "Standard Plan",
+    "value": "1",
+    "type": "1",
+    "country": "SW"
+  },
+  {
+    "name": "Light Plan",
+    "value": "3",
+    "type": "1",
+    "country": "SW"
+  },
+  {
+    "name": "TOEIC",
+    "value": "8",
+    "type": "1",
+    "country": "SW"
+  },
+  {
+    "name": "Standard ( 六堂一對一＋兩堂團體課）",
+    "value": "1",
+    "type": "1",
+    "country": "TW"
+  },
+  {
+    "name": "Light ( 四堂一對一＋兩堂團體課）",
+    "value": "3",
+    "type": "1",
+    "country": "TW"
+  },
+  {
+    "name": "TOEIC (前四週要求需上Standard課程四週，四週後調整為多益專業課程",
+    "value": "8",
+    "type": "1",
+    "country": "TW"
+  },
+  {
+    "name": "Standard Plan",
+    "value": "1",
+    "type": "1",
+    "country": "TK"
+  },
+  {
+    "name": "Light Plan",
+    "value": "3",
+    "type": "1",
+    "country": "TK"
+  },
+  {
+    "name": "TOEIC",
+    "value": "8",
+    "type": "1",
+    "country": "TK"
+  },
+  {
+    "name": "Standard Plan",
+    "value": "1",
+    "type": "1",
+    "country": "UAE"
+  },
+  {
+    "name": "Light Plan",
+    "value": "3",
+    "type": "1",
+    "country": "UAE"
+  },
+  {
+    "name": "TOEIC",
+    "value": "8",
+    "type": "1",
+    "country": "UAE"
+  },
+  {
+    "name": "Standard Plan",
+    "value": "1",
+    "type": "1",
+    "country": "VT"
+  },
+  {
+    "name": "Light Plan",
+    "value": "3",
+    "type": "1",
+    "country": "VT"
+  },
+  {
+    "name": "TOEIC",
+    "value": "8",
+    "type": "1",
+    "country": "VT"
+  }
+]

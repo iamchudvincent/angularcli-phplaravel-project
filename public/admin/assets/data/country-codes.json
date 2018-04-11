@@ -1,0 +1,87 @@
+[
+    {
+        "name": "Italy",
+        "value": "IT",
+        "id": "1"
+    },
+    {
+        "name": "Bahrain",
+        "value": "BH",
+        "id": "2"
+    },
+    {
+        "name": "Brazil",
+        "value": "BR",
+        "id": "3"
+    },
+    {
+        "name": "China",
+        "value": "CH",
+        "id": "4"
+    },
+    {
+        "name": "Iran",
+        "value": "IR",
+        "id": "5"
+    },
+    {
+        "name": "Japan",
+        "value": "JP",
+        "id": "6"
+    },
+    {
+        "name": "Korea",
+        "value": "KR",
+        "id": "7"
+    },
+    {
+        "name": "Myanmar",
+        "value": "MY",
+        "id": "8"
+    },
+    {
+        "name": "Russia",
+        "value": "RU",
+        "id": "9"
+    },
+    {
+        "name": "Saudi Arabia",
+        "value": "SAU",
+        "id": "10"
+    },
+    {
+        "name": "Spain",
+        "value": "SP",
+        "id": "11"
+    },
+    {
+        "name": "Switzerland",
+        "value": "SW",
+        "id": "12"
+    },
+    {
+        "name": "Taiwan",
+        "value": "TW",
+        "id": "13"
+    },
+    {
+        "name": "Turky",
+        "value": "TK",
+        "id": "14"
+    },
+    {
+        "name": "UAE",
+        "value": "UAE",
+        "id": "15"
+    },
+    {
+        "name": "Vietnam",
+        "value": "VT",
+        "id": "16"
+    },
+    {
+        "name": "Other",
+        "value": "Others",
+        "id": "17"
+    }
+]
