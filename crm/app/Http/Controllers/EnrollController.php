@@ -7,6 +7,7 @@ use App\Http\Requests\EnrollRequest;
 use App\Repositories\AccommodationPrices\AccommodationPricesInterface;
 use App\Repositories\Accommodations\AccommodationsInterface;
 use App\Repositories\Buildings\BuildingsInterface;
+use App\Repositories\CondoBeds\CondoBedsInterface;
 use App\Repositories\Holidays\HolidaysInterface;
 use App\Repositories\LongstayPrices\LongstayPricesInterface;
 use App\Repositories\Plans\PlansInterface;
@@ -14,6 +15,11 @@ use App\Repositories\Rooms\RoomsInterface;
 use App\Repositories\ShortstayLessonPrices\ShortstayLessonPricesInterface;
 use App\Repositories\StudentApply\StudentApplyInterface;
 use App\Repositories\Terms\TermsInterface;
+use App\Repositories\Courses\CoursesInterface;
+use App\Repositories\Beds\BedsInterface;
+use App\Repositories\Promotions\PromotionsInterface;
+use App\Repositories\InvoiceDiscount\InvoiceDiscountInterface;
+use App\Repositories\Invoices\InvoicesInterface;
 use League\Flysystem\Exception;
 //use Log;
 
@@ -30,13 +36,21 @@ class EnrollController extends Controller
     private $shortstayService;
     private $studentApplyService;
     private $plansService;
+    private $courseService;
+    private $bedService;
+    private $promotionService;
+    private $invoiceDiscountService;
+    private $condoBedService;
+    private $invoiceService;
 
     public function __construct(AccommodationPricesInterface $accommodationPricesInterface, PlansInterface $plansInterface,
                                 AccommodationsInterface $accommodationsInterface, BuildingsInterface $buildingsInterface,
                                 HolidaysInterface $holidayInterface, RoomsInterface $roomsInterface,
                                 TermsInterface $termsInterface, LongstayPricesInterface $longstayPricesInterface,
                                 ShortstayLessonPricesInterface $shortstayLessonPrice, StudentApplyInterface $studentApplyService,
-                                PlansInterface $plansService)
+                                PlansInterface $plansService, CoursesInterface $coursesInterface, BedsInterface $bedsInterface,
+                                PromotionsInterface $promotionsInterface, InvoiceDiscountInterface $invoiceDiscountInterface,
+                                CondoBedsInterface $condoBedsInterface, InvoicesInterface $invoicesInterface)
     {
         $this->accommodationPricesService = $accommodationPricesInterface;
         $this->accommodationService = $accommodationsInterface;
@@ -49,6 +63,12 @@ class EnrollController extends Controller
         $this->shortstayService = $shortstayLessonPrice;
         $this->studentApplyService = $studentApplyService;
         $this->plansService = $plansService;
+        $this->courseService = $coursesInterface;
+        $this->bedService = $bedsInterface;
+        $this->promotionService = $promotionsInterface;
+        $this->invoiceDiscountService = $invoiceDiscountInterface;
+        $this->condoBedService = $condoBedsInterface;
+        $this->invoiceService = $invoicesInterface;
     }
 
     private function validateData($data)
@@ -374,6 +394,7 @@ class EnrollController extends Controller
         $errorCodes = config('errorcodes.enroll');
         $yesNoAnswer = config('constants.answer');
         $statusCode = config('constants.status_code');
+        $promoValue = config('constants.promo_value');
 
         if( count($errors) == 0 ) {
             $today = time();
@@ -393,6 +414,9 @@ class EnrollController extends Controller
             $editId = md5($randomNumber."i@mas+r!n&");
             $languageId = strtolower($this->getLanguage());
             $data['studentEditLink'] = 'https://'.$_SERVER['SERVER_NAME'].'/studentinfo/?id='.$editId.'&lan='.$languageId;
+
+            $numberofEmptyBeds = $this->bedService->getNumEmptyBed($data['accommodationId1'], $data['checkIn'], $data['checkOut'], $data['roomId1'], $data["sex"] == "男性" ? '1' : '2');
+            $numberofEmptyCondoBeds = $this->condoBedService->getNumEmptyBed($data['accommodationId1'], $data['checkIn'], $data['checkOut'], $data['roomId1'], ($data["sex"] == "男性" || $data["sex"] == "M" ? '1' : '2'));
 
             if( in_array($optionsList['Special Options']['key'], $data['optionsList']) ) {
                 $data[$optionsList['Special Options']['key']] = $language=='JP'?$yesNoAnswer['yes']['jp_value']:$yesNoAnswer['yes']['en_value'];
@@ -433,6 +457,22 @@ class EnrollController extends Controller
 
             if( empty($data['emergencyContact']) ) {
                 $data['emergencyContact'] = "";
+            }
+
+            if( empty($data['address']) ) {
+                $data['address'] = "";
+            }
+
+            if( empty($data['phone']) ) {
+                $data['phone'] = "";
+            }
+
+            if( empty($data['job']) ) {
+                $data['job'] = "";
+            }
+
+            if( empty($data['name']) ) {
+                $data['name'] = "";
             }
 
             if( $data['applicationRoute'] == $applicationRoute['individual']['en'] ) {
@@ -490,6 +530,22 @@ class EnrollController extends Controller
                 $data = $this->calculateOptionsCostLongstayPlan($data);
                 $data = $this->calculateCostWithLongstayPlan($data);
 
+                // Promotion only for Share House and Share Room
+                if($data['accommodationId1'] !=  2 && $data['accommodationId1'] !=  3 &&
+                    $data['accommodationId1'] !=  7 && $data['accommodationId1'] !=  8) {
+
+                    if ($data['term'] >= $promoValue['less_4'] && $data['term'] <= $promoValue['less_24']) {
+
+                        $dateCheckIn = date("Y-m-d", strtotime($data['checkIn']));
+                        $discountPromo = $this->promotionService->findDiscountAmount($data['planId'],$data['accommodationId1'],$data['roomId1'],$data['term'],$data['numOf'],$dateCheckIn);
+                        $data['discount'] = $discountPromo['discount_amount']?$discountPromo['discount_amount']:0;
+                        $data['discountPromoRemark'] = $discountPromo['remark'];
+                        if($language != 'JP') {
+                            $data['discount'] = $discountPromo['discount_amount_en']?$discountPromo['discount_amount_en']:0;
+                        }
+                    }
+                }
+
             } elseif( $plan->plan_type == $planType['short'] ) {
                 $data = $this->calculateOptionsCostShortstayPlan($data);
                 $data = $this->calculateCostWithShortstayPlan($data);
@@ -538,13 +594,19 @@ class EnrollController extends Controller
             if( in_array('meals', $data['optionsList']) ) {
                 $data['meals'] = $language=='JP'?$yesNoAnswer['yes']['jp_value']:$yesNoAnswer['yes']['en_value'];
             } else {
-                $data['meals'] = $language=='JP'?$yesNoAnswer['no']['jp_value']:$yesNoAnswer['no']['en_value'];
+                $data['meals'] = $language=='JP'?$yesNoAnswer['yes']['jp_value']:$yesNoAnswer['yes']['en_value']; //All meal = yes
             }
 
             if( in_array('pickUp', $data['optionsList']) ) {
-                $data['pickUp'] = $language=='JP'?$yesNoAnswer['yes']['jp_value']:$yesNoAnswer['yes']['en_value'];
+                $data['pickUp'] = $language=='JP'?$yesNoAnswer['no']['jp_value']:$yesNoAnswer['no']['en_value'];
+                if($data['accommodationId1'] !=  7 && $data['accommodationId1'] !=  8) { // Walk-in pickUp = no
+                    $data['pickUp'] = $language=='JP'?$yesNoAnswer['yes']['jp_value']:$yesNoAnswer['yes']['en_value'];
+                }
             } else {
                 $data['pickUp'] = $language=='JP'?$yesNoAnswer['no']['jp_value']:$yesNoAnswer['no']['en_value'];
+                if($data['accommodationId1'] !=  7 && $data['accommodationId1'] !=  8) {  // Walk-in pickUp = no
+                    $data['pickUp'] = $language=='JP'?$yesNoAnswer['yes']['jp_value']:$yesNoAnswer['yes']['en_value'];
+                }
             }
 
             try {
@@ -563,39 +625,99 @@ class EnrollController extends Controller
                 $data['birthday'] = date('Y/m/d', strtotime($data['birthday']));
 
                 $mailSender = $language =='JP' ? config("constants.mail.from-address.JP") : config("constants.mail.from-address.EN");
+                $receiverName = $data['passportName'];
                 //Log::info("mailSender is $mailSender, constants.mail.from-address.$language and the default is " . config("constants.mail.from-address.EN") );
                 if (!empty($data['consultation'])) {
                     $mailConfig = config('constants.mail.enroll.JP.consult');
                     if($language != "JP"){
-                        $mailConfig = config('constants.mail.enroll.EN.consult');
+                        if($language == "CN") {
+                            $mailConfig = config('constants.mail.enroll.CN.consult');
+                        } else if($language == "TW") {
+                            $mailConfig = config('constants.mail.enroll.TW.consult');
+                        } else {
+                            $mailConfig = config('constants.mail.enroll.EN.consult');
+                        }
                     }
                     if ($applicationRoute['individual']['en'] == $data['applicationRoute']) {
                         $data['applicationRoute'] = $language=='JP'?$applicationRoute['individual']['jp']:$applicationRoute['individual']['en'];
-                        $listAdminEmail = explode(',', $mailConfig['admin']['individual']['address']);
-                        GlobalFunctions::sendMailable($mailConfig['admin']['individual']['template'], $listAdminEmail[0], sprintf($mailConfig['admin']['individual']['subject'], $randomNumber), $data, $data['name'], $data['email'], $listAdminEmail,$mailSender);
+                        switch(strtoupper($language)) {
+                            case 'TW': $listAdminEmail = explode(',', $mailConfig['admin']['individual']['address_tw']); break;
+                            default: $listAdminEmail = explode(',', $mailConfig['admin']['individual']['address']); break;
+                        }
+                        GlobalFunctions::sendMailable($mailConfig['admin']['individual']['template'], $listAdminEmail[0], sprintf($mailConfig['admin']['individual']['subject'], $randomNumber), $data, $receiverName, $data['email'], $listAdminEmail,$mailSender);
+                        if($numberofEmptyBeds == 0 && $numberofEmptyCondoBeds == 0) {
+                            if($data['accommodationId1'] != '2' && $data['accommodationId1'] != '3' && $data['accommodationId1'] != '7' && $data['accommodationId1'] != '8') {
+                                GlobalFunctions::sendMailable($mailConfig['novacant']['template'], $toUser, $mailConfig['novacant']['subject'], $data, "", "", array(),$mailSender);
+                            } else {
+                                GlobalFunctions::sendMailable($mailConfig['user']['template'], $toUser, $mailConfig['user']['subject'], $data, "", "", array(),$mailSender);
+                            }
+                        } else {
+                            GlobalFunctions::sendMailable($mailConfig['user']['template'], $toUser, $mailConfig['user']['subject'], $data, "", "", array(),$mailSender);
+                        }
                     } else {
                         $data['applicationRoute'] = $language=='JP'?$applicationRoute['agent']['jp']:$applicationRoute['agent']['en'];
-                        $listAdminEmail = explode(',', $mailConfig['admin']['corporate']['address']);
-                        GlobalFunctions::sendMailable($mailConfig['admin']['corporate']['template'], $listAdminEmail[0], sprintf($mailConfig['admin']['corporate']['subject'], $randomNumber), $data, $data['name'], $data['email'], $listAdminEmail,$mailSender);
+                        switch(strtoupper($language)) {
+                            case 'TW': $listAdminEmail = explode(',', $mailConfig['admin']['corporate']['address_tw']); break;
+                            default: $listAdminEmail = explode(',', $mailConfig['admin']['corporate']['address']); break;
+                        }
+                        GlobalFunctions::sendMailable($mailConfig['admin']['corporate']['template'], $listAdminEmail[0], sprintf($mailConfig['admin']['corporate']['subject'], $randomNumber), $data, $receiverName, $data['email'], $listAdminEmail,$mailSender);
                         $toUser = $data['agentEmail'];
+                        if($numberofEmptyBeds == 0 && $numberofEmptyCondoBeds == 0) {
+                            if($data['accommodationId1'] != '2' && $data['accommodationId1'] != '3' && $data['accommodationId1'] != '7' && $data['accommodationId1'] != '8') {
+                                GlobalFunctions::sendMailable($mailConfig['novacantagent']['template'], $toUser, $mailConfig['novacantagent']['subject'], $data, "", "", array(),$mailSender);
+                            } else {
+                                GlobalFunctions::sendMailable($mailConfig['agent']['template'], $toUser, $mailConfig['agent']['subject'], $data, "", "", array(),$mailSender);
+                            }
+                        } else {
+                            GlobalFunctions::sendMailable($mailConfig['agent']['template'], $toUser, $mailConfig['agent']['subject'], $data, "", "", array(),$mailSender);
+                        }
                     }
-                    GlobalFunctions::sendMailable($mailConfig['user']['template'], $toUser, $mailConfig['user']['subject'], $data, "", "", array(),$mailSender);
+
                 } else {
                     $mailConfig = config('constants.mail.enroll.JP.apply');
                     if($language != "JP"){
-                        $mailConfig = config('constants.mail.enroll.EN.apply');
+                        if($language == "CN"){
+                            $mailConfig = config('constants.mail.enroll.CN.apply');
+                        } else if($language == "TW") {
+                            $mailConfig = config('constants.mail.enroll.TW.apply');
+                        } else {
+                            $mailConfig = config('constants.mail.enroll.EN.apply');
+                        }
                     }
                     if ($applicationRoute['individual']['en'] == $data['applicationRoute']) {
                         $data['applicationRoute'] = $language=='JP'?$applicationRoute['individual']['jp']:$applicationRoute['individual']['en'];
-                        $listAdminEmail = explode(',', $mailConfig['admin']['individual']['address']);
-                        GlobalFunctions::sendMailable($mailConfig['admin']['individual']['template'], $listAdminEmail[0], sprintf($mailConfig['admin']['individual']['subject'], $randomNumber), $data, $data['name'], $data['email'], $listAdminEmail,$mailSender);
+                        switch(strtoupper($language)) {
+                            case 'TW': $listAdminEmail = explode(',', $mailConfig['admin']['individual']['address_tw']); break;
+                            default: $listAdminEmail = explode(',', $mailConfig['admin']['individual']['address']); break;
+                        }
+                        GlobalFunctions::sendMailable($mailConfig['admin']['individual']['template'], $listAdminEmail[0], sprintf($mailConfig['admin']['individual']['subject'], $randomNumber), $data, $receiverName, $data['email'], $listAdminEmail,$mailSender);
+                        if($numberofEmptyBeds == 0 && $numberofEmptyCondoBeds == 0) {
+                            if($data['accommodationId1'] != '2' && $data['accommodationId1'] != '3' && $data['accommodationId1'] != '7' && $data['accommodationId1'] != '8') {
+                                GlobalFunctions::sendMailable($mailConfig['novacant']['template'], $toUser, $mailConfig['novacant']['subject'], $data, "", "", array(),$mailSender);
+                            } else {
+                                GlobalFunctions::sendMailable($mailConfig['user']['template'], $toUser, $mailConfig['user']['subject'], $data, "", "", array(),$mailSender);
+                            }
+                        } else {
+                            GlobalFunctions::sendMailable($mailConfig['user']['template'], $toUser, $mailConfig['user']['subject'], $data, "", "", array(),$mailSender);
+                        }
                     } else {
                         $data['applicationRoute'] = $language=='JP'?$applicationRoute['agent']['jp']:$applicationRoute['agent']['en'];
-                        $listAdminEmail = explode(',', $mailConfig['admin']['corporate']['address']);
-                        GlobalFunctions::sendMailable($mailConfig['admin']['corporate']['template'], $listAdminEmail[0], sprintf($mailConfig['admin']['corporate']['subject'], $randomNumber), $data, $data['name'], $data['email'], $listAdminEmail,$mailSender);
+                        switch(strtoupper($language)) {
+                            case 'TW': $listAdminEmail = explode(',', $mailConfig['admin']['corporate']['address_tw']); break;
+                            default: $listAdminEmail = explode(',', $mailConfig['admin']['corporate']['address']); break;
+                        }
+                        GlobalFunctions::sendMailable($mailConfig['admin']['corporate']['template'], $listAdminEmail[0], sprintf($mailConfig['admin']['corporate']['subject'], $randomNumber), $data, $receiverName, $data['email'], $listAdminEmail,$mailSender);
                         $toUser = $data['agentEmail'];
+                        if($numberofEmptyBeds == 0 && $numberofEmptyCondoBeds == 0) {
+                            if($data['accommodationId1'] != '2' && $data['accommodationId1'] != '3' && $data['accommodationId1'] != '7' && $data['accommodationId1'] != '8') {
+                                GlobalFunctions::sendMailable($mailConfig['novacantagent']['template'], $toUser, $mailConfig['novacantagent']['subject'], $data, "", "", array(),$mailSender);
+                            } else {
+                                GlobalFunctions::sendMailable($mailConfig['agent']['template'], $toUser, $mailConfig['agent']['subject'], $data, "", "", array(),$mailSender);
+                            }
+                        } else {
+                            GlobalFunctions::sendMailable($mailConfig['agent']['template'], $toUser, $mailConfig['agent']['subject'], $data, "", "", array(),$mailSender);
+                        }
                     }
-                    GlobalFunctions::sendMailable($mailConfig['user']['template'], $toUser, $mailConfig['user']['subject'], $data, "", "", array(),$mailSender);
                 }
                 $this->saveStudentApply($randomNumber, $data, $term, $optionsList);
 
@@ -622,6 +744,7 @@ class EnrollController extends Controller
         $optionsList = config('constants.options_list.'.$language);
         $planType = config('constants.plan.plan_type');
         $generalValue = config('constants.general_value');
+        $planValue = config('constants.plan_id');
 
         $plan = $this->planService->findById($dataClient['planId']);
 
@@ -641,11 +764,7 @@ class EnrollController extends Controller
             $dataClient['pickUp'] = $yesNoAnswer['no']['jp_value'];
         }
 
-        if( ($dataClient['term'] < $optionsCost['entranceFee_condition'] && $plan->name != $generalValue['light_plan']) || ($plan->name == $generalValue['light_plan']) ) {
-            $dataClient['entranceFee'] = $optionsCost['entranceFee'];
-        } else {
-            $dataClient['entranceFee'] = 0;
-        }
+        $dataClient['entranceFee'] = $optionsCost['entranceFee'];
 
         return $dataClient;
     }
@@ -744,7 +863,13 @@ class EnrollController extends Controller
         $building = $this->buildingService->findById($dataClient['buildingId']);
         $dataClient['building'] = $building->name;
 
-        $longstayPrice = $this->longstayService->findByAccommodationPlanTermRoom($dataClient['accommodationId1'], $dataClient['planId'], $term->getKey(), $dataClient['roomId1'], $dataClient['checkIn']);
+        if($dataClient['accommodationId1'] == 5 || $dataClient['accommodationId1'] == 6) {
+            // Executive & Deluxe Accommodation with num_of_use since the room can accommodate 1 ~ 3 persons
+            $longstayPrice = $this->longstayService->findByAccommodationPlanTermRoomWithNumOf($dataClient['accommodationId1'], $dataClient['planId'], $term->getKey(), $dataClient['roomId1'], $dataClient['checkIn'], $dataClient['numOf']);
+        } else {
+            $longstayPrice = $this->longstayService->findByAccommodationPlanTermRoom($dataClient['accommodationId1'], $dataClient['planId'], $term->getKey(), $dataClient['roomId1'], $dataClient['checkIn']);
+        }
+
         $holidays = $this->holidayService->getHolidaysInPeriod($dataClient['entrance'], $dataClient['graduation']);
 
         // Count holidays which all classes are opened
@@ -981,31 +1106,85 @@ class EnrollController extends Controller
     public function saveStudentApply($randomNumber, $data, $term, $optionsList)
     {
        //TODO Hyde sava to databases;
+        $today = date("Y-m-d H:i:s");
+        $language = $this->getLanguage();
+        $holidays = $this->holidayService->getHolidaysInPeriod($data['entrance'], $data['graduation']);
+        $holidaysStudent = '';
+        foreach($holidays as $holiday){
+            if($holiday['opened_class'] == 1) { //list only 1=open classes
+                $dateFormat = strtotime($holiday['date']);
+                $holidaysStudent .= date('M j',$dateFormat).', ';
+            }
+        }
+
+        $courseName = $language == 'JP'?$this->getPlanNameJP($data['planId']):$this->getPlanName($data['planId'],$this->getLanguage());
+        $photocopyValue = $language == 'JP'?100:0;
+        $memoDateFrom = date('m/j',strtotime($data['checkIn']));
+        $memoDateTo = date('m/j',strtotime($data['checkOut']));
+        $courseMemo = ($data['buildingId']==1 ? 'ITP':'SFC').' '.$memoDateFrom.'-'.$memoDateTo.' '.$courseName;
+        $numberofEmptyBeds = $this->bedService->getNumEmptyBed($data['accommodationId1'], $data['checkIn'], $data['checkOut'], $data['roomId1'], ($data["sex"] == "男性" || $data["sex"] == "M" ? '1' : '2'));
+        $numberofEmptyCondoBeds = $this->condoBedService->getNumEmptyBed($data['accommodationId1'], $data['checkIn'], $data['checkOut'], $data['roomId1'], ($data["sex"] == "男性" || $data["sex"] == "M" ? '1' : '2'));
+
+        if($numberofEmptyBeds == 0 && $numberofEmptyCondoBeds == 0 &&
+            ($data['accommodationId1'] != '2' && $data['accommodationId1'] != '3' &&
+                $data['accommodationId1'] != '7' && $data['accommodationId1'] != '8')) {
+            $studentStatus = -2; //No Available Room Status
+        } else {
+            $studentStatus = 1; //Default New Status
+        }
+
+        // Promotion
+        $discountValue = isset($data['discount'])?$data['discount']:0;
+        $registerFeeValue = 0;
+        if($term >= 12 && $discountValue) {
+            $registerFeeValue = $language == 'JP'?15000:150;
+            $discountValue = $discountValue + $registerFeeValue;
+        }
+
+        // Long Stay Discount only for Share House, Share Room and Condo
+        $longStayDiscount = 0;
+        if($data['accommodationId1'] !=  2 && $data['accommodationId1'] !=  3 &&
+            $data['accommodationId1'] !=  7 && $data['accommodationId1'] !=  8) {
+            if($term >= 8) {
+                if($term >= 8 && $term <= 11) {
+                    $longStayDiscount = $language == 'JP'?10000:100;
+                } else if($term >= 12 && $term <= 15) {
+                    $longStayDiscount = $language == 'JP'?20000:200;
+                } else if($term >= 16 && $term <= 19) {
+                    $longStayDiscount = $language == 'JP'?30000:300;
+                } else if($term >= 20 && $term <= 23) {
+                    $longStayDiscount = $language == 'JP'?40000:400;
+                } else {
+                    $longStayDiscount = $language == 'JP'?50000:500;
+                }
+            }
+        }
+
         $studentApply = array(
             "apply_no" => $randomNumber,
             "edit_id" => md5($randomNumber."i@mas+r!n&"),
-            "student_name" => $data['name'],
+            "student_name" => isset($data['name'])?$data['name']:null,
             "passport_name" => $data['passportName'],
+            "passport_id" => isset($data['passportId'])?$data['passportId']:null,
             "birthday" => date('Y-m-d H:i:s', strtotime($data['birthday'])),
             "phone" => $data['phone'],
             "email" => $data['email'],
             "sex" => $data["sex"] == "男性" || $data["sex"] == "M" ? 1 : 2,
             "age" => $data['age'],
-            "student_status" => 1, //Default - New status
+            "student_status" => $studentStatus,
             "nationality" => $data['nationality'],
             "country_code" => $this->getLanguage(),
             "address" => $data['address'],
-            "phone" => $data['phone'],
-            "email" => $data['email'],
             "job" => $data['job'],
             "emergency_contact" => $data['emergencyContact'],
             "email_family" => $data['emailFamily'],
             "skype_id" => $data['skypeId'],
             "line_id" => $data['lineId'],
             "term" => $term, //plan Long
+            "memo" => $data['memo'],
 
             "plan_id" => $data['planId'],
-            "course" => $this->getPlanName($data['planId'],$this->getLanguage()),
+            "course" => ','.$courseName,
             "building_id" => $data['buildingId'],
             "campus" => $data['buildingId']==1 ? 'ITP':'SFC',
             "accommodation_id1" => isset($data['accommodationId1'])?$data['accommodationId1']:null,
@@ -1016,12 +1195,20 @@ class EnrollController extends Controller
 //            "agent_name" => array_key_exists("agentName", $data) ? "" : "QQE",
             "agent_name" => $data['agentName'] == "" ? "QQ":$data['agentName'],
             "agent_email" => $data['agentEmail'],
+            "arrival_date" => date('Y-m-d H:i:s', strtotime($data['checkIn'])),
 
-            "options_special" => $optionsList['Special Options']['key'] == 'specialOption' ? 1 : 0,
-            "options_pickup" => $optionsList['Pick up']['key'] == 'pickUp' ? 1 : 0,
-            "options_meals" => $optionsList['Meals']['key'] == 'meals' ? 1 : 0,
+            "options_special_option" => $data["specialOption"] == "希望する" || $data["specialOption"] == "yes" ? 1 : 0,
+            "options_pickup" => $data["pickUp"] == "希望する" || $data["pickUp"] == "yes" ? 1 : 0,
+            "options_meals" => $data["meals"] == "希望する" || $data["meals"] == "yes" ? 1 : 0,
+            "options_beginner_option" => $data["beginnerOption"] == "希望する" || $data["beginnerOption"] == "yes" ? 1 : 0,
+            "options_island_hopping" => $data["islandHopping"] == "希望する" || $data["islandHopping"] == "yes" ? 1 : 0,
+            "options_oslob" => $data["oslob"] == "希望する" || $data["oslob"] == "yes" ? 1 : 0,
             "checkin_date" => date('Y-m-d H:i:s', strtotime($data['checkIn'])),
             "checkout_date" => date('Y-m-d H:i:s', strtotime($data['checkOut'])),
+            "entrance_date" => date('Y-m-d H:i:s', strtotime($data['entrance'])),
+            "graduation_date" => date('Y-m-d H:i:s', strtotime($data['graduation'])),
+            "due_date" => date('Y-m-d H:i:s', strtotime('-9 days', strtotime($data['checkIn']))),//due_date: 9days before checkin_date
+            "discount" => $discountValue + $longStayDiscount,
             "total_cost" => $data['totalCost'],
             "total_cost_php" => $data['totalCostPhp'],
 
@@ -1032,14 +1219,133 @@ class EnrollController extends Controller
             "pickup_cost" => $data['pickUpCost'],
             "entrance_fee" => $data['entranceFee'],
             "visa_fee_php" => $data['visa'],
-            "acri_fee_php" => $data['acri'],
+            "i_card_cost" => $data['acri'],
             "emigration_fee_php" => $data['emigration'],
             "electrical_fee_php" => $data['electricalCharge'],
+            "photocopy_php" => $photocopyValue,
             "ssp_fee_php" => $data['ssp'],
             "holiday_fee" => $data['holidayFee'],
-            "sub_total" => $data['subTotal']
+            "holidays" => $holidaysStudent,
+            "sub_total" => ($data['subTotal'] - $data['holidayFee']) //Excluding Holiday Fee
         );
-        $this->studentApplyService->create($studentApply);
+        $result = $this->studentApplyService->create($studentApply);
+
+        $dataArray = array(
+            "student_id" => $result['id'],
+            "bldg_id" => $data['buildingId'],
+            "course_name" => $courseName,
+            "date_from" => date('Y-m-d H:i:s', strtotime($data['checkIn'])),
+            "date_to" => date('Y-m-d H:i:s', strtotime($data['checkOut'])),
+            "memo" => $courseMemo,
+            "created_by" => 'SYSTEM',
+            "created_at" => $today,
+            "updated_at" => $today,
+        );
+        //save in courses table
+        $this->courseService->create($dataArray);
+
+        //invoices table
+        $invoiceData = array (
+            "sa_id_number" => $result['id'],
+            "checkin_date" => date('Y-m-d H:i:s', strtotime($data['checkIn'])),
+            "checkout_date" => date('Y-m-d H:i:s', strtotime($data['checkOut'])),
+            "approved_date" => $today,
+            "term" => $term,
+            "due_date" => date('Y-m-d H:i:s', strtotime('-9 days', strtotime($data['checkIn']))),//due_date: 9days before checkin_date
+            "discount" => $discountValue + $longStayDiscount,
+            "total_cost" => $data['totalCost'],
+            "total_cost_php" => $data['totalCostPhp'],
+            "remittance_fee" => $data['remittanceFee'],
+            "entrance_fee" => $data['entranceFee'],
+            "visa_fee_php" => $data['visa'],
+            "id_card" => 200, //default student id card 200
+            "i_card_cost" => $data['acri'],
+            "immigration_fee_php" => $data['emigration'],
+            "electrical_fee_php" => $data['electricalCharge'],
+            "photocopy_php" => $photocopyValue,
+            "ssp_fee_php" => $data['ssp'],
+            "holiday_fee" => $data['holidayFee'],
+            "holidays" => $holidaysStudent,
+            "sub_total" => ($data['subTotal'] - $data['holidayFee']) //Excluding Holiday Fee
+        );
+        $invoiceResult = $this->invoiceService->create($invoiceData);
+
+        // Promotion Discount
+        if($discountValue) {
+            $today=date("Y-m-d h:i:s");
+            $invoiceNumber = $this->studentApplyService->getCountPerCountry($result['country_code']);
+            $counter = $invoiceNumber['count'] + 1;
+            $newInvoiceNo = $result['country_code'].'A'
+                .date("Ym")
+                .str_pad($counter, 3, "0", STR_PAD_LEFT);
+            $result->update(array("invoice_number" => $newInvoiceNo));
+            $invoiceResult->update(array("invoice_number" => $newInvoiceNo));
+            $invoiceArray = array(
+                "student_invoice_no" => $newInvoiceNo,
+                "apply_id" => $result['id'],
+                "discount" => isset($data['discount'])?$data['discount']:0,
+                "who_discounted" => "SYSTEM",
+                "reason" => urldecode($data['discountPromoRemark']),
+                "created_at" => $today,
+                "updated_at" => $today
+            );
+
+            if($term >= 12) {
+                $regFeeArray = array(
+                    "student_invoice_no" => $newInvoiceNo,
+                    "apply_id" => $result['id'],
+                    "discount" => $registerFeeValue,
+                    "who_discounted" => "SYSTEM",
+                    "reason" => urldecode('Free registration fee'),
+                    "created_at" => $today,
+                    "updated_at" => $today
+                );
+                $this->invoiceDiscountService->create($regFeeArray);
+            }
+
+            if($term >= 8) {
+                $longStayArray = array(
+                    "student_invoice_no" => $newInvoiceNo,
+                    "apply_id" => $result['id'],
+                    "discount" => $longStayDiscount,
+                    "who_discounted" => "SYSTEM",
+                    "reason" => urldecode('Long stay discount'),
+                    "created_at" => $today,
+                    "updated_at" => $today
+                );
+                $this->invoiceDiscountService->create($longStayArray);
+            }
+            //save in invoice_discount table
+            $this->invoiceDiscountService->create($invoiceArray);
+        } else {
+
+            // Long Stay Discount only for Share House, Share Room and Condo
+            if($data['accommodationId1'] !=  2 && $data['accommodationId1'] !=  3 &&
+                $data['accommodationId1'] !=  7 && $data['accommodationId1'] !=  8) {
+                if($term >= 8) {
+                    $today=date("Y-m-d h:i:s");
+                    $invoiceNumber = $this->studentApplyService->getCountPerCountry($result['country_code']);
+                    $counter = $invoiceNumber['count'] + 1;
+                    $newInvoiceNo = $result['country_code'].'A'
+                        .date("Ym")
+                        .str_pad($counter, 3, "0", STR_PAD_LEFT);
+                    $result->update(array("invoice_number" => $newInvoiceNo));
+                    $invoiceResult->update(array("invoice_number" => $newInvoiceNo));
+                    $longStayArray = array(
+                        "student_invoice_no" => $newInvoiceNo,
+                        "apply_id" => $result['id'],
+                        "discount" => $longStayDiscount,
+                        "who_discounted" => "SYSTEM",
+                        "reason" => urldecode('Long stay discount'),
+                        "created_at" => $today,
+                        "updated_at" => $today
+                    );
+                    $this->invoiceDiscountService->create($longStayArray);
+                }
+            }
+        }
+
+
     }
 
     /**
@@ -1063,6 +1369,43 @@ class EnrollController extends Controller
             if($planId == $plan['id']){
                 $planName = $plan['name'];
             }
+        }
+        return $planName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlanNameJP($planId)
+    {
+        if ($planId == 1) {
+            $planName = 'STANDARD';
+        } else if ($planId == 2) {
+            $planName = 'SUPERIOR';
+        } else if ($planId == 3) {
+            $planName = 'LIGHT';
+        } else if ($planId == 4) {
+            $planName = 'SUPER SHORT LIGHT';
+        } else if ($planId == 5) {
+            $planName = 'SUPER SHORT';
+        } else if ($planId == 6) {
+            $planName = 'SUPER SHORT + ONLINE';
+        } else if ($planId == 7) {
+            $planName = 'BUSINESS';
+        } else if ($planId == 8) {
+            $planName = 'TOEIC w/out guarantee';
+        } else if ($planId == 9) {
+            $planName = 'TOEIC with guarantee';
+        } else if ($planId == 10) {
+            $planName = 'IELTS';
+        } else if($planId == 14) {
+            $planName = 'Body Make ST';
+        } else if($planId == 15) {
+            $planName = 'Body Make HL';
+        } else if($planId == 16) {
+            $planName = 'SUPER LIGHT';
+        } else {
+            $planName = 'FAMILY';
         }
         return $planName;
     }
