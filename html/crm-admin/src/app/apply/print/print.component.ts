@@ -6,7 +6,7 @@ import {Component, OnInit, Input} from "@angular/core";
   templateUrl: './print.component.html',
 })
 export class PrintComponent implements OnInit {
-    @Input() list: Array<any> = [{}];
+    @Input() otherlist: Array<any> = [{}];
     constructor() {
     }
   ngOnInit() {

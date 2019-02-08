@@ -1,0 +1,145 @@
+<!-- Print All Aiport Pickup section Hidden -->
+<div id="print-all-airport-pickup-template" style="display: none;">
+    <span *ngFor="let o of airportPickUpList">
+        <div *ngIf="o.country_code == 'TW' || o.country_code == 'CN'">
+            <div align="center">
+                <span><img height="25%" width="80%" src="assets/images/header-invoice.png"/></span>
+            </div>
+            <div style="width:100%;text-align:center;font-size:15pt;"><b>行程最後確認表</b></div>
+            <table style="width:100%;text-align: left;border-collapse: collapse;font-size:14pt;" border="1">
+                <tr>
+                    <td>Campus<br>校區</td>
+                    <td>{{o.campus==='ITP'?'IT Park':'Seafront'}}</td>
+                    <td>Note for Student</td>
+                    <td colspan="3">{{o.note_for_student}}</td>
+                </tr>
+                <tr>
+                    <td>Name<br>名字</td>
+                    <td>{{o.passport_name?o.passport_name:o.student_name}}</td>
+                    <td>Gender<br>性别</td>
+                    <td>{{o.sex===1?'Male':'Female'}}</td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr>
+                    <td>Nationality<br>國籍</td>
+                    <td>{{o.country_code}}</td>
+                    <td>Course<br>課程</td>
+                    <td>{{o.course}}</td>
+                    <td>Room type<br>房間型態</td>
+                    <td>
+                        <span *ngIf='o.room_id1==1'>Single</span>
+                        <span *ngIf='o.room_id1==2'>Twin</span>
+                        <span *ngIf='o.room_id1==3'>Triple</span>
+                        <span *ngIf='o.room_id1==4'>Quad</span>
+                        <span *ngIf='o.room_id1==5'>Hex</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Pickup<br>接機</td>
+                    <td>{{o.options_pickup===1?'YES':'NO'}}</td>
+                    <td>Meal<br>含餐</td>
+                    <td>{{o.options_meals===1?'YES':'NO'}}</td>
+                    <td>Weeks<br>週數</td>
+                    <td>{{o.term}}</td>
+                </tr>
+                <tr>
+                    <td>Arrival date<br>抵達日期</td>
+                    <td>{{o.arrival_date | date: 'MM/dd'}}</td>
+                    <td>FLIGHT NO<br>班機號碼</td>
+                    <td>{{o.flight_no}}</td>
+                    <td>Arrival time<br>抵達時間</td>
+                    <td>
+                        <span *ngIf="o.arrival_time">{{o.arrival_time | date: 'HH:mm'}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Check in date<br>入住日期</td>
+                    <td>{{o.checkin_date | date: 'MM/dd'}}</td>
+                    <td>Check out date<br>退房日期</td>
+                    <td>{{o.checkout_date | date: 'MM/dd'}}</td>
+                    <td>Pick up staff<br>接機聯繫人</td>
+                    <td>Rain:  0995-295-6323<br>Denise: 0945-149-6424   </td>
+                </tr>
+            </table>
+            <div>
+                <div style="text-align:center;font-size:13pt;">
+                    請走出機場大門尋找手持QQEnglish接機牌的學生經理，緊急狀況請播打電話給接機人聯繫人<br>
+                </div>
+                <div style="text-align:center;font-size:13pt;">
+                    IT Park 校區地址：8th floor skyrise 4, IT Park, Cebu City, Philippines.<br>
+                    Seafront 校區地址：Looc, Maribago Lapu-Lapu City, Cebu,  Philippines <br>
+                </div>
+                <div style="margin-bottom:1px;text-align:center;">
+                    <img height="60%" width="85%" src="assets/images/dom_int_arrival_area.png"/>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="o.country_code != 'TW' && o.country_code != 'CN'">
+            <div align="center">
+                <span><img height="25%" width="80%" src="assets/images/header-invoice.png"/></span>
+            </div>
+            <div style="width:100%;text-align:center;font-size:15pt;"><b>Confirmation Letter</b></div>
+            <table style="width:100%;text-align: left;border-collapse: collapse;font-size:14pt;" border="1">
+                <tr>
+                    <td>Campus<br><br></td>
+                    <td>{{o.campus==='ITP'?'IT Park':'Seafront'}}</td>
+                    <td>Note for Student</td>
+                    <td colspan="3">{{o.note_for_student}}</td>
+                </tr>
+                <tr>
+                    <td>Name<br><br></td>
+                    <td>{{o.passport_name?o.passport_name:o.student_name}}</td>
+                    <td>Gender<br><br></td>
+                    <td>{{o.sex===1?'Male':'Female'}}</td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr>
+                    <td>Nationality<br><br></td>
+                    <td>{{o.country_code}}</td>
+                    <td>Course<br><br></td>
+                    <td>{{o.course}}</td>
+                    <td>Room type<br><br></td>
+                    <td>
+                        <span *ngIf='o.room_id1==1'>Single</span>
+                        <span *ngIf='o.room_id1==2'>Twin</span>
+                        <span *ngIf='o.room_id1==3'>Triple</span>
+                        <span *ngIf='o.room_id1==4'>Quad</span>
+                        <span *ngIf='o.room_id1==5'>Hex</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Pickup<br><br></td>
+                    <td>{{o.options_pickup===1?'YES':'NO'}}</td>
+                    <td>Meal<br><br></td>
+                    <td>{{o.options_meals===1?'YES':'NO'}}</td>
+                    <td>Weeks<br><br></td>
+                    <td>{{o.term}}</td>
+                </tr>
+                <tr>
+                    <td>Arrival date<br><br></td>
+                    <td>{{o.arrival_date | date: 'MM/dd'}}</td>
+                    <td>FLIGHT NO<br><br></td>
+                    <td>{{o.flight_no}}</td>
+                    <td>Arrival time<br><br></td>
+                    <td>
+                        <span *ngIf="o.arrival_time">{{o.arrival_time | date: 'HH:mm'}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Check in date<br><br></td>
+                    <td>{{o.checkin_date | date: 'MM/dd'}}</td>
+                    <td>Check out date<br><br></td>
+                    <td>{{o.checkout_date | date: 'MM/dd'}}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+            <div align="center">
+                <br>IT Park Address：8th floor skyrise 4, IT Park, Cebu City, Philippines.<br>
+                Seafront Address：Looc, Maribago Lapu-Lapu City, Cebu,  Philippines.<br><br><br>
+                <img height="65%" width="85%" src="assets/images/dom_int_arrival_area.png"/>
+            </div>
+        </div>
+    </span>
+</div>
+<!-- Print All Aiport Pickup section Hidden -->

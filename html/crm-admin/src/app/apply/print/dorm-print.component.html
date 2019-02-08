@@ -1,0 +1,408 @@
+<!-- Print Dorm List section Hidden -->
+<!-- Print All start-->
+<div id="alldormhotelchangelist-section" style="display: none;">
+    <table style="border: 1px solid black; border-collapse: collapse;">
+        <thead class="thead-inverse">
+        <th style="text-align:center;">Name</th>
+        <th style="text-align:center;">Gender</th>
+        <th style="text-align:center;">Country</th>
+        <th style="text-align:center;">Original<br>Check-in</th>
+        <th style="text-align:center;">Original<br>Check-out</th>
+        <th style="text-align:center;">Previous<br>stay</th>
+        <th style="text-align:center;">Key<br>return</th>
+        <th style="text-align:center;">Change<br>Check-in</th>
+        <th style="text-align:center;">Change<br>Check-out</th>
+        <th style="text-align:center;">Current<br>stay</th>
+        <th style="text-align:center;">Student<br>signature</th>
+        <th style="text-align:center;">Given by (Staff)</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let o of dormchangelist; let i = index" style="border: 1px solid black;
+            border-collapse: collapse; text-align:center; font-family: Arial, Helvetica, sans-serif;
+            font-size: 80%;">
+            <td style="width:150px;">{{o.passport_name?o.passport_name:o.student_name}}</td>
+            <td>{{o.sex==1?'M':'F'}}</td>
+            <td>{{o.country_code}}</td>
+            <td style="font-size: 9pt;width:200px;color:darkblue;">
+                {{o.checkin_date | date: 'yyyy-MM-dd'}}<br>
+                ({{o.checkin_date | date: 'EE'}})
+            </td>
+            <td style="font-size: 9pt;width:200px;color:darkblue;">
+                {{o.checkout_date | date: 'yyyy-MM-dd'}}<br>
+                ({{o.checkout_date | date: 'EE'}})
+            </td>
+            <td style="width:100px;color:green;font-size:9pt;">
+                <span *ngIf="o.dormitory_room_name.split(',')[1] != o.current_dormitory_room_name && !o.hotel_name">
+                    {{o.dormitory_room_name.split(',')[1]}}<br>{{o.building_id==1?'(ITP)':'(SFC)'}}
+                </span>
+                <span *ngIf="o.dormitory_room_name.split(',')[1] == o.current_dormitory_room_name && o.hotel_name">
+                    {{o.hotel_name.split(',')[1]}}<br>{{o.building_id==1?'(ITP)':'(SFC)'}}
+                </span>
+            </td>
+            <td></td>
+            <td style="font-size: 9pt;width:200px;color:darkred;">
+                {{o.reservation_checkin | date: 'yyyy-MM-dd'}}<br>
+                ({{o.reservation_checkin | date: 'EE'}})
+            </td>
+            <td style="font-size: 9pt;width:200px;color:darkred;">
+                {{o.reservation_checkout | date: 'yyyy-MM-dd'}}<br>
+                ({{o.reservation_checkout | date: 'EE'}})
+            </td>
+            <td style="width:100px;color:green">{{o.current_dormitory_room_name}}(#{{o.bed_name}})<br>
+                {{o.room_type | uppercase}}
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr *ngFor="let o of hotelchangeList; let i = index" style="border: 1px solid black;
+            border-collapse: collapse; text-align:center; font-family: Arial, Helvetica, sans-serif;
+            font-size: 80%;">
+            <td style="width:150px;">{{o.passport_name?o.passport_name:o.student_name}}</td>
+            <td>{{o.sex==1?'M':'F'}}</td>
+            <td>{{o.country_code}}</td>
+            <td style="font-size: 9pt;width:200px;color:darkblue;">
+                {{o.checkin_date | date: 'yyyy-MM-dd'}}<br>
+                ({{o.checkin_date | date: 'EE'}})
+            </td>
+            <td style="font-size: 9pt;width:200px;color:darkblue;">
+                {{o.checkout_date | date: 'yyyy-MM-dd'}}<br>
+                ({{o.checkout_date | date: 'EE'}})
+            </td>
+            <td style="width:100px;color:green;font-size:9pt;">
+                <span *ngIf="o.dormitory_room_name.split(',')[1] != o.current_dormitory_room_name && !o.hotel_name">
+                    {{o.dormitory_room_name.split(',')[1]}}<br>{{o.building_id==1?'(ITP)':'(SFC)'}}
+                </span>
+                <span *ngIf="o.dormitory_room_name.split(',')[1] == o.current_dormitory_room_name && o.hotel_name">
+                    {{o.hotel_name.split(',')[1]}}<br>{{o.building_id==1?'(ITP)':'(SFC)'}}
+                </span>
+            </td>
+            <td></td>
+            <td style="font-size: 9pt;width:200px;color:darkred;">
+                {{o.reservation_checkin | date: 'yyyy-MM-dd'}}<br>
+                ({{o.reservation_checkin | date: 'EE'}})
+            </td>
+            <td style="font-size: 9pt;width:200px;color:darkred;">
+                {{o.reservation_checkout | date: 'yyyy-MM-dd'}}<br>
+                ({{o.reservation_checkout | date: 'EE'}})
+            </td>
+            <td style="width:100px;color:green">{{o.current_dormitory_room_name}}(#{{o.bed_name}})<br>
+                {{o.room_type | uppercase}}
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr *ngFor="let o of walkinchangeList; let i = index" style="border: 1px solid black;
+            border-collapse: collapse; text-align:center; font-family: Arial, Helvetica, sans-serif;
+            font-size: 80%;">
+            <td style="width:150px;">{{o.passport_name?o.passport_name:o.student_name}}</td>
+            <td>{{o.sex==1?'M':'F'}}</td>
+            <td>{{o.country_code}}</td>
+            <td style="font-size: 9pt;width:200px;color:darkblue;">
+                {{o.checkin_date | date: 'yyyy-MM-dd'}}<br>
+                ({{o.checkin_date | date: 'EE'}})
+            </td>
+            <td style="font-size: 9pt;width:200px;color:darkblue;">
+                {{o.checkout_date | date: 'yyyy-MM-dd'}}<br>
+                ({{o.checkout_date | date: 'EE'}})
+            </td>
+            <td style="width:100px;color:green;font-size:9pt;">
+                <span *ngIf="o.dormitory_room_name.split(',')[1] != o.current_dormitory_room_name && !o.hotel_name">
+                    {{o.dormitory_room_name.split(',')[1]}}<br>{{o.building_id==1?'(ITP)':'(SFC)'}}
+                </span>
+                <span *ngIf="o.dormitory_room_name.split(',')[1] == o.current_dormitory_room_name && o.hotel_name">
+                    {{o.hotel_name.split(',')[1]}}<br>{{o.building_id==1?'(ITP)':'(SFC)'}}
+                </span>
+            </td>
+            <td></td>
+            <td style="font-size: 9pt;width:200px;color:darkred;">
+                {{o.reservation_checkin | date: 'yyyy-MM-dd'}}<br>
+                ({{o.reservation_checkin | date: 'EE'}})
+            </td>
+            <td style="font-size: 9pt;width:200px;color:darkred;">
+                {{o.reservation_checkout | date: 'yyyy-MM-dd'}}<br>
+                ({{o.reservation_checkout | date: 'EE'}})
+            </td>
+            <td style="width:100px;color:green">{{o.current_dormitory_room_name}}(#{{o.bed_name}})<br>
+                {{o.room_type | uppercase}}
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr *ngFor="let o of condochangeList; let i = index" style="border: 1px solid black;
+            border-collapse: collapse; text-align:center; font-family: Arial, Helvetica, sans-serif;
+            font-size: 80%;">
+            <td style="width:150px;">{{o.passport_name?o.passport_name:o.student_name}}</td>
+            <td>{{o.sex==1?'M':'F'}}</td>
+            <td>{{o.country_code}}</td>
+            <td style="font-size: 9pt;width:200px;color:darkblue;">
+                {{o.checkin_date | date: 'yyyy-MM-dd'}}<br>
+                ({{o.checkin_date | date: 'EE'}})
+            </td>
+            <td style="font-size: 9pt;width:200px;color:darkblue;">
+                {{o.checkout_date | date: 'yyyy-MM-dd'}}<br>
+                ({{o.checkout_date | date: 'EE'}})
+            </td>
+            <td style="width:100px;color:green;font-size:9pt;">
+                <span *ngIf="o.dormitory_room_name.split(',')[1] != o.current_dormitory_room_name && !o.hotel_name">
+                    {{o.dormitory_room_name.split(',')[1]}}<br>{{o.building_id==1?'(ITP)':'(SFC)'}}
+                </span>
+                <span *ngIf="o.dormitory_room_name.split(',')[1] == o.current_dormitory_room_name && o.hotel_name">
+                    {{o.hotel_name.split(',')[1]}}<br>{{o.building_id==1?'(ITP)':'(SFC)'}}
+                </span>
+            </td>
+            <td></td>
+            <td style="font-size: 9pt;width:200px;color:darkred;">
+                {{o.reservation_checkin | date: 'yyyy-MM-dd'}}<br>
+                ({{o.reservation_checkin | date: 'EE'}})
+            </td>
+            <td style="font-size: 9pt;width:200px;color:darkred;">
+                {{o.reservation_checkout | date: 'yyyy-MM-dd'}}<br>
+                ({{o.reservation_checkout | date: 'EE'}})
+            </td>
+            <td style="width:100px;color:green">{{o.current_dormitory_room_name}}(#{{o.bed_name}})<br>
+                {{o.room_type | uppercase}}
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!-- Print All end-->
+<!-- Print Dormitory start-->
+<div id="dormchangelist-section" style="display: none;">
+    <table style="border: 1px solid black; border-collapse: collapse;">
+        <thead class="thead-inverse">
+        <th style="text-align:center;">Name</th>
+        <th style="text-align:center;">Gender</th>
+        <th style="text-align:center;">Country</th>
+        <th style="text-align:center;">Original<br>Check-in</th>
+        <th style="text-align:center;">Original<br>Check-out</th>
+        <th style="text-align:center;">Previous<br>stay</th>
+        <th style="text-align:center;">Key<br>return</th>
+        <th style="text-align:center;">Change<br>Check-in</th>
+        <th style="text-align:center;">Change<br>Check-out</th>
+        <th style="text-align:center;">Current<br>stay</th>
+        <th style="text-align:center;">Student<br>signature</th>
+        <th style="text-align:center;">Given by (Staff)</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let o of dormchangelist; let i = index" style="border: 1px solid black;
+            border-collapse: collapse; text-align:center; font-family: Arial, Helvetica, sans-serif;
+            font-size: 80%;">
+            <td style="width:150px;">{{o.passport_name?o.passport_name:o.student_name}}</td>
+            <td>{{o.sex==1?'M':'F'}}</td>
+            <td>{{o.country_code}}</td>
+            <td style="font-size: 9pt;width:200px;color:darkblue;">
+                {{o.checkin_date | date: 'yyyy-MM-dd'}}<br>
+                ({{o.checkin_date | date: 'EE'}})
+            </td>
+            <td style="font-size: 9pt;width:200px;color:darkblue;">
+                {{o.checkout_date | date: 'yyyy-MM-dd'}}<br>
+                ({{o.checkout_date | date: 'EE'}})
+            </td>
+            <td style="width:100px;color:green;font-size:9pt;">
+                <span *ngIf="o.dormitory_room_name.split(',')[1] != o.current_dormitory_room_name && !o.hotel_name">
+                    {{o.dormitory_room_name.split(',')[1]}}<br>{{o.building_id==1?'(ITP)':'(SFC)'}}
+                </span>
+                <span *ngIf="o.dormitory_room_name.split(',')[1] == o.current_dormitory_room_name && o.hotel_name">
+                    {{o.hotel_name.split(',')[1]}}<br>{{o.building_id==1?'(ITP)':'(SFC)'}}
+                </span>
+            </td>
+            <td></td>
+            <td style="font-size: 9pt;width:200px;color:darkred;">
+                {{o.reservation_checkin | date: 'yyyy-MM-dd'}}<br>
+                ({{o.reservation_checkin | date: 'EE'}})
+            </td>
+            <td style="font-size: 9pt;width:200px;color:darkred;">
+                {{o.reservation_checkout | date: 'yyyy-MM-dd'}}<br>
+                ({{o.reservation_checkout | date: 'EE'}})
+            </td>
+            <td style="width:100px;color:green">{{o.current_dormitory_room_name}}(#{{o.bed_name}})<br>
+                {{o.room_type | uppercase}}
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!-- Print Dormitory end-->
+<!-- Print Hotel start-->
+<div id="hotelchangelist-section" style="display: none;">
+    <table style="border: 1px solid black; border-collapse: collapse;">
+        <thead class="thead-inverse">
+        <th style="text-align:center;">Name</th>
+        <th style="text-align:center;">Gender</th>
+        <th style="text-align:center;">Country</th>
+        <th style="text-align:center;">Original<br>Check-in</th>
+        <th style="text-align:center;">Original<br>Check-out</th>
+        <th style="text-align:center;">Previous<br>stay</th>
+        <th style="text-align:center;">Key<br>return</th>
+        <th style="text-align:center;">Change<br>Check-in</th>
+        <th style="text-align:center;">Change<br>Check-out</th>
+        <th style="text-align:center;">Current<br>stay</th>
+        <th style="text-align:center;">Student<br>signature</th>
+        <th style="text-align:center;">Given by (Staff)</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let o of hotelchangeList; let i = index" style="border: 1px solid black;
+            border-collapse: collapse; text-align:center; font-family: Arial, Helvetica, sans-serif;
+            font-size: 80%;">
+            <td style="width:150px;">{{o.passport_name?o.passport_name:o.student_name}}</td>
+            <td>{{o.sex==1?'M':'F'}}</td>
+            <td>{{o.country_code}}</td>
+            <td style="font-size: 9pt;width:200px;color:darkblue;">
+                {{o.checkin_date | date: 'yyyy-MM-dd'}}<br>
+                ({{o.checkin_date | date: 'EE'}})
+            </td>
+            <td style="font-size: 9pt;width:200px;color:darkblue;">
+                {{o.checkout_date | date: 'yyyy-MM-dd'}}<br>
+                ({{o.checkout_date | date: 'EE'}})
+            </td>
+            <td style="width:100px;color:green;font-size:9pt;">
+                <span *ngIf="o.dormitory_room_name.split(',')[1] != o.current_dormitory_room_name && !o.hotel_name">
+                    {{o.dormitory_room_name.split(',')[1]}}<br>{{o.building_id==1?'(ITP)':'(SFC)'}}
+                </span>
+                <span *ngIf="o.dormitory_room_name.split(',')[1] == o.current_dormitory_room_name && o.hotel_name">
+                    {{o.hotel_name.split(',')[1]}}<br>{{o.building_id==1?'(ITP)':'(SFC)'}}
+                </span>
+            </td>
+            <td></td>
+            <td style="font-size: 9pt;width:200px;color:darkred;">
+                {{o.reservation_checkin | date: 'yyyy-MM-dd'}}<br>
+                ({{o.reservation_checkin | date: 'EE'}})
+            </td>
+            <td style="font-size: 9pt;width:200px;color:darkred;">
+                {{o.reservation_checkout | date: 'yyyy-MM-dd'}}<br>
+                ({{o.reservation_checkout | date: 'EE'}})
+            </td>
+            <td style="width:100px;color:green">{{o.current_dormitory_room_name}}(#{{o.bed_name}})<br>
+                {{o.room_type | uppercase}}
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!-- Print Hotel end-->
+<!-- Print Walkin start-->
+<div id="walkinchangelist-section" style="display: none;">
+    <table style="border: 1px solid black; border-collapse: collapse;">
+        <thead class="thead-inverse">
+        <th style="text-align:center;">Name</th>
+        <th style="text-align:center;">Gender</th>
+        <th style="text-align:center;">Country</th>
+        <th style="text-align:center;">Original<br>Check-in</th>
+        <th style="text-align:center;">Original<br>Check-out</th>
+        <th style="text-align:center;">Previous<br>stay</th>
+        <th style="text-align:center;">Key<br>return</th>
+        <th style="text-align:center;">Change<br>Check-in</th>
+        <th style="text-align:center;">Change<br>Check-out</th>
+        <th style="text-align:center;">Current<br>stay</th>
+        <th style="text-align:center;">Student<br>signature</th>
+        <th style="text-align:center;">Given by (Staff)</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let o of walkinchangeList; let i = index" style="border: 1px solid black;
+            border-collapse: collapse; text-align:center; font-family: Arial, Helvetica, sans-serif;
+            font-size: 80%;">
+            <td style="width:150px;">{{o.passport_name?o.passport_name:o.student_name}}</td>
+            <td>{{o.sex==1?'M':'F'}}</td>
+            <td>{{o.country_code}}</td>
+            <td style="font-size: 9pt;width:200px;color:darkblue;">
+                {{o.checkin_date | date: 'yyyy-MM-dd'}}<br>
+                ({{o.checkin_date | date: 'EE'}})
+            </td>
+            <td style="font-size: 9pt;width:200px;color:darkblue;">
+                {{o.checkout_date | date: 'yyyy-MM-dd'}}<br>
+                ({{o.checkout_date | date: 'EE'}})
+            </td>
+            <td style="width:100px;color:green;font-size:9pt;">
+                <span *ngIf="o.dormitory_room_name.split(',')[1] != o.current_dormitory_room_name && !o.hotel_name">
+                    {{o.dormitory_room_name.split(',')[1]}}<br>{{o.building_id==1?'(ITP)':'(SFC)'}}
+                </span>
+                <span *ngIf="o.dormitory_room_name.split(',')[1] == o.current_dormitory_room_name && o.hotel_name">
+                    {{o.hotel_name.split(',')[1]}}<br>{{o.building_id==1?'(ITP)':'(SFC)'}}
+                </span>
+            </td>
+            <td></td>
+            <td style="font-size: 9pt;width:200px;color:darkred;">
+                {{o.reservation_checkin | date: 'yyyy-MM-dd'}}<br>
+                ({{o.reservation_checkin | date: 'EE'}})
+            </td>
+            <td style="font-size: 9pt;width:200px;color:darkred;">
+                {{o.reservation_checkout | date: 'yyyy-MM-dd'}}<br>
+                ({{o.reservation_checkout | date: 'EE'}})
+            </td>
+            <td style="width:100px;color:green">{{o.current_dormitory_room_name}}(#{{o.bed_name}})<br>
+                {{o.room_type | uppercase}}
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!-- Print Walkin end-->
+<!-- Print Condo start-->
+<div id="condochangelist-section" style="display: none;">
+    <table style="border: 1px solid black; border-collapse: collapse;">
+        <thead class="thead-inverse">
+        <th style="text-align:center;">Name</th>
+        <th style="text-align:center;">Gender</th>
+        <th style="text-align:center;">Country</th>
+        <th style="text-align:center;">Original<br>Check-in</th>
+        <th style="text-align:center;">Original<br>Check-out</th>
+        <th style="text-align:center;">Previous<br>stay</th>
+        <th style="text-align:center;">Key<br>return</th>
+        <th style="text-align:center;">Change<br>Check-in</th>
+        <th style="text-align:center;">Change<br>Check-out</th>
+        <th style="text-align:center;">Current<br>stay</th>
+        <th style="text-align:center;">Student<br>signature</th>
+        <th style="text-align:center;">Given by (Staff)</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let o of condochangeList; let i = index" style="border: 1px solid black;
+            border-collapse: collapse; text-align:center; font-family: Arial, Helvetica, sans-serif;
+            font-size: 80%;">
+            <td style="width:150px;">{{o.passport_name?o.passport_name:o.student_name}}</td>
+            <td>{{o.sex==1?'M':'F'}}</td>
+            <td>{{o.country_code}}</td>
+            <td style="font-size: 9pt;width:200px;color:darkblue;">
+                {{o.checkin_date | date: 'yyyy-MM-dd'}}<br>
+                ({{o.checkin_date | date: 'EE'}})
+            </td>
+            <td style="font-size: 9pt;width:200px;color:darkblue;">
+                {{o.checkout_date | date: 'yyyy-MM-dd'}}<br>
+                ({{o.checkout_date | date: 'EE'}})
+            </td>
+            <td style="width:100px;color:green;font-size:9pt;">
+                <span *ngIf="o.dormitory_room_name.split(',')[1] != o.current_dormitory_room_name && !o.hotel_name">
+                    {{o.dormitory_room_name.split(',')[1]}}<br>{{o.building_id==1?'(ITP)':'(SFC)'}}
+                </span>
+                <span *ngIf="o.dormitory_room_name.split(',')[1] == o.current_dormitory_room_name && o.hotel_name">
+                    {{o.hotel_name.split(',')[1]}}<br>{{o.building_id==1?'(ITP)':'(SFC)'}}
+                </span>
+            </td>
+            <td></td>
+            <td style="font-size: 9pt;width:200px;color:darkred;">
+                {{o.reservation_checkin | date: 'yyyy-MM-dd'}}<br>
+                ({{o.reservation_checkin | date: 'EE'}})
+            </td>
+            <td style="font-size: 9pt;width:200px;color:darkred;">
+                {{o.reservation_checkout | date: 'yyyy-MM-dd'}}<br>
+                ({{o.reservation_checkout | date: 'EE'}})
+            </td>
+            <td style="width:100px;color:green">{{o.current_dormitory_room_name}}(#{{o.bed_name}})<br>
+                {{o.room_type | uppercase}}
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!-- Print Condo end-->
+<!-- Print Dorm List section -->

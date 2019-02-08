@@ -1,0 +1,52 @@
+<!-- Print All Accept Letter section Hidden -->
+<div id="print-all-accept-letter-template" style="display: none;">
+    <span *ngFor="let o of acceptLetterList">
+        <div *ngIf="o.campus=='ITP'">
+            <div align="center">
+                <span><img height="25%" width="80%" src="./assets/images/header-invoice.png"/></span>
+            </div>
+            <div style="font-size:13pt;">
+                <div style="width:100%;text-align:center;font-size:25pt;color:deepskyblue;margin-bottom:25px;"><b>Letter of Acceptance<br/></b></div>
+                <div style="width:100%;text-align:left;"> To :    <b>{{o.passport_name}} {{o.passport_id?'(Passport number:':''}} {{o.passport_id}}{{o.passport_id?')':''}}</b></div>
+                <div style="width:100%;text-align:left;margin-bottom:10px;"> From :    Admissions Office, Real Great English Corporation</div>
+                <div style="width:100%;text-align:left"> Date :    <b>{{today | date:'longDate'}}</b></div>
+                <div style="width:100%;text-align:left"> Re :    Confirmation of Enrollment</div>
+                <span style="font-size:15pt;width:100%;text-align: left;">
+                    <p style="text-indent:50px">This is to confirm that we have received the Enrollment Form for the following student and that the student has been accepted as a full time English Language Student of Real Great English.<br></p>
+                    <p style="text-indent:50px">We guarantee this student will obey the laws, rules and regulation of the Philippines, and leave before their visa expires. We will assist this student to process extension or conversion of their visa in the Philippines.<br></p>
+                    <p style="text-indent:50px">We will provide meal and accommodation during the whole period of the stay.<br></p>
+                    <p style="text-indent:50px">Accommodation address: BLK3, LOT5, Park Vista, APAS, Cebu city, Cebu Philippines.<br></p>
+                </span>
+                <div style="width:100%;text-align:left"> Name :    <b>{{o.sex==1?'Mr.':'Ms.'}} {{o.passport_name}}</b></div>
+                <div style="width:100%;text-align:left"> Course Date :    <b>{{o.checkin_date | date:'MMMM'}} {{o.checkin_date | date:'dd'}}, {{o.checkin_date | date:'yyyy'}} to  {{o.checkout_date | date:'MMMM'}} {{o.checkout_date | date:'dd'}}, {{o.checkout_date | date:'yyyy'}}</b></div>
+                <div style="width:100%;text-align:left;margin-bottom:50px;">
+                    <img height="30%" width="50%"src="./assets/images/hr_manager_e_signature.jpg"/>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="o.campus=='SFC'">
+            <div align="center">
+                <span><img height="25%" width="80%" src="./assets/images/header-invoice.png"/></span>
+            </div>
+            <div style="font-size:13pt;">
+                <div style="width:100%;text-align:center;font-size:25pt;color:deepskyblue;margin-bottom:25px;"><b>Letter of Acceptance<br/></b></div>
+                <div style="width:100%;text-align:left;"> To :    <b>{{o.passport_name}} {{o.passport_id?'(Passport number:':''}} {{o.passport_id}}{{o.passport_id?')':''}}</b></div>
+                <div style="width:100%;text-align:left;margin-bottom:10px;"> From :    Admissions Office, Real Great English Corporation</div>
+                <div style="width:100%;text-align:left"> Date :    <b>{{today | date:'longDate'}}</b></div>
+                <div style="width:100%;text-align:left"> Re :    Confirmation of Enrollment</div>
+                <span style="font-size:15pt;width:100%;text-align: left;">
+                    <p style="text-indent:50px">This is to confirm that we have received the Enrollment Form for the following student and that the student has been accepted as a full time English Language Student of Real Great English.<br></p>
+		            <p style="text-indent:50px">We guarantee this student will obey the laws, rules and regulation of the Philippines, and leave before their visa expires. We will assist this student to process extension or conversion of their visa in the Philippines.<br></p>
+		            <p style="text-indent:50px">We will provide meal and accommodation during the whole period of the stay.<br></p>
+		            <p style="text-indent:50px">Accommodation address: Looc Maribago, Lapu-Lapu City, Cebu Philippines.<br></p>
+                </span>
+                <div style="width:100%;text-align:left"> Name :    <b>{{o.sex==1?'Mr.':'Ms.'}} {{o.passport_name}}</b></div>
+                <div style="width:100%;text-align:left"> Course Date :    <b>{{o.checkin_date | date:'MMMM'}} {{o.checkin_date | date:'dd'}}, {{o.checkin_date | date:'yyyy'}} to  {{o.checkout_date | date:'MMMM'}} {{o.checkout_date | date:'dd'}}, {{o.checkout_date | date:'yyyy'}}</b></div>
+                <div style="width:100%;text-align:left;margin-bottom:50px;">
+                    <img height="30%" width="50%"src="./assets/images/hr_manager_e_signature.jpg"/>
+                </div>
+            </div>
+        </div>
+    </span>
+</div>
+<!-- Print All Accept Letter section Hidden -->

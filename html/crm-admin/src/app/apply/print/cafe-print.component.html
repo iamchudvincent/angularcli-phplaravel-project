@@ -1,0 +1,127 @@
+<!-- Print QQE Cafe List section Hidden -->
+<div id="cafelist-section">
+    <table style="border: 1px solid black; border-collapse: collapse;">
+        <div *ngFor="let o of qqeCafeList;">
+            <thead class="thead-inverse">
+            <th style="text-align:center;width:160px;">Date</th>
+            <th style="text-align:center;width:160px;">
+                STUDENTS<br>({{o.cafeCampus=='1'?'ITP':'SFC'}})
+            </th>
+            <th colspan="2" style="text-align:center;width:100px;">JP</th>
+            <th colspan="2" style="text-align:center;width:100px;">TW</th>
+            <th colspan="2" style="text-align:center;width:100px;">CN</th>
+            <th colspan="2" style="text-align:center;width:100px;">KR</th>
+            <th colspan="2" style="text-align:center;width:100px;">RUS</th>
+            <th colspan="2" style="text-align:center;width:100px;">VN</th>
+            <th colspan="2" style="text-align:center;width:100px;">ARAB</th>
+            <th colspan="2" style="text-align:center;width:100px;">OTHERS</th>
+            <th style="text-align:center;width:100px;">TOTAL</th>
+            <th style="text-align:center;width:100px;">
+                INTERN<br>({{o.cafeCampus=='1'?'ITP':'SFC'}})
+            </th>
+            <th style="text-align:center;width:100px;">
+                NON-STUDENTS<br>({{o.cafeCampus=='1'?'ITP':'SFC'}})
+            </th>
+            </thead>
+        </div>
+        <tbody>
+        <tr *ngFor="let o of qqeCafeList;" style="border: 1px solid black;border-collapse: collapse; text-align:center; font-family: Arial, Helvetica, sans-serif;
+           font-size: 80%;">
+            <td>{{o.cafeFrom | date: 'MM/dd'}} ~ {{o.cafeTo | date: 'MM/dd'}}</td>
+            <td><b>{{o.total}}</b></td>
+            <td>{{o.jpTotal}}</td>
+            <td>{{o.jpPercent}}%</td>
+            <td>{{o.twTotal}}</td>
+            <td>{{o.twPercent}}%</td>
+            <td>{{o.cnTotal}}</td>
+            <td>{{o.cnPercent}}%</td>
+            <td>{{o.krTotal}}</td>
+            <td>{{o.krPercent}}%</td>
+            <td>{{o.ruTotal}}</td>
+            <td>{{o.ruPercent}}%</td>
+            <td>{{o.vnTotal}}</td>
+            <td>{{o.vnPercent}}%</td>
+            <td>{{o.arabTotal}}</td>
+            <td>{{o.arabPercent}}%</td>
+            <td>{{o.othersTotal}}</td>
+            <td>{{o.othersPercent}}%</td>
+            <td>{{o.total==0?'0%':'100%'}}</td>
+            <td><b>{{o.internTotal}}</b></td>
+            <td><b>{{o.guardTotal}}</b></td>
+        </tr>
+        <tr *ngFor="let o of qqeCafeListSec;" style="border: 1px solid black;border-collapse: collapse; text-align:center; font-family: Arial, Helvetica, sans-serif;
+           font-size: 80%;">
+            <td>{{o.cafeFrom | date: 'MM/dd'}} ~ {{o.cafeTo | date: 'MM/dd'}}</td>
+            <td><b>{{o.total}}</b></td>
+            <td>{{o.jpTotal}}</td>
+            <td>{{o.jpPercent}}%</td>
+            <td>{{o.twTotal}}</td>
+            <td>{{o.twPercent}}%</td>
+            <td>{{o.cnTotal}}</td>
+            <td>{{o.cnPercent}}%</td>
+            <td>{{o.krTotal}}</td>
+            <td>{{o.krPercent}}%</td>
+            <td>{{o.ruTotal}}</td>
+            <td>{{o.ruPercent}}%</td>
+            <td>{{o.vnTotal}}</td>
+            <td>{{o.vnPercent}}%</td>
+            <td>{{o.arabTotal}}</td>
+            <td>{{o.arabPercent}}%</td>
+            <td>{{o.othersTotal}}</td>
+            <td>{{o.othersPercent}}%</td>
+            <td>{{o.total==0?'0%':'100%'}}</td>
+            <td><b>{{o.internTotal}}</b></td>
+            <td><b>{{o.guardTotal}}</b></td>
+        </tr>
+        <tr *ngFor="let o of qqeCafeListThird;" style="border: 1px solid black;border-collapse: collapse; text-align:center; font-family: Arial, Helvetica, sans-serif;
+           font-size: 80%;">
+            <td>{{o.cafeFrom | date: 'MM/dd'}} ~ {{o.cafeTo | date: 'MM/dd'}}</td>
+            <td><b>{{o.total}}</b></td>
+            <td>{{o.jpTotal}}</td>
+            <td>{{o.jpPercent}}%</td>
+            <td>{{o.twTotal}}</td>
+            <td>{{o.twPercent}}%</td>
+            <td>{{o.cnTotal}}</td>
+            <td>{{o.cnPercent}}%</td>
+            <td>{{o.krTotal}}</td>
+            <td>{{o.krPercent}}%</td>
+            <td>{{o.ruTotal}}</td>
+            <td>{{o.ruPercent}}%</td>
+            <td>{{o.vnTotal}}</td>
+            <td>{{o.vnPercent}}%</td>
+            <td>{{o.arabTotal}}</td>
+            <td>{{o.arabPercent}}%</td>
+            <td>{{o.othersTotal}}</td>
+            <td>{{o.othersPercent}}%</td>
+            <td>{{o.total==0?'0%':'100%'}}</td>
+            <td><b>{{o.internTotal}}</b></td>
+            <td><b>{{o.guardTotal}}</b></td>
+        </tr>
+        <tr *ngFor="let o of qqeCafeListFourth;" style="border: 1px solid black;border-collapse: collapse; text-align:center; font-family: Arial, Helvetica, sans-serif;
+           font-size: 80%;">
+            <td>{{o.cafeFrom | date: 'MM/dd'}} ~ {{o.cafeTo | date: 'MM/dd'}}</td>
+            <td><b>{{o.total}}</b></td>
+            <td>{{o.jpTotal}}</td>
+            <td>{{o.jpPercent}}%</td>
+            <td>{{o.twTotal}}</td>
+            <td>{{o.twPercent}}%</td>
+            <td>{{o.cnTotal}}</td>
+            <td>{{o.cnPercent}}%</td>
+            <td>{{o.krTotal}}</td>
+            <td>{{o.krPercent}}%</td>
+            <td>{{o.ruTotal}}</td>
+            <td>{{o.ruPercent}}%</td>
+            <td>{{o.vnTotal}}</td>
+            <td>{{o.vnPercent}}%</td>
+            <td>{{o.arabTotal}}</td>
+            <td>{{o.arabPercent}}%</td>
+            <td>{{o.othersTotal}}</td>
+            <td>{{o.othersPercent}}%</td>
+            <td>{{o.total==0?'0%':'100%'}}</td>
+            <td><b>{{o.internTotal}}</b></td>
+            <td><b>{{o.guardTotal}}</b></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!-- Print QQE Cafe section -->

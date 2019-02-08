@@ -1,0 +1,41 @@
+<!-- Print Grad List section Hidden -->
+<div id="gradlist-section" style="display: none;">
+    <span style="font-family:Arial,Tahoma,sans-serif;font-size:11pt;text-align:center;">
+        Total Graduates:
+    </span>
+    <span *ngIf="gradlist" style="font-family:Arial;font-size:10pt;text-align:center;font-weight:bold;color:red">
+        {{gradlist.length}}
+    </span>
+    <table style="border: 1px solid black; border-collapse: collapse;">
+        <thead class="thead-inverse">
+        <th style="width: 10px;">#</th>
+        <th style="width: 200px;font-size: 80%;">Student Name</th>
+        <th style="width: 100px;font-size: 80%;">Passport Name</th>
+        <th style="width: 10px;font-size: 80%;">Sex</th>
+        <th style="width: 10px;font-size: 80%;">Age</th>
+        <th style="width: 10px;font-size: 80%;">Country</th>
+        <th style="width: 10px;font-size: 80%;">Campus</th>
+        <th style="width: 250px;font-size: 80%;">Course</th>
+        <th style="width: 125px;font-size: 80%;">Graduate date</th>
+        <th style="width: 200px;font-size: 80%;">Current Room</th>
+
+        </thead>
+        <tbody>
+        <tr *ngFor="let o of gradlist; let i = index" style="border: 1px solid black;
+            border-collapse: collapse; text-align:center; font-family: Arial, Helvetica, sans-serif;
+            font-size: 80%;">
+            <td>{{ i + 1 }}.</td>
+            <td style="font-size:13px;">{{o.student_name}}</td>
+            <td style="font-size:13px;">{{o.passport_name}}</td>
+            <td>{{o.sex===1?'M':'F'}}</td>
+            <td>{{o.age}}</td>
+            <td>{{o.country_code}}</td>
+            <td>{{o.campus}}</td>
+            <td>{{o.course}}</td>
+            <td>{{o.graduation_date | date: 'yyyy-MM-dd(EE)'}}</td>
+            <td>{{o.dormitory_room_name}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!-- Print Grad List section -->

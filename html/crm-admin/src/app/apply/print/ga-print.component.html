@@ -1,0 +1,335 @@
+    <!-- Print GA Invoice section Hidden -->
+
+    <div id="all-ga-invoice-template" style="display: none;">
+        <span *ngFor="let o of gaInvoiceTemplates">
+                <span style="font-size:9pt;">
+                <!--Admin-->
+                <div align="center">
+                    <span style="width:100%;float:left">
+                        <img height="5%" width="13%" src="assets/images/qqenglishlogo.png"/>
+                        <div style="width:85%;text-align:right;text-decoration:underline">
+                            <strong>Admin Copy</strong>
+                        </div>
+                    </span>
+                </div>
+                <div align="center">
+                    <table style="width:85%;text-align: left;border-collapse: collapse;margin-bottom:10px;
+                    font-family:Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;font-size:9pt;">
+                        <tr style="line-height:30px;">
+                            <td>Name</td>
+                            <td colspan="3" style="text-align:center;outline: thin solid black;">{{o.passport_name}}</td>
+                            <td></td>
+                            <td  style="text-align:center;">Date</td>
+                            <td style="text-align:center;border-bottom: 1px solid black">{{gaToday | date: 'yyyy-MM-dd'}}</td>
+                        </tr>
+                    </table>
+                    <table style="width:85%;text-align: left;border-collapse: collapse;margin-bottom:10px;
+                    font-family:Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;font-size:9pt;">
+                        <tr style="line-height:30px;">
+                            <td>week/weeks</td>
+                            <td colspan="3" style="text-align:center;outline: thin dotted black;">{{o.term}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="4"></td>
+                            <td>SSP</td>
+                            <td></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.ssp_fee_php}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="4"></td>
+                            <td>I-Card</td>
+                            <td></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.i_card_cost}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="2" rowspan="2" style="text-align:center;
+                            border-bottom: thin solid black;border-top: thin solid black;
+                            border-left: thin solid black;border-right: thin solid black;">
+                                Departure<br>Date
+                            </td>
+                            <td  colspan="2" rowspan="2" style="text-align:center;
+                            border-bottom: thin solid black;border-top: thin solid black;
+                            border-right: thin solid black;">
+                                <span *ngIf="o.departure_date != '1970-01-01 00:00:00'">
+                                    {{o.departure_date | date: 'dd-MMM'}}
+                                </span>
+                            </td>
+                            <td>VISA</td>
+                            <td></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.visa_fee_php}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td>ID</td>
+                            <td></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.id_card}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="4"></td>
+                            <td>ELEC</td>
+                            <td></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.electrical_fee_php}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="4"></td>
+                            <td>Room update</td>
+                            <td></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.room_update_php}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="4"></td>
+                            <td>Photocopy</td>
+                            <td></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.photocopy_php}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="4"></td>
+                            <td>Meal(extra)</td>
+                            <td></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.meal_total_php}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="4"></td>
+                            <td>Others</td>
+                            <td></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.others_php}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="4"></td>
+                            <td>Adjust(Other,VISA,etc)</td>
+                            <td style="color:orangered;text-align:center"></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.adjustments_php}}</td>
+                        </tr>
+                        <tr style="font-weight:bold;text-align:center">
+                            <td colspan="4"></td>
+                            <td colspan="2">Total Amount to be paid</td>
+                            <td style="text-align:right;outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.adjustments_php + o.others_php + o.meal_total_php + o.photocopy_php + o.room_update_php + o.electrical_fee_php + o.id_card + o.visa_fee_php + o.i_card_cost + o.ssp_fee_php}}</td>
+                        </tr>
+                    </table>
+                    <table style="width:85%;text-align: left;border-collapse: collapse;
+                    font-family:Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;font-size:9pt;" border="1" >
+                        <tr style="line-height:40px;">
+                            <td colspan="4">Prepared by: {{userName}}</td>
+                            <td colspan="2" rowspan="2">Received by Acct Dept:</td>
+                        </tr>
+                    </table>
+                </div>
+                    <!--Student-->
+                <div align="center">
+                    <span style="width:100%;float:left">
+                        <img height="5%" width="13%" src="assets/images/qqenglishlogo.png"/>
+                        <div style="width:85%;text-align:right;text-decoration:underline">
+                            <strong>Student Copy</strong>
+                        </div>
+                    </span>
+                </div>
+                <div align="center">
+                    <table style="width:85%;text-align: left;border-collapse: collapse;margin-bottom:10px;
+                    font-family:Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;font-size:9pt;">
+                        <tr style="line-height:30px;">
+                            <td>Name</td>
+                            <td colspan="3" style="text-align:center;outline: thin solid black;">{{o.passport_name}}</td>
+                            <td></td>
+                            <td  style="text-align:center;">Date</td>
+                            <td style="text-align:center;border-bottom: 1px solid black">{{gaToday | date: 'yyyy-MM-dd'}}</td>
+                        </tr>
+                    </table>
+                    <table style="width:85%;text-align: left;border-collapse: collapse;margin-bottom:10px;
+                    font-family:Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;font-size:9pt;">
+                        <tr style="line-height:30px;">
+                            <td>week/weeks</td>
+                            <td colspan="3" style="text-align:center;outline: thin dotted black;">{{o.term}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="4"></td>
+                            <td>SSP</td>
+                            <td></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.ssp_fee_php}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="4"></td>
+                            <td>I-Card</td>
+                            <td></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.i_card_cost}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="4" style="text-align:center;
+                            border-bottom: thin solid black;border-top: thin solid black;
+                            border-left: thin solid black;border-right: thin solid black;">
+                                PAYMENT RECEIVED
+                            </td>
+                            <td >VISA</td>
+                            <td></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.visa_fee_php}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="2" rowspan="2" style="text-align:center;
+                            border-bottom: thin solid black;border-left: thin solid black;border-right: thin solid black;">
+                                <br>Date
+                            </td>
+                            <td colspan="2" rowspan="2" style="text-align:center;
+                            border-bottom: thin solid black;
+                            border-left: thin solid black;border-right: thin solid black;">
+                                <br>Signature
+                            </td>
+                            <td>ID</td>
+                            <td></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.id_card}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td>ELEC</td>
+                            <td></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.electrical_fee_php}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="4"></td>
+                            <td>Room update</td>
+                            <td></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.room_update_php}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="4"></td>
+                            <td>Photocopy</td>
+                            <td></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.photocopy_php}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="4"></td>
+                            <td>Meal(extra)</td>
+                            <td></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.meal_total_php}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="4"></td>
+                            <td>Others</td>
+                            <td></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.others_php}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="4"></td>
+                            <td>Adjust(Other,VISA,etc)</td>
+                            <td style="color:orangered;text-align:center"></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.adjustments_php}}</td>
+                        </tr>
+                        <tr style="font-weight:bold;text-align:center">
+                            <td colspan="4"></td>
+                            <td colspan="2">Total Amount to be paid</td>
+                            <td style="text-align:right;outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.adjustments_php + o.others_php + o.meal_total_php + o.photocopy_php + o.room_update_php + o.electrical_fee_php + o.id_card + o.visa_fee_php + o.i_card_cost + o.ssp_fee_php}}</td>
+                        </tr>
+                    </table>
+                    <table style="width:85%;text-align: left;border-collapse: collapse;
+                    font-family:Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;font-size:9pt;" border="1" >
+                        <tr style="line-height:40px;">
+                            <td colspan="4">Prepared by: {{userName}}</td>
+                            <td colspan="2" rowspan="2">Received by Acct Dept:</td>
+                        </tr>
+                    </table>
+                </div>
+                    <!--Accounting-->
+                <div align="center">
+                    <span style="width:100%;float:left">
+                        <img height="5%" width="13%" src="assets/images/qqenglishlogo.png"/>
+                        <div style="width:85%;text-align:right;text-decoration:underline">
+                            <strong>Accounting Copy</strong>
+                        </div>
+                    </span>
+                </div>
+                <div align="center">
+                    <table style="width:85%;text-align: left;border-collapse: collapse;margin-bottom:10px;
+                    font-family:Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;font-size:9pt;">
+                        <tr style="line-height:30px;">
+                            <td>Name</td>
+                            <td colspan="3" style="text-align:center;outline: thin solid black;">{{o.passport_name}}</td>
+                            <td></td>
+                            <td  style="text-align:center;">Date</td>
+                            <td style="text-align:center;border-bottom: 1px solid black">{{gaToday | date: 'yyyy-MM-dd'}}</td>
+                        </tr>
+                    </table>
+                    <table style="width:85%;text-align: left;border-collapse: collapse;margin-bottom:10px;
+                    font-family:Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;font-size:9pt;">
+                        <tr style="line-height:30px;">
+                            <td>week/weeks</td>
+                            <td colspan="3" style="text-align:center;outline: thin dotted black;">&emsp;&emsp;{{o.term}}&emsp;&emsp;</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="4"></td>
+                            <td>SSP</td>
+                            <td></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.ssp_fee_php}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="4"></td>
+                            <td>I-Card</td>
+                            <td></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.i_card_cost}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="4"></td>
+                            <td>VISA</td>
+                            <td></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.visa_fee_php}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="4"></td>
+                            <td>ID</td>
+                            <td></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.id_card}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="4"></td>
+                            <td>ELEC</td>
+                            <td></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.electrical_fee_php}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="4"></td>
+                            <td>Room update</td>
+                            <td></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.room_update_php}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="4"></td>
+                            <td>Photocopy</td>
+                            <td></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.photocopy_php}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="4"></td>
+                            <td>Meal(extra)</td>
+                            <td></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.meal_total_php}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="4"></td>
+                            <td>Others</td>
+                            <td></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.others_php}}</td>
+                        </tr>
+                        <tr style="text-align:right">
+                            <td colspan="4"></td>
+                            <td>Adjust(Other,VISA,etc)</td>
+                            <td style="color:orangered;text-align:center"></td>
+                            <td style="outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.adjustments_php}}</td>
+                        </tr>
+                        <tr style="font-weight:bold;text-align:center">
+                            <td colspan="4"></td>
+                            <td colspan="2">Total Amount to be paid</td>
+                            <td style="text-align:right;outline: thin dotted black;">Php&emsp;&emsp;&emsp;{{o.adjustments_php + o.others_php + o.meal_total_php + o.photocopy_php + o.room_update_php + o.electrical_fee_php + o.id_card + o.visa_fee_php + o.i_card_cost + o.ssp_fee_php}}</td>
+                        </tr>
+                    </table>
+                    <table style="width:85%;text-align: left;border-collapse: collapse;
+                    font-family:Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;font-size:9pt;" border="1" >
+                        <tr style="line-height:20px;">
+                            <td colspan="4">Prepared by: {{userName}}</td>
+                            <td colspan="2" rowspan="2">
+                                <div>
+                                    Received by Acct Dept & Signature:
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </span>
+        </span>
+    </div>
+
+    <!-- Print List section -->

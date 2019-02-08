@@ -1,0 +1,1048 @@
+<!-- Print Schedule List section Hidden -->
+<div id="print-all-section-template"  style="display: none;">
+    <div *ngFor="let o of schedulelist" class="page">
+        <!-- ITP TEMPLATES -->
+        <div *ngIf="o.campus=='ITP'">
+                <span *ngIf="o.country_code=='CN'">
+                    <strong><u>{{o.passport_name}}</u> &emsp;
+                      ID號碼 {{o.id_number}} &emsp;
+                      周數 {{o.term}} &emsp;
+                      宿舍 {{o.dormitory_room_name}} {{o.hotel_name}} &emsp;
+                    </strong><br/><br/>
+                    <span id="it-ch-template">
+                        <div style="margin-bottom:100px;">
+                            <p>首日日程安排（菲律宾时间）</p>
+                            <p>Park Vista 宿舍区   请使用8:20的班车<br/>
+                                QQ house 宿舍区     请使用8:20的班车    <br/>
+                                Alba Uno hotel 宿舍区　请乘坐8:20的校车前往学校</p>
+                            <p>→8:00      早餐（到达之后可自行前往8F餐厅就餐） <br/>
+                                <span class="yellow">→8:40      拍照(学校学生ID使用)-8F大厅集合</span><br/>
+                                →9:00       LEVEL TEST 英语水平测试      <br/>
+                                →11:00　    说明会   <br/>
+                                →12:00    午餐，兑换点介绍，相关手续（缴交护照，签证费，水电费，照片等） <br/>
+                                →13:00     正式课程   <br/>
+                                →17:50    欢迎晚会 </p>
+                            <p>＊时间表有可能会发生变化，敬请谅解。</p>
+                            <p>当天需要准备<br/>
+                                照片2张，护照，SSP费用 (6540)，签证费用(vary)，电费(300/W)，笔记用品。<br/>
+                                卫生纸（学校厕所内没有提供卫生纸）</p>
+                            <p>联系方式<br/>
+                                学校地址：8TH Floor Skyrise4, IT Park, Asian Town, Lahug, Cebu City, Philippines<br/>
+                                TEL：(+63)32-318-9600<br/>
+                                <br/>
+                                <span class="red">必须添加微信公告群！（後果自負）</span></p>
+                            <table style="margin-top:20px;margin-bottom:20px;">
+                                <tr>
+                                    <td colspan="3">
+                                        <span class="red">所有有关学校公告都会在这里給大家发布！</span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <p>學校OPEN時間 <br/>
+                                7：00～24：00</p>
+                            <p>・请尽量不要随身携带大量现金及贵重物品。（学校提供小保险柜，但需要自备锁具）<br/>
+                                ・晚上21时之后禁止步行返回宿舍，请使用校车或乘坐出租车（为避免危险）<br/>
+                                ・请尽量不要乘坐吉普尼（菲律宾公车），有可能遇到盗贼。<br/>
+                                ・请小心诈骗行为，不要参与一份文件或物件的整体或任何部分，不要轻易前往当地人家中访问。</p>
+                        </div>
+                    </span>
+                </span>
+            <span *ngIf="o.country_code=='JP'">
+                    <strong><u>{{o.passport_name}}</u>様 &emsp;
+                    ID番号 {{o.id_number}} &emsp;
+                    週数 {{o.term}} &emsp;
+                    宿舍 {{o.dormitory_room_name}} {{o.hotel_name}} &emsp;</strong><br/>
+                    <span id="it-jp-template">
+                        <br/>
+                        <table style="margin-bottom:50px;font-size:14px;">
+                            <tr><strong>初⽇（⽉曜⽇）のスケジュール（フィリピン時間）</strong></tr>
+                            <tr> <td style="padding-left:45px;">08:40&emsp;&emsp;8Fフロント前集合・教室ご案内・写真撮影</td></tr>
+                            <tr> <td style="padding-left:45px;">09:00&emsp;&emsp;レベルチェックテスト　(Reading/Listening/Writing/Speaking)</td></tr>
+                            <tr> <td style="padding-left:45px;">11:00&emsp;&emsp;オリエンテーション </td></tr>
+                            <tr> <td style="padding-left:45px;">12:00&emsp;&emsp;昼⾷　（※パスポートお預かり・両替・現地滞在費用のお支払い）</td></tr>
+                            <tr> <td style="padding-left:45px;">13:00&emsp;&emsp;新入生特別クラス   50分×5コマ</td></tr>
+                            <tr> <td style="padding-left:45px;">18:00&emsp;&emsp;ウェルカムパーティー </td></tr>
+                            <tr> <td style="padding-left:45px;">19:00&emsp;&emsp;新入生交流会＠Q-Bay</td></tr>
+                            <tr><td style="padding-left:45px;text-align:center;">学校からシャトルバスをご利用になれます。</td></tr>
+                            <tr><td style="padding-left:45px;text-align:center;">（バスの時刻表を参考に学校にお越しください。）</td></tr>
+                            <tr><td style="padding-left:45px;text-align:center;">＊スケジュールが変更する場合がございますので、ご了承ください。</td></tr>
+                            <tr><td><br></td></tr>
+                            <tr><td style="padding-left:45px;text-align:center;text-decoration:underline;">8F QQ Caféのご案内</td></tr>
+                            <tr><td style="padding-left:45px;text-align:center;">朝食  AM7:10～ AM9:00</td></tr>
+                            <tr><td style="padding-left:45px;text-align:center;">昼食　AM11:50～ PM2:00</td></tr>
+                            <tr><td style="padding-left:45px;text-align:center;">夕食　PM5:30～ PM8:00</td></tr>
+                            <tr><td style="padding-left:45px;text-align:center;">(土日も営業)</td></tr>
+                            <tr><td><br></td></tr>
+                            <tr><td style="padding-left:45px;text-align:center;text-decoration:underline;">当日の持ち物</td></tr>
+                            <tr><td style="padding-left:45px;text-align:center;">パスポート・現地滞在費用・ガイドブック・筆記用具</td></tr>
+                            <tr><td style="padding-left:45px;text-align:center;">トイレットペーパー(学校のトイレにはございません)</td></tr>
+                            <tr><td style="text-decoration:underline;"><strong>注意事項</strong></td></tr>
+                            <tr><td style="padding-left:20px;">・学校に入館する際は必ずIDを着用してください。（IDがない場合は入館できません）</td></tr>
+                            <tr><td style="padding-left:20px;">・ドレスコードを守ってください（※詳しくはガイドブックをご覧ください）</td></tr>
+                            <tr><td style="padding-left:20px;">・水道水は飲まないようにご注意ください</td></tr>
+                            <tr><td style="padding-left:20px;">・貴重品等は自己責任にてお願い致します。</td></tr>
+                            <tr><td><strong>※校内　寮内及び学校外部で発生した紛失　盗難等の被害に関しては、一切責任を負いません</strong></td></tr>
+                            <tr><td><br></td></tr>
+                            <tr><td style="text-decoration:underline;"><strong>ドミトリーでの注意事項</strong></td></tr>
+                            <tr><td style="padding-left:20px;">夜10時以降の飲酒及び騒音は禁止  建物内は禁煙</td></tr>
+                            <tr><td style="padding-left:20px;">貴重品等はスーツケースに入れ必ず鍵をかけてください。　</td></tr>
+                            <tr><td><br></td></tr>
+                            <tr><td><strong>連絡先</strong></td></tr>
+                            <tr><td style="padding-left:20px;">本校住所 ：8TH Floor Skyrise4, IT Park, Asian Town, Lahug, Cebu City, Philippines</td></tr>
+                            <tr><td style="padding-left:20px;">TEL：032-479-9411  開校時間　7：00〜24:00</td></tr>
+                        </table>
+                    </span>
+                </span>
+            <span *ngIf="o.country_code=='TW'" style="font-size:15px;">
+                    <strong><u>{{o.passport_name}}</u> &emsp;
+                    ID號碼 {{o.id_number}} &emsp;
+                    週数 {{o.term}} &emsp;
+                    宿舍 {{o.dormitory_room_name}} {{o.hotel_name}} &emsp;</strong><br/><br/>
+                    <span id="it-tw-template">
+                      <div style="margin-bottom:1px;">
+                          首日日程安排（菲律賓時間）<br/>
+                          <p>Park Vista 宿舍區   請使用8:20的班車。<br/>
+                          QQ house 宿舍區     請使用8:20的班車。<br/>
+                          Alba Uno hotel 宿舍區　請乘坐8:20的校車前往學校。</p>
+                          <span>→8:00      早餐（到達之後可自行前往8F餐廳就餐）</span><br/>
+                          <span class="yellow">→8:40      拍照(學校學生ID使用)-8F大廳集合</span><br/>
+                          <span class="yellow">→9:00      LEVEL TEST 英語水平測試         </span><br/>
+                          <span class="yellow">→11:00　   校規說明會         </span><br/>
+                          <span>→12:00    午餐,兌換外幣及環境介绍，相關手續（繳交護照，簽證費，水電費，照片等）   </span><br/>
+                          <span class="yellow">→13:00    正式課程    </span><br/>
+                          <span>→17:50    歡迎晚會</span><br/>
+
+
+                          <p>＊新課表請於周二上午八點至櫃檯領取。<br/>
+                              ＊時間表有可能會發生變化，敬請諒解。</p>
+
+                          <span>當天需要準備</span><br/>
+                          <span class="yellow">照片2張，護照，SSP費用 (6540)，簽證費用(vary)，電費(500/W)，筆記用品。</span><br/>
+                          <span class="yellow">衛生紙（學校廁所內沒有提供衛生紙）</span><br/><br/>
+
+                          <span>聯繫方式</span><br/>
+                          <span>學校地址：8TH Floor Skyrise4, IT Park, Asian Town,  Lahug,</span><br/>
+                          <span>Cebu City, Philippines</span><br/>
+                          <span>TEL：(+63)32-479-9411</span><br/>
+                          <br/>
+                          <span class="red">必須添加LINE公告群！（後果自負）</span><br/>
+                          <span class="red">所有有關學校公告都會在這裡給大家發佈！</span>
+                             <table cellspacing="0" cellpadding="0">
+                              <tr>
+                                  <td rowspan="2" vertical-align="top">
+                                      <div class="red" style="color:red">
+                                      請用LINE掃一下右邊的QR CODE！
+                                      </div>
+
+                                      <p>學校OPEN時間 7：00～24：00</p>
+                                  </td>
+                                  <td><img width="70%" height="70%" src="assets/images/it_taiwan_2.png"/></td>
+                                  <td><img width="70%" height="70%" src="assets/images/qqe_facebook_qrcode.png"/></td>
+                                  <td><img width="70%" height="70%" src="assets/images/qqe_instagram_qrcode.png"/></td>
+                                  <td><img width="70%" height="70%" src="assets/images/qqe_question_qrcode.png"/></td>
+                              </tr>
+                              <tr>
+                                  <td><img width="70%" height="70%" src="assets/images/qqe_line.png"/></td>
+                                  <td><img width="70%" height="70%" src="assets/images/qqe_fb.png"/></td>
+                                  <td><img width="70%" height="70%" src="assets/images/qqe_instagram.png"/></td>
+                                  <td><img width="70%" height="70%" src="assets/images/qqe_question.png"/></td>
+                              </tr>
+                             </table>
+                          <p>注意事項<br/>
+                          ・缺勤時請於學校聯繫。<br/>
+                          ・宿舍內禁止吸煙，22時之後禁止在宿舍內飲酒、大聲喧嘩，如果需飲酒請前往宿舍外的餐廳。<br/>
+                          ・校內，宿舍內的物品未經許可禁止帶走。<br/>
+                          ・宿舍內的自來水不能直接飲用，請使用飲水機。<br/>
+                          ・請儘量不要隨身攜帶大量現金及貴重物品。（學校提供小保險櫃，但需要自備鎖具）<br/>
+                          ・晚上21時之後禁止步行返回宿舍，請使用校車或乘坐出租車（為避免危險）<br/>
+                          ・請儘量不要乘坐吉普尼（菲律賓公車），有可能遇到盜賊。<br/>
+                          ・請小心詐騙行為，不要參與賭博，不要輕易前往當地人家中訪問。</p><br/>
+                          </div>
+                  </span>
+                </span>
+            <span *ngIf="o.country_code=='KR'">
+                    <strong><u>{{o.passport_name}}</u>님&emsp;
+                    ID번호 {{o.id_number}} &emsp;
+                    주 {{o.term}} &emsp;
+                    기숙사 {{o.dormitory_room_name}} {{o.hotel_name}} &emsp;</strong><br>
+                    <span id="it-kr-template" style="font-size:17px;">
+                        <div style="margin-bottom:40px;">
+                            <p>첫 날 일정표（필리핀 시간 )</p>
+                            <p>파크비스타 기숙사     8:20AM 에 셔틀버스를 탑승해주세요<br>
+                                큐큐하우스 기숙사     8:20AM 에 셔틀버스를 탑승해주세요<br>
+                                제레니티 호텔　         8:20AM 에 셔틀버스를 탑승해주세요</p>
+                            <p>→8:00       아침식사（8층에 있는 큐큐카페에서 아침식사를 해주세요）<br/>
+                                →9:00       레벨 테스트<br/>
+                                →11:00　 오리엔테이션 및 캠퍼스 투어<br/>
+                                →12:00     점심식사<br/>
+                                →13:00     학원 내 환전<br/>
+                                →14:00     데모수업<br/>
+                                →17:50     신입생 환영회
+                            </p>
+                            <p>＊당일 사정에 의하여 스케줄이 변경되는 경우가 있으니, 양해 부탁 드립니다. </p>
+                            <p><b>첫 날 준비물</b><br/>
+                                여권, 사진 2매(2x2, 없는 경우에는 학원에서 사진 촬영 가능,100페소 비용발생) <br/>
+                                현지 납부 비용( SSP, Visa, 전기세(500P/1주), ID Card, I-Card, ), 환전할 비용, 필기도구<br>
+                                화장지(큐큐잉글리쉬에서는 화장실에 화장지를 따로 준비해 두지 않습니다.)</p>
+                            <p><b>연락처</b><br/>
+                                School address：8TH Floor Skyrise4, IT Park, Asian Town,  Lahug, Cebu City, Philippines<br/>
+                                연락처：(+63)32-318-9600<br/>
+                                긴급 연락처:  <span class="red">Amy 0908-516-0469</span></p>
+                            <p><b>학원 운영 시간</b><br/>
+                                7：00～24：00</p>
+                            <p><b>안내사항</b><br/>
+                                ・불가피하게 학교를 못 오시게 될 경우 연락 부탁 드립니다.<br/>
+                                ・기숙사 내에서는  음주가 불가능합니다.<br/>
+                                ・교내의 물건을 무단으로 가져가지 마시기 바랍니다.<br/>
+                                ・교내에서는 수돗물을 먹지 않도록 주의 부탁 드립니다. 냉 온수기 이용을 권장합니다.<br>
+                                ・현금이나 귀중품은 되도록 휴대하지 마시기 바랍니다.<br>
+                                ・미성년자는 혼자 택시 이용을 삼가주시기바랍니다. (위험 방지)<br>
+                                ・지프니, 트라이시클, 오토바이는 기본적으로 이용하지 마시기 바랍니다. (소매치기, 강도가 있을 수 있음)<br>
+                                ・금전전 목적의 권유나 사기 행위에 경계해주시기 바랍니다.</p>
+                        </div>
+                    </span>
+                </span>
+            <span *ngIf="o.country_code=='RU'">
+                  <strong><u>{{o.passport_name}}</u> Name &emsp;
+                    ID {{o.id_number}} &emsp;
+                    Weeks {{o.term}} &emsp;
+                    Dorm {{o.dormitory_room_name}} {{o.hotel_name}} &emsp;</strong><br/><br/>
+                  <span id="it-ru-template" style="font-size:18px;">
+                        <div style="font-weight: bold"> Первый день в QQEnglish </div><br/>
+
+                        <div style="margin-bottom:10px;">
+                            →8:20～  Завтрак  <br/>
+                            →8:40～  Фотографирование на документы<br/>
+                            →9:00    Тест на определение уровня английского языка<br/>
+                            →11:00   Оформление документов<br/>
+                            →11:45    Обед<br/>
+                            →12:50    Экскурсия по IT-парку, обмен валюты<br/>
+                            →13.00-17:00  Ознакомительные занятия<br/>
+                            →18:00     Приветственная вечеринка<br/>
+                            →19:00     Факультативы(7 этаж)<br/>
+
+                              * В расписании могут произойти изменения<br/><br/>
+
+                        </div><br/>
+
+
+                        <div style="font-weight: bold"> В первый день необходимо заплатить за SSP, визу и электричество </div>
+                        <div>
+                            При себе необходимы: паспорт, канцелярские принадлежности и салфетки  <br/>
+                            (мы не предоставляем туалетную бумагу)<br/><br/>
+                        </div>
+
+                        <div style="font-weight: bold"> Контакты </div>
+                        <div>
+                            Адрес школы：7TH Floor Skyrise4, IT Park, Asian Town,  Lahug, Cebu City, Philippines<br/>
+                            TEL：(+63)32-318-9600<br/>
+                            Контакт для связи:  <br/>
+                            Alexandra  09167660790 <br/>
+                            Mahmoud  09052195589 <br/><br/>
+
+
+                        </div>
+
+                        <div style="font-weight: bold"> Школа работает </div>
+                        <div>
+                            с 7:00～23:00<br/><br/>
+                        </div>
+
+
+                        <div style="margin-bottom:50px;">
+                            <span style="font-weight: bold"> Меры предосторожности </span> <br/>
+                            <span style="font-size: 20px;">
+                            ・После 10 вечера в общежитиях школы запрещается употреблять алкоголь. <br/>
+                            ・Из общежитий запрещается выносить вещи, принадлежащие школе. <br/>
+                            ・Не рекомендуется пить водопроводную воду. Пожалуйста, используйте кулер с водой. <br/>
+                            ・После 9 вечера не рекомендуется идти к общежитию пешком. Воспользуйтесь такси или школьным автобусом.  <br/>
+                            ・Не участвуйте в азартных играх, не ходите домой к незнакомым людям. <br/><br/>
+                            </span><br/><br/>
+                        </div>
+                    </span>
+                </span>
+            <span *ngIf="o.country_code=='VN'" >
+                    <div style="font-size:14pt;"><strong><u>{{o.passport_name}}</u>&emsp;
+                            Số ID {{o.id_number}}&emsp;
+                            Tuần {{o.term}}&emsp;
+                            Ký túc xá {{o.dormitory_room_name}} {{o.hotel_name}} </strong><br/>
+                    </div>
+                    <span id="it-vt-template">
+                        <div style="font-weight: bold;text-align:center;font-size:17pt;">
+                            Lịch ngày đầu tiên dành cho Sinh viên<br/><br/>
+                        </div>
+
+                        <div style="font-size:16pt;">8:40 Tập hợp tại bàn lễ tân (Tầng 8)<br/>
+                             &emsp;&emsp;→ Di chuyển đến phòng Training 2 (Tầng 7)<br>
+                             8:50 Chụp ảnh ( phòng Training 2 - Tầng 7)<br/>
+                             9:00～11:00 Làm bài kiểm tra đầu vào ( Tầng 7) <br/>
+                             1:00 Phổ biến nội quy về trường với Quản lý Việt Nam ( Tầng 8)<br/>
+                             12:00 Ăn trưa (Nhà ăn tầng 8)<br/>
+                             &emsp;&emsp;Học viên mới PHẢI quay trở lại phòng Training 2 vào lúc 12:50 sau giờ ăn<br>
+                             12:50 Giới thiệu vòng quanh Khu IT Park<br/>
+                             14:00 Lớp Demo (Phòng Traning 2 – Tầng 7)<br/>
+                             18:00 Tiệc chào đón tân sinh viên (Khu café tầng 8)<br/>
+                        </div>
+
+                        <div style="font-weight:bold;font-size:16pt;">
+                           <div><br/>Pass Wifi: Tại tầng 8<br/>
+                            <span>Café1:
+                                <span style="color: red">C@feQQE@8thF<br/></span>
+                            </span>
+                            <span>Café2:
+                                <span style="color: red">8thF@QQEC@fe<br/></span>
+                            </span>
+                            <span>Café3:
+                                <span style="color: red">c@fe3@thFqqe<br/><br/></span>
+                            </span>
+                           </div>
+                        </div>
+
+                        <div style="font-size:16pt;">
+                            <div style="font-weight: bold"> Trường mở cửa từ  </div>
+                            <div>7：00～24: 00<br/><br/></div>
+                        </div>
+
+                        <div style="font-size:16pt;">
+                            <div style="font-weight: bold"> Liên hệ quản lý Việt Nam: <br/></div>
+
+                            <div>Zalo: 09060831525 <br/></div>
+                            <div>Viber: 01226976755 <br/></div>
+                            <div>Số điện thoại ở Philippines: 09950014746 <br/><br/></div>
+
+                        </div>
+
+                        <div style="margin-bottom:140px;font-size:16pt;">
+                            <span>
+                            ・Liện lạc quản lý khi có kế hoạch du lịch, không tham gia lớp học. <br/>
+                            ・Không uống rượu, mang rượu vào ký túc xá.<br/>
+                            ・Không mang vật dụng của trường và ký túc xá ra ngoài.<br/>
+                            ・Gửi số tiền lớn nào tủ của trường học, không để tại ký túc xá. <br/>
+                            ・Hạn chế vào nhà đân địa phương, đi xe jeepney, phương tiện công cộng. <br/><br/>
+                            </span>
+                        </div>
+                    </span>
+                </span>
+            <span *ngIf="o.country_code=='IR'" >
+                    <div style="font-size:14pt;"><strong><u>{{o.passport_name}}</u>
+                            ID {{o.id_number}}
+                            Weeks {{o.term}}
+                            Dorm {{o.dormitory_room_name}} {{o.hotel_name}}</strong><br/>
+                    </div>
+
+                    <span id="it-ir-template" style="font-size:14pt;">
+	                <div style="font-weight: bold"> برنامه روز نخست ( به وقت محلی فیلیپین ) </div><br/>
+                        <div>
+		میتوانید از سرویس کالج برای آمدن به کالج استفاده کنید.  <br/>
+		سرویس کالج از ساعت 7:00 آماده انتقال دانشجویان میباشد.   <br/>
+	    در جلوی درب اصلی مقر خوابگاه ها منتظر سرویس باشید و یا از گارد زمان دقیق را سوال نمایید. 　 <br/><br/>
+	</div>
+
+                        <div>از ساعت 7 الی 8:40 برای صرف صبحانه میتوانید به کافه تریا کالج مراجعه کنید. <br/>
+	    از ساعت 8:40 الی 8:45 در قسمت مراجعات منتظر کارکنان کالج باشید برای راهنمایی شما به اتاق امتحانات جهت حضور و غیاب و گرفتن عکس.<br/>
+		از ساعت 9:00 الی 11:00 آزمون تعیین سطح. <br/>
+		*بعد از آزمون تعیین سطح در قسمت مراجعات با پرسنل فارسی زبان ما تماس بگیرید و منتظر بمانید.<br/>
+		از ساعت 11:00 الی 12:00 آشناسازی و نمایش محیط کالج و پر کردن فرم های ثبت نام
+		از ساعت 12 الی 13:00 زمان نهار  میباشد. همچنین میتوانید در قسمت مراجعات ارز خود را تبدیل نمایید.<br/>
+		از ساعت 13:00 الی 17:50 زمان برگزاری کلاس روز نخست. میتوانید برنامه کلاس های روز نخست خود را از روی تابلو اعلانات ملاحضه نمایید. <br/>
+		از ساعت 18:00 برنامه جشن خوش آمد گویی  و شام.<br/><br/>
+	</div>
+
+	                    <div>گاهی تغییراتی در زمانبندی پیش خواهد آمد . از شکیبایی شما سپاسگزاریم.</div><br/><br/>
+
+	<div>
+		<span style="font-weight: bold">وسایل مورد نیاز روز نخست: </span><br/>
+		پاسپورت، لوازم التحریر (خودکار و دفتر و غیره ) و پول میزان کافی بابت پرداخت شهریه و هزینه های دولتی از قبیل ویزا، آیدی کارت و غیره.<br/>
+		همچنین دستمال کاغذی برای سرویس بهداشتی اراته نمیشود.<br/><br/>
+	</div>
+
+                        <div >
+                            <div style="font-weight: bold"> ارتباط با ما و آدرس  کالج: </div>
+                            <div>
+		                 	آدرس کالج：8TH Floor Skyrise4, IT Park, Asian Town,  Lahug, Cebu City, Philippines <br/>
+		                 	تلفن کالج ：9600-318-32 (63+) <br/>
+		                	تلفن اضطراری:  محمود  9052195589 (63+) <br/>
+		                	  یاشا  9982364967 (63+) <br/><br/>
+                        </div>
+                    </div>
+
+	                <div >
+		<div style="font-weight: bold"> ساعت کاری کالج : </div>
+		<div>از ساعت 7:00 الی 22:00</div><br/>
+	</div>
+
+	                <div style="margin-bottom:65px;font-size:12pt;">
+		            <span style="font-weight: bold"><br/>تذکر :</span> <br/>
+		<span>
+		・زمانی که میدانید در روز بعد غایب هستید حتما به کالج اطلاع دهید.<br/>
+		・بعد از ساعت 22:00 نوشیدن مشروبات الکلی ممنوع میباشد. در صورت تمایل میتوانید به رستوران های اطراف کالج بروید.<br/>
+		・هرگز از آب لوله کشی برای مصارب شرب استفاده نکنید . فقط از آب معدنی و آبهای تصفیه شده استفاده کنید.<br/>
+		・از همراه داشتن پول زیاد اجتناب کنید. در صورت نیاز از صندوق امانات در کالج استفاده و برای آن قفل کوچک تهیه نمایید.<br/>
+		・بعد از ساعت 21:00 از تردد در خیابان های خلوت همچنین مسیر کالج تا خوابگاه خودداری کنید و از تاکسی و یا یرویس کالج استفاده نمایید.<br/>
+		・از سوار شدن به جیبنی خودداری کنید.<br/>
+		・مراقب افراد متقلب بوده و از رفتن به منزل افراد محلی خودداری کنید.<br/>
+
+		</span>
+                    </div>
+
+                    </span>
+                </span>
+            <span *ngIf="o.country_code=='ARAB'" >
+                    <div style="font-size:14pt;"><strong><u>{{o.passport_name}}</u>
+                            ID {{o.id_number}}
+                            Weeks {{o.term}}
+                            Dorm {{o.dormitory_room_name}} {{o.hotel_name}}</strong><br/>
+                    </div>
+                    <span id="it-sau-template" style="font-size:14pt;">
+
+	                <div style="font-weight: bold">جدول اليوم الأول （الوقت الفلبيني） </div><br/>
+
+	                <div>
+	             	بارك فيستا :يرجى استقلال الحافلة على الساعة 8:20  صباحا <br/>
+	             	كيوكيو هاوس: يرجى استقلال الحافلة على الساعة 8:20  صباحا <br/>
+	            	 فندق (Alba Uno) :يرجى استقلال الحافلة على الساعة 8:20 صباحا <br/><br/>
+	                </div>
+
+	                <div>→من الساعة 7:00 صباحا إلى الساعة 9:00 صباحا وقت الإفطار（عند وصولك يرجى التوجه مباشرة إلى الطابق الثامن للحصول على وجبة الإفطار） <br/>
+	                    	→08:45 انتظار الموظف المسؤول للتوجيه و التقاط صورة وتعبئة النموذج (يرجى الانتظار أمام مكتب الاستقبال للحصول على الدعم أو موظفي QQE)<br/>
+	                    	→9:00 اختبار تحديد المستوى <br/>
+	                    	→11:00 صرف العملات و دفع الرسوم<br/>
+	                    	→12:00 الغداء<br/>
+	                    	→من الساعة 13:00 إلى الساعة 17:00 حصص تمهيدية <br/>
+	                    	→17:50 حفل ترحيبي بالطلاب الجدد<br/><br/>
+	                </div>
+
+	                <div>＊يرجى التفهم , قد يحدث تغيرات في الجدول الزمني .</div><br/><br/>
+
+	                <div>
+		                <span style="font-weight: bold">احتياجات اليوم الأول </span><br/>
+	                    	 2 صورة شخصية ， جواز سفر ， رسوم SSP ， رسوم تأشيرة ， رسوم الكهرباء ，الدفاتر والقرطاسية.<br/>
+	                     	المناديل （لا نقدم ورق التواليت في المدرسة）<br/><br/>
+	                </div>
+
+	                <div>
+	   	                <div style="font-weight: bold"> الاتصال  </div>
+		                <div>
+		                	عنوان المدرسة (8TH Floor Skyrise4, IT Park, Asian Town,  Lahug, Cebu City, Philippines)<br/>
+		                   	الهاتف: 9600 318 32 63+<br/>
+		                	للطواريء:  محمود  9052195589 (63+) <br/>
+		                	  یاشا  9982364967 (63+) <br/><br/>
+		                </div>
+	                </div>
+
+	                <div>
+		                <div style="font-weight:bold;"> تفتح المدرسة: </div>
+		                <div>من الساعة 7:00 صباحا وحتى 12 مساء</div><br/>
+	                </div>
+
+	                <div style="margin-bottom:50px;font-size:12pt;">
+		                <span style="font-weight: bold;"><br/>الاحتياطات</span> <br/>
+		                <span>
+	                      	・ عندما تعلم أنك ستكون غائبًا عن الفصل ، فالرجاء الاتصال بالمدرسة.<br/>
+	                     	・ بعد الساعة 10 مساءًا ، لا يسمح بالشراب في غرفة النوم ، إذا كان ذلك ضروريًا ، يُرجى البقاء في المطعم.<br/>
+	                    	・ لا يسمح لفرع المدرسة والمهجع بالاكل خارج المعهد دون إذن<br/>
+	                    	・ مياه الصنبور ليست صالحة للشرب في المهجع أو في أي مكان آخر ، يرجى استخدام علب الماء<br/>
+	                    	・ من فضلك لا تحمل كميات كبيرة من النقود والأشياء الثمينة. （توفر المدارس صندوق الأمان ، ولكن تحتاج إلى إحضار قفل خاص بك).<br/>
+	                    	・ بعد الساعة 9 مساءً لا يُسمح بالرجوع إلى السكن مشيا ، يرجى استقلال الحافلة أو الحافلة المدرسية.<br/>
+	                     	・ من فضلك لا تأخذ (جيبني) ، قد تحدث سرقة لك.<br/>
+	                    	・ كن حذرا من الاحتيال ، لا تشارك في القمار ، ولا تذهب إلى منازل السكان المحليين.<br/>
+		                </span>
+	                </div>
+
+                    </span>
+                </span>
+        </div>
+
+        <!-- SFC TEMPLATES -->
+        <div *ngIf="o.campus=='SFC'">
+                <span *ngIf="o.country_code=='CN'">
+                    <strong><u>{{o.passport_name}}</u>&emsp;
+                    ID號碼 {{o.id_number}} &emsp;
+                    周數 {{o.term}} &emsp;
+                    宿舍 {{o.dormitory_room_name}} {{o.hotel_name}} &emsp;</strong><br/>
+                    <span id="sfc-ch-template">
+                        <div style="margin-bottom:25px;">
+                            <p>首日日程安排（菲律宾时间）</p>
+                            <p>→7:00      早餐  <br/>
+                                →9:00      新生说明会（结束口说测验后请至柜台）    <br/>
+                                →10:00     Level Test<br/>
+                                →11:00　   Speaking Test<br/>
+                                →12:00     Savemore，货币兑换，相关手续（缴交护照，签证费，水电费，照片等）   <br/>
+                                →13:00     午餐<br/>
+                                →14:30　   Q-Friends 介紹<br/>
+                                →15:00　   试上课程<br/>
+                                →17:50     欢迎晚会</p>
+                            <p>＊时间表有可能会发生变化，敬请谅解。<br/>
+                                *新课表请于周二上午八点前至柜台领取。</p>
+                            <p><span class="yellow">当天需要准备<br/></span>
+                                <span class="red">此份资料、照片2张、护照</span>，SSP费用 (6540)，签证费用(vary)，电费(500/W)，笔记用品。<br/>
+                                卫生纸（学校厕所内没有提供卫生纸）</p>
+                            <p>联系方式<br/>
+                                学校地址：Looc, Maribago Lapu-Lapu City, Cebu,  Philippines<br/>
+                                TEL：(+63)32-495-1043<br/></p>
+                            <b>WIFI password:<span style="color:red">Seafront@S10</span>1st Floor WiFi:<span style="color:red">QQE-SFGF-AP-Student</span> Password:<span style="color:red">Du5BPtyC</span></b><br/>
+                            <span>Come back to Seafront: Mactan, Lapu-lapu City, Maribago, Savemore, QQEnglish</span>
+
+                            <table>
+                                <tr>
+                                    <th>紧急联系电话 ：</th>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2">Rain 0995-295-6323<br/>
+                                            <br/>
+                                    </th>
+                                    <td><img src="assets/images/qqcode_sfc_2.png"/></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="red">請用微信扫一下右边的二维码</span></td>
+                                </tr>
+                            </table>
+
+                            <p>學校OPEN時間 <br/>
+                                7：00～24；00 </p>
+
+                            <p>注意事项 <br/>
+                                ・缺勤时请与学校联系。<br/>
+                                ・宿舍内禁止吸烟，饮酒、大声喧哗，如果需饮酒请前往宿舍外的餐厅。<br/>
+                                ・校内，宿舍内的物品未经许可禁止带走。<br/>
+                                ・宿舍内的自来水不能直接饮用，请使用饮水机。<br/>
+                                ・请尽量不要随身携带大量现金及贵重物品。（学校提供小保险柜，但需要自备锁具）<br/>
+                                ・晚上9点之后在外, 请注意安全。<br/>
+                                ・请尽量不要乘坐吉普尼（菲律宾公车），有可能遇到盗贼。<br/>
+                                ・请小心诈骗行为，不要参与一份文件或物件的整体或任何部分，不要轻易前往当地人家中访问。</p>
+                        </div>
+                    </span>
+                </span>
+            <span *ngIf="o.country_code=='JP'">
+                    <strong><u>{{o.passport_name}}</u>様&emsp;
+                    ID番号 {{o.id_number}}&emsp;
+                    週数 {{o.term}}&emsp;
+                    宿舍 {{o.dormitory_room_name}} {{o.hotel_name}}</strong><br/>
+                    <span id="sfc-jp-template">
+                    <br/>
+                    <div>
+                        <span>初日（月曜日）のスケジュール（フィリピン時間）</span>
+                        <table  cellspacing="0" cellpadding="0" style="border:2px solid black;font-size:10px;">
+                            <tr>
+                                <td width="100px" style="text-align:center;">時間</td>
+                                <td style="width:200px;text-align:center">プログラム</td>
+                                <td style="text-align:center;">場所</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center;">7:00~</td>
+                                <td>朝食　(到着された方からお召し上がりいただけます）</td>
+                                <td>食事付きプランの方のみ</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center;">8:00~</td>
+                                <td rowspan="2" style="text-align:center;">レベルチェックテスト</td>
+                                <td rowspan="3">＠Study room </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center;">9:00~</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center;">10:00~</td>
+                                <td>オリエンテーション</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center;">11:00~</td>
+                                <td>シーフロント周辺　両替所案内</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center;">12:00~</td>
+                                <td>昼食</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center;">13:00~</td>
+                                <td>施設案内</td>
+                                <td>＠Study room</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center;">14:00~</td>
+                                <td>クラス</td>
+                                <td>当日、掲示版を確認</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center;">15:00~</td>
+                                <td>クラス</td>
+                                <td>当日、掲示版を確認</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center;">16:00~</td>
+                                <td>クラス</td>
+                                <td>当日、掲示版を確認</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center;">17:00~</td>
+                                <td>クラス</td>
+                                <td>当日、掲示版を確認</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center;">18:00~</td>
+                                <td>ウェルカムパーティ</td>
+                                <td>＠QQ Café</td>
+                            </tr>
+                        </table>
+                        <span>★スケジュールおよび場所は変更になる場合がございますので、ご了承ください。</span><br/><br/>
+
+                        <span>当日の持ち物</span><br/>
+                        <table cellspacing="0" cellpadding="0" style="border:2px solid black;">
+                            <tr>
+                                <td style="width:50px;text-align:center">①</td>
+                                <td colspan="2" style="width:570px;">お渡しした資料　(本冊子･STUDENTマニュアル･SEAFRONT滞在規則)</td>
+                            </tr>
+                            <tr>
+                                <td style="width:50px;text-align:center">②</td>
+                                <td colspan="2" style="width:700px;">SSP代・VISA代・電気代(500/週)・ 生活費　※両替所に行きますので必要分の円をご用意下さい。</td>
+                            </tr>
+                            <tr>
+                                <td style="width:50px;text-align:center">③</td>
+                                <td colspan="2" style="width:710px;">パスポート ※SSP申請の為、全員ご提出をお願いします。滞在期間中は学校でお預かり致します。</td>
+                            </tr>
+                            <tr>
+                                <td style="width:50px;text-align:center">④</td>
+                                <td colspan="2" style="width:700px;">トイレットペーパー(学校のトイレにはございません)</td>
+                            </tr>
+                            <tr>
+                                <td style="width:50px;text-align:center">⑤</td>
+                                <td colspan="2" style="width:700px;">筆記用具</td>
+                            </tr>
+                        </table>
+
+                        <span>連絡先</span><br/>
+                        <span>本校住所：Looc Maribago, Lapu Lapu City, Philippines</span><br/>
+                        <table cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td style="vertical-align:top">TEL：032-495-1043</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr></tr>
+                            <tr>
+                                <td style="vertical-align:top">緊急連絡先 (Harumi):0917-839-2218</td>
+                                <td rowspan="8"><img src="assets/images/seafront_japan.png"/></td>
+                                <td><p>SEA FRONT JAPANESE<br/>シーフロント校の日本人グループラインです。<br/>学校からのお知らせを日本語変換して<br/>発信しています。</p></td>
+                            </tr>
+                            <tr><td></td><td></td><td></td></tr>
+                            <tr>
+                                <td><p>學校OPEN時間<br/>
+                               7：00～24；00</p></td>
+                            </tr>
+                           </table>
+                        <p>注意事項<br/>
+                        ★WiFi Password; Seafront@S10（Sは大文字です）1st Floor WiFi:<span style="color:red">QQE-SFGF-AP-Student</span> Password:<span style="color:red">Du5BPtyC</span><br/>
+                        ・やむを得ず学校を休む際はご連絡お願いします。<br/>
+                        ・喫煙は喫煙スペースでのみ、寮内は禁酒。アルコールは外のレストランにてお願いします。<br/>
+                        ・校内・寮内の物品を無断に持ち出し禁止<br/>
+                        ・寮内では水道水は飲まないよう気をつけてください。ウォーターサーバー利用してください。<br/>
+                        ・金銭目的の勧誘や詐欺行為に警戒して下さい。金銭の貸し借り、自宅訪問等はしないこと。<br>
+                        ・プールの使用時間；6:00-22:00   ビーチの使用時間；6:00-18:00</p>
+                        </div><!--<br/><br/>-->
+                    </span>
+                </span>
+            <span *ngIf="o.country_code=='TW'" style="font-size:14px;">
+                    <strong><u>{{o.passport_name}}</u> &emsp;
+                    ID號碼 {{o.id_number}} &emsp;
+                    週数 {{o.term}} &emsp;
+                    宿舍 {{o.dormitory_room_name}} {{o.hotel_name}} &emsp;</strong><br/><br/>
+                    <span id="sfc-tw-template">
+
+                        首日日程安排（菲律賓時間）<br/><br/>
+
+                        <span>→7:00      早餐  </span><br/>
+                        <span>→7:50      LEVEL TEST (study room) , 英語水平測試 (自習室)</span><br/>
+                        <span>→10:00　   Savemore，貨幣兌換，相關手續（繳交護照，簽證費，水電費，照片等）   　 </span><br/>
+                        <span>→11:00     新生說明會 (結束口說測驗後請至櫃檯)      </span><br/>
+                        <span>→11:30     Q-Friends 介紹</span><br/>
+                        <span>→12:00     午餐</span><br/>
+                        <span>→13:00　   正式課程 </span><br/>
+                        <span>→17:50     歡迎晚會</span><br/>
+
+
+                        <p>＊時間表有可能會發生變化，敬請諒解。<br/>
+                            ＊新課表請於周二上午八點前至櫃檯領取。</p>
+
+                        <span class="yellow">當天需要準備</span><br/>
+                        <span><span class="red">此份資料、照片2張、護照</span>，SSP費用 (6540)，簽證費用(vary)，電費(500/W)，筆記用品。</span><br/>
+                        <span>衛生紙（學校廁所內沒有提供衛生紙）</span><br/><br/>
+
+                        <span><strong>聯繫方式</strong></span><br/>
+                        <span>學校地址：Looc, Maribago Lapu-Lapu City, Cebu,  Philippines</span><br/>
+                        <span>TEL：(+63)32-495-1043</span><br/>
+                        <span><strong>緊急聯繫電話</strong>Rain 0995-295-6323</span><br/>
+                        <br/>
+                        <br/><br/>
+                        <b>WIFI 密碼:<span style="color:red">Seafront@S10</span>&emsp;&emsp;1st Floor WiFi:<span style="color:red"> QQE-SFGF-AP-Student</span> Password:<span style="color:red"> Du5BPtyC </span></b><br/>
+                        <span><strong>Come back to Seafront:</strong></span>
+                        <span>Mactan, Lapu-lapu City, Maribago, QQEnglish (Near Savemore)</span>
+
+                           <table>
+                            <tr>
+                                <td style="color:red;vertical-align:top">請用LINE掃一下右邊的QR CODE！</td>
+                                <td><img width="60%" height="60%" src="assets/images/sfc_taiwan_2.png"/></td>
+                                <td><img width="60%" height="60%" src="assets/images/qqe_facebook_qrcode.png"/></td>
+                                <td><img width="60%" height="60%" src="assets/images/qqe_instagram_qrcode.png"/></td>
+                                <td><img width="60%" height="60%" src="assets/images/qqe_question_qrcode.png"/></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><img width="60%" height="60%" src="assets/images/qqe_line.png"/></td>
+                                <td><img width="60%" height="60%" src="assets/images/qqe_fb.png"/></td>
+                                <td><img width="60%" height="60%" src="assets/images/qqe_instagram.png"/></td>
+                                <td><img width="60%" height="60%" src="assets/images/qqe_question.png"/></td>
+                            </tr>
+                           </table>
+
+                        <p>學校OPEN時間 7：00～24: 00</p>
+
+                        <div style="margin-bottom:20px;">
+                        <p>注意事項<br/>
+                        ・缺勤時請與學校聯繫。<br/>
+                        ・宿舍內禁止吸煙，飲酒、大聲喧嘩，如果需飲酒請前往宿舍外的餐廳。<br/>
+                        ・校內，宿舍內的物品未經許可禁止帶走。<br/>
+                        ・宿舍內的自來水不能直接飲用，請使用飲水機。<br/>
+                        ・請儘量不要隨身攜帶大量現金及貴重物品。（學校提供小保險櫃，但需要自備鎖具）<br/>
+                        ・晚上9點之後在外, 請注意安全。<br/>
+                        ・請儘量不要乘坐吉普尼（菲律賓公車），有可能遇到盜賊。<br/>
+                        ・請小心詐騙行為，不要參與賭博，不要輕易前往當地人家中訪問。<br/></p>
+                        </div>
+                    </span>
+                </span>
+            <span *ngIf="o.country_code=='KR'">
+                    <strong><u>{{o.passport_name}}</u>님&emsp;
+                ID번호 {{o.id_number}} &emsp;
+                주 {{o.term}} &emsp;
+                기숙사 {{o.dormitory_room_name}} {{o.hotel_name}} &emsp;</strong><br/><br/>
+                    <span id="sfc-kr-template" style="font-size:16px;">
+                        <div style="margin-bottom:50px;">
+                            <p>첫날스케줄 （필리핀시간）</p>
+
+                            <p>→8:00       아침식사<br/>
+                                →8:50       레벨테스트 (스터디룸)<br/>
+                                →11:00　  오리엔테이션<br/>
+                                →12:00     세이브모어 수퍼마켓 방문(환전)<br/>
+                                →13:00     점심식사<br/>
+                                →14:00     수업<br/>
+                                →15:00　 Q-Friends 소개          <br>
+                                →17:50     환영파티(Welcome party)</p>
+                            <p>＊상황에 따라 스케줄이 변경될수 있으니 양해부탁드립니다.</p>
+                            <p><b>첫날준비물</b><br/>
+                                <span class="red">사진2장(2*2)，여권</span>，SSP비용，VISA 비용，전기세，필기도구.<br/>
+                                휴대용 티슈（화장실에 휴지가 비치되어있지 않음）</p>
+                            <p><b>Contact</b><br/>
+                                학원주소：Looc, Maribago Lapu-Lapu City, Cebu,  Philippines<br/>
+                                TEL：(+63)32-495-1043<br/>
+                                긴급연락처:  Amy 0908-516-0469</p>
+                            <p><b>Other</b><br/>
+                                <b>WIFI password: <span class="red">Seafront@S10</span>1st Floor WiFi:<span style="color:red">QQE-SFGF-AP-Student</span> Password:<span style="color:red">Du5BPtyC</span></b><br>
+                                    Seafront 캠퍼스 근처 이름:<br>
+                                    Mactan, Lapu-lapu City, Maribago, Savemore, QQEnglish </p>
+                            <p><b>학교 개방 시간</b><br/>
+                                7：00～24：00</p>
+                            <p><b>주의사항</b><br/>
+                                ・수업 결석시 미리 알려주세요.<br/>
+                                ・기숙사 내에서 금주입니다. 술을 드실경우 학교 밖 레스토랑에서 드시기 바랍니다.<br/>
+                                ・학교 캠퍼스, 기숙사 내에 물품들을 허락없이 가져가지 마시기 바랍니다.<br/>
+                                ・기숙사나 다른 곳에서의 수돗물은 마실 수 없으니, 정수기 물을 이용해주시기 바랍니다.<br>
+                                ・현금과 귀중품을 되도록 휴대하지 마시기 바랍니다.(학교내에 금고가 있지만 이용시 개인자물쇠를 지참하시기 바랍니다.)<br>
+                                ・오후 9시 이후에 기숙사로 돌아올 경우 택시나 스쿨버스를 이용하시기 바랍니다.<br>
+                                ・도난의 경우가 있으니 지프니는 되도록 이용하지 마시기 바랍니다.<br>
+                                ・사기, 도박 등 참여하지 마시고, 쉽게 현지인들을 따라가지 마시기 바랍니다.</p>
+                        </div>
+                    </span>
+                </span>
+            <span *ngIf="o.country_code=='RU'">
+                    <strong><u>{{o.passport_name}}</u> Name &emsp;
+                ID {{o.id_number}} &emsp;
+                Weeks {{o.term}} &emsp;
+                Dorm {{o.dormitory_room_name}} {{o.hotel_name}} &emsp;</strong><br/><br/>
+                    <span id="sfc-ru-template" style="font-size:18px;">
+                    <div style="font-weight: bold"> Первый день в QQEnglish </div><br/>
+
+                    <div>
+                        →7:00 Завтрак  <br/>
+                        →8:00 Тест на определение уровня английского языка в Study Room<br/>
+                        →09:00 Speaking test <br/>
+                        →9:30 Фотографирование на документы<br/>
+                        →10:00 Orientation, оформление документов<br/>
+                        →11:00 Обмен валюты и SaveMore for shopping <br/>
+                        →12.00 Обед <br/>
+                        →13.00 QQ друзья в Study Room <br/>
+                        →14.00 Ознакомительное занятие <br/>
+                        →15.00 Ознакомительное занятие <br/>
+                        →16.00 Ознакомительное занятие <br/>
+                        →17.00 Ознакомительное занятие <br/>
+                        →18.00 Ужин и приветственная вечеринка <br/>
+                          * В расписании могут произойти изменения <br/><br/>
+
+                    </div><br/>
+
+
+                    <div style="font-weight: bold"> В свой первый день вы должны заплатить за SSP, визу, электричество и обучение </div>
+                    <div>
+                        Захватите с собой паспорт, канцелярские принадлежности и салфетки  <br/>
+                        (мы не предоставляем туалетную бумагу)<br/><br/>
+                    </div>
+
+                    <div style="font-weight: bold"> Контакты </div>
+                    <div>
+                        Адрес школы: Looc, Maribago Lapu-Lapu City, Себу, Филиппины<br/>
+                        Контакт для связи: Тел: (+ 63) 32-495-1043 <br/>
+                        Русскоязычный контакт  <br/>
+                        Lilit 0945 185 6809  <br/>
+                        Alexandra  0916 766 0790    <br/><br/>
+
+
+                    </div>
+
+                    <div style="font-weight: bold"> Школа работает </div>
+                    <div>
+                        7: 00 ~ 24: 00<br/><br/>
+                    </div>
+
+
+                    <div>
+                        <span style="font-weight: bold"> Меры предосторожности </span> <br/>
+                        <span>
+                        ・После 10 вечера в общежитиях школы запрещается шуметь <br/>
+                        ・Из общежитий запрещается выносить вещи, принадлежащие школе. <br/>
+                        ・Не рекомендуется пить водопроводную воду. Пожалуйста, используйте кулер с водой. <br/>
+                        ・После 9 вечера не рекомендуется идти к/от Кампуса пешком. Воспользуйтесь такси.  <br/>
+                        ・Не участвуйте в азартных играх, не ходите домой к незнакомым людям. <br/><br/>
+
+                        </span>
+                    </div>
+
+                    <div style="font-weight: bold;margin-bottom:87px;">
+                        WIFI password:
+                        <span class='red'>Seafront@S10</span>
+                        1st Floor WiFi:<span style="color:red">QQE-SFGF-AP-Student</span> Password:<span style="color:red">Du5BPtyC</span>
+                    </div>
+                </span>
+                </span>
+            <span *ngIf="o.country_code=='VN'" >
+                    <strong><u>{{o.passport_name}}</u>&emsp;
+                            Số ID {{o.id_number}}&emsp;
+                            Tuần {{o.term}}&emsp;
+                            Ký túc xá {{o.dormitory_room_name}} {{o.hotel_name}}</strong><br/><br/>
+                <span id="sfc-vt-template" style="font-size:17px;">
+                    <div style="font-weight: bold"> Lịch trình ngày đầu tiên（Philippine time）</div><br/>
+
+                    <div>→7:00       Bữa sáng<br/>
+                        →8:50      Kiểm tra đầu vào ( study room )<br/>
+                        →11:00　 Giới thiệu về trường và phổ biến nội quy học tập<br/>
+                        →12:00     Thăm quan xung quanh trường, đổi tiền<br/>
+                        →13:00     Ăn trưa<br/>
+                        →14:00     Học lớp đầu tiên<br/>
+                        →15:00　 Giới thiệu bạn bè ở QQ     <br/>
+                        →17:50     Tiệc chào đón tân sinh viên<br/><br/>
+                    </div>
+
+                    <div>＊Lịch có thể thay đổi tùy theo tình hình thực tế. Rất mong nhận được sự thông cảm!<br/><br/></div>
+                    <div>
+                        <span style="font-weight: bold">Những thứ cần thiết ngày đầu tiên</span><br/>
+                        2 ảnh，Passport， Phí SSP，VISA，tiền điện，Vở viết and các vật dụng khác <br/>
+                        Tissues（Lưu ý không có giấy vệ sinh trong trường） <br/><br/>
+                    </div>
+
+                    <div style="width: 55%; float:left">
+                        <div style="font-weight: bold"> Liên hệ: </div>
+
+                        <div>Địa chỉ：Looc, Maribago Lapu-Lapu City, Cebu,  Philippines </div>
+                        <div>TEL：(+63)32-495-1043 </div>
+                        <div> Liên hệ khi khẩn cấp:  Moe  0995-568-9535 </div>
+
+                        <div style="font-weight: bold">Lưu ý khác</div>
+                        <div>Địa chỉ: </div>
+                        <div>Mactan, Lapu-lapu City, Maribago, Savemore, QQEnglish </div><br/>
+                    </div>
+
+                    <div style="width: 45%; float:right">
+                       <span><img src="assets/images/seafront_vietnam.png"/></span>
+                    </div>
+
+                    <div>
+                        <div style="font-weight: bold"> Thời gian mở cửa </div>
+                        <div>7：00～24: 00</div><br/>
+                    </div>
+
+                    <div style="font-weight: bold;">
+                       <div>WIFI password:
+                        <span style="color: red">Seafront@S10</span>
+                           1st Floor WiFi:<span style="color:red">QQE-SFGF-AP-Student</span> Password:<span style="color:red">Du5BPtyC</span><br/>
+                       </div>
+                    </div>
+
+                    <div style="margin-bottom:20px;">
+                        <span style="font-weight: bold"><br/>Lưu ý thận trọng:</span> <br/>
+                        <span>
+                        ・Khi bạn muốn nghỉ học hãy thông báo cho chúng tôi<br/>
+                        ・Không uống rượu trong ký túc xá, nếu muốn hãy uống trong khu vựa nhà hàng<br/>
+                        ・Nhưng vật dụng trong trường và trong ký túc xá không được mang ra khỏi trường nếu không được sự cho phép<br/>
+                        ・Nước máy không được sử dụng uống ở trong ký túc hoặc bất cứ nơi nào khác, hãy sử dụng nước trong bình<br/>
+                        ・Không giữ số lượng tiền mặt và các đồ dùng có giá trị ( Trường có cung cấp hộp an toàn, học viên phải bảo quản chìa khóa của mình)<br/>
+                        ・Sau 9 giờ tối không đi bộ về trường hay đi Taxi hoặc xe bus của trường<br/>
+                        ・Không đi Jeepney, bạn có thể bị mất cắp<br/>
+                        ・Cẩn thận với sự gian lận, không tham gia đánh bạc, không dễ dàng đi vào nhà người lạ. <br/>
+                        </span><br/><br/>
+                    </div>
+                </span>
+            </span>
+            <span *ngIf="o.country_code=='IR'" >
+                    <div style="font-size:14pt;"><strong><u>{{o.passport_name}}</u>
+                            ID {{o.id_number}}
+                            Weeks {{o.term}}
+                            Dorm {{o.dormitory_room_name}} {{o.hotel_name}}</strong><br/>
+                    </div>
+
+                    <span id="sfc-ir-template" style="font-size:14pt;">
+
+	                <div style="font-weight: bold"> برنامه روز نخست به وقت محلی فیلیپین </div><br/>
+
+	                <div>→8:00  صبحانه<br/>
+		→ 8:50   امتحان تعیین سطح.<br/>
+		→ 11:00 معرفی و نمایش کالج و قوانین آن.<br/>
+		→ 12:00  تبدیل ارز و پرکردن فرم های ثبت نام.<br/>
+		→ 13:00  ناهار.<br/>
+		→ 14:00  شروع کلاس ها.<br/>
+		→ 15:00 مراسم معرفه و آشنایی با محیط کالج.<br/>
+		→ 17:50  جشن خوش آمد گویی.<br/><br/>
+	</div>
+
+	                <div>＊گاهی تغییراتی در زمانبندی پیش خواهد آمد . از شکیبایی شما سپاسگزاریم.</div><br/><br/>
+
+	                <div>
+		<span style="font-weight: bold">وسایل مورد نیاز روز نخست:</span><br/>
+		2 قطعه عکس، پاسپورت، لوازم تحریر (دفتر ، خودکار و غیره ...) ، همچنین پول به میزان لازم برای پرداخت هزینه های مربوط به SSP , Visa, ID card, و غیره . <br/>
+		همچنین دستمال کاغذی همراه داشته باشید .(در کالج ارائه نمیشود)<br/><br/>
+	</div>
+
+	                <div style="width: 50%; float:right">
+	   	<div style="font-weight: bold"> ارتباط با ما  </div>
+		<div>
+			آدرس کالج：Looc, Maribago Lapu-Lapu City, Cebu,  Philippines<br/>
+			تلفن کالج: 1043-495-32 (63+) <br/>
+			تلفن اضطراری: Moe  0995-568-9535 <br/><br/>
+		</div>
+		<div style="font-weight: bold"> سایر موارد </div>
+		<div style="font-weight: bold">پسورد وایفای :  Seafront@S10 </div> 1st Floor WiFi:<span style="color:red">QQE-SFGF-AP-Student</span> Password:<span style="color:red">Du5BPtyC</span><br/>
+		<div>
+			برای بازگشت به خوابگاه   Seafront از آدرس زیر استفاده کنید:<br/>
+			Mactan, Lapu-lapu City, Maribago, Savemore, QQEnglish <br/>
+		</div>
+
+	</div>
+
+	                <div style="width: 50%; float:left">
+	                    <span>
+		                    <img src="assets/images/line_code_ir_sfc.png"/><br/>
+	                    </span>
+	                </div>
+
+	                <div style="font-weight: bold"> ساعت کاری کالج </div>
+		            <div>7:00 صبح الی 24:00</div><br/><br/>
+
+		            <div style="margin-bottom:60px;font-size:12pt;">
+		                <span style="font-weight: bold"><br/><br/><br/>تذکر : </span><br/>
+			            <span>
+			・زمانی که میدانید در روز بعد غایب هستید حتما به کالج اطلاع دهید.<br/>
+			・نوشیدن هر گونه نوشیدنی الکلی در خوابگاه ممنوع میباشد. در صورت لوزوم میتوانید خارج از خوابگاه از رستوران یا بار<br/>
+				 استفاده کنید<br>
+			・از جابجایی لوازم خوابگاه بدون اجازه خودداری کنید.<br/>
+			・هرگز از آب لوله کشی برای مصارب شرب استفاده نکنید . فقط از آب معدنی و آبهای تصفیه شده استفاده کنید.<br/>
+			・لطفا از همراه داشتن پول زیادخودداری کنید. کالج صندوق های اماناتی در کالج تدارک دیده و نیاز هست برای آن قفل کوچک تهیه کنید.<br/>
+			・لطفا برای بازگشت به خوابگاه بعد از ساعت 9 شب از تاکسی و سرویس کالج استفاده کنید و از قدم زدن در خیابان پرهیز کنید.<br/>
+			・لطفا از سوار شدن به جیبنی پرهیز کنید.(احتمال دزدیده شدن لوازم و کیف پول شما وجود دارد).<br/>
+			・مراقب متقلبین باشید، از شرکت در قمار پرهیز کنید، از رفتن به خانه های افراد محلی خودداری کنید.<br/>
+			</span>
+		            </div>
+
+                    </span>
+                </span>
+            <span *ngIf="o.country_code=='ARAB'" >
+                    <div style="font-size:14pt;"><strong><u>{{o.passport_name}}</u>
+                            ID {{o.id_number}}
+                            Weeks {{o.term}}
+                            Dorm {{o.dormitory_room_name}} {{o.hotel_name}}</strong><br/>
+                    </div>
+
+                    <span id="sfc-sau-template" style="font-size:14pt;">
+
+	                    <div style="font-weight: bold">جدول اليوم الأول （الوقت الفلبيني） </div><br/>
+
+	                    <div>→8:00 الافطار<br/>
+	                    	→8:50 اختبار تحديد المستوى (غرفة الدراسة)<br/>
+	                    	→11:00 توجيهات اليوم الأول<br/>
+	                    	→12:00 رحلات ميدانية ، وتغيير العملات<br/>
+	                    	→13:00 الغداء<br/>
+	                     	→14:00 ساعة في الفصل<br/>
+	            	→15:00 التقديم بأصدقاء كيوكيو        <br/>
+	                    	→17:50 حفلة ترحيبية بالطلاب الجدد<br/><br/>
+	                    </div>
+
+	                    <div>＊يرجى التفهم , قد يحدث تغيرات في الجدول الزمني .</div><br/>
+
+	                    <div>
+		                    <span style="font-weight: bold">احتياجات اليوم الأول</span><br/>
+	                        	2 صورة شخصية ， جواز سفر ， رسوم SSP ， رسوم تأشيرة ， رسوم الكهرباء ，الدفاتر والقرطاسية.<br/>
+	                        	المناديل （لا نقدم ورق التواليت في المدرسة）<br/><br/>
+	                    </div>
+
+	                    <div style="width: 50%; float:right">
+	   	                    <div style="font-weight: bold"> الاتصال  </div>
+		                    <div>
+		                        	عنوان المدرسة (Looc, Maribago Lapu-Lapu City, Cebu,  Philippines)<br/>
+		                        	الهاتف: 1043 495 32 63+<br/>
+		                           	للطواريء :مو 9535 568 0995<br/><br/>
+		                    </div>
+		                    <div style="font-weight: bold">أخرى </div>
+		                    <div style="font-weight: bold">كلمة السر للواي فاي: Seafront</div><br/>
+		                    <div>
+		                      	الرجوع الى المدرسة<br/>
+		                    	Mactan, Lapu-lapu City, Maribago, Savemore, QQEnglish <br/><br/>
+		                    </div>
+
+	                    </div>
+
+	                    <div style="width: 50%; float:left">
+		                    <p>قروب على تطبيق لاين</p><br/>
+	                        <span>
+		                          <img src="assets/images/line_code_sau_sfc.png"/>
+	                        </span>
+	                    </div>
+
+                        <div>
+                            <div style="font-weight:bold;"> تفتح المدرسة: </div>
+		                    <div>7:00 صبح الی 24:00</div><br/>
+                        </div>
+
+		                <div style="margin-bottom:50px;">
+		                    <span style="font-weight: bold"><br/>تذکر : </span><br/>
+			                <span>
+	                      		・ عندما تعلم أنك ستكون غائبًا عن الفصل ، فالرجاء الاتصال بالمدرسة.<br/>
+	                     		・ بعد الساعة 10 مساءًا ، لا يسمح بالشراب في غرفة النوم ، إذا كان ذلك ضروريًا ، يُرجى البقاء في المطعم.<br/>
+	                    		・ لا يسمح لفرع المدرسة والمهجع بالاكل خارج المعهد دون إذن.<br/>
+	                      		・ مياه الصنبور ليست صالحة للشرب في المهجع أو في أي مكان آخر ، يرجى استخدام علب الماء<br/>
+	                    		・ من فضلك لا تحمل كميات كبيرة من النقود والأشياء الثمينة. （توفر المدارس صندوق الأمان ، ولكن تحتاج إلى إحضار قفل خاص بك).<br/>
+	                    		・ بعد الساعة 9 مساءً لا يُسمح بالرجوع إلى السكن مشيا ، يرجى استقلال الحافلة أو الحافلة المدرسية.<br/>
+	                     		・ من فضلك لا تأخذ (جيبني) ، قد تحدث سرقة لك.<br/>
+	                     		・ كن حذرا من الاحتيال ، لا تشارك في القمار ، ولا تذهب إلى منازل السكان المحليين.<br/>
+			                </span>
+		                </div>
+                    </span>
+
+                </span>
+        </div>
+    </div>
+</div>
+<!-- Print Schedule List section -->
