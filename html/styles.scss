@@ -1,0 +1,187 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import 'variables';
+@import 'app/app.component';
+body {
+  background-color: white;
+  padding-right: 0 !important;
+  overflow: hidden;
+}
+
+
+/* body.modal-open {*/
+
+
+/*   overflow: hidden;*/
+
+
+/* }*/
+
+* {
+  font-family: AvenirNextLTW01Regular, 'sans-serif';
+}
+
+/*//////////////LOADING//////////////////////*/
+
+.modal-loading {
+  background: rgba(0, 0, 0, 0.3);
+  .modal-dialog {
+    margin: auto;
+    height: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    .modal-content {
+      background: transparent;
+      border: 0;
+      margin: auto;
+    }
+  }
+}
+
+.uil-poi-css {
+  height: 80px;
+  width: 100%;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.uil-poi-css>img {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 45px;
+  -webkit-animation: uil-poi-anim0 0.7s linear infinite;
+  animation: uil-poi-anim0 0.7s linear infinite;
+}
+
+@-webkit-keyframes uil-poi-anim0 {
+  0% {
+    top: 0;
+  }
+  50% {
+    top: 20px;
+  }
+  100% {
+    top: 0;
+  }
+}
+
+@keyframes uil-poi-anim0 {
+  0% {
+    top: 0;
+  }
+  50% {
+    top: 20px;
+  }
+  100% {
+    top: 0;
+  }
+}
+
+
+/*///////////////////////////////////////////*/
+
+ngx-my-date-picker .ngxmdp .selector {
+  left: -150px !important;
+  top: 30px;
+}
+
+.w-15 {
+  width: 15% !important;
+}
+
+.w-45 {
+  width: 45% !important;
+}
+
+.w-20 {
+  width: 20% !important;
+}
+
+.w-60 {
+  width: 60% !important;
+}
+
+.popover.national-flag-popover {
+  border-color: rgba(0, 0, 0, 0.25) !important;
+  background-color: rgb(255, 255, 255) !important;
+  .national-flag:hover {
+    cursor: pointer;
+  }
+}
+
+.popover.other-reservation-popover {
+  border-color: rgba(0, 0, 0, 0.85) !important;
+  background-color: rgba(0, 0, 0, 0.85) !important;
+}
+
+.popover {
+  max-width: 600px;
+}
+
+.popover .popover-content {
+  color: #fff;
+  border-radius: 5px;
+  font-size: 16px;
+  padding: 14px 18px;
+}
+
+.popover.popover-top::after,
+.popover.bs-tether-element-attached-bottom::after {
+  border-top-color: rgba(0, 0, 0, 0.85) !important;
+}
+
+.popover.popover-left::after,
+.popover.bs-tether-element-attached-right::after {
+  border-left-color: rgba(0, 0, 0, 0.85) !important;
+}
+
+.tooltip-inner {
+  max-width: 600px;
+  .tooltip-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    .tooltip-memo {
+      white-space: nowrap;
+      overflow: hidden !important;
+      text-overflow: ellipsis;
+      font-size: 16px;
+      padding: 5px 0;
+      padding-left: 10px;
+    }
+    img {
+      width: 26px;
+      margin: 0 10px;
+    }
+  }
+}
+
+@font-face {
+  font-family: 'AvenirNextLTW01Bold';
+  src: url('./assets/fonts/avenir-next-bold.eot');
+  src: url('./assets/fonts/avenir-next-bold.eot') format('embedded-opentype'), url('./assets/fonts/avenir-next-bold.woff') format('woff'), url('./assets/fonts/avenir-next-bold.ttf') format('truetype'), url('./assets/fonts/avenir-next-bold.svg#AvenirNextLTW01BoldRegular') format('svg');
+}
+
+@font-face {
+  font-family: 'AvenirNextLTW01Italic';
+  src: url('./assets/fonts/avenir-next-italic.eot');
+  src: url('./assets/fonts/avenir-next-italic.eot') format('embedded-opentype'), url('./assets/fonts/avenir-next-italic.woff') format('woff'), url('./assets/fonts/avenir-next-italic.ttf') format('truetype'), url('./assets/fonts/avenir-next-italic.svg#AvenirNextLTW01ItalicRegular') format('svg');
+}
+
+@font-face {
+  font-family: 'AvenirNextLTW01Regular';
+  src: url('./assets/fonts/avenir-next-regular.eot');
+  src: url('./assets/fonts/avenir-next-regular.eot') format('embedded-opentype'), url('./assets/fonts/avenir-next-regular.woff') format('woff'), url('./assets/fonts/avenir-next-regular.ttf') format('truetype'), url('./assets/fonts/avenir-next-regular.svg#AvenirNextLTW01RegularRegular') format('svg');
+}
+
+@font-face {
+  font-family: 'AvenirNextW01Thin';
+  src: url('./assets/fonts/avenir-next-thin.eot');
+  src: url('./assets/fonts/avenir-next-thin.eot') format('embedded-opentype'), url('./assets/fonts/avenir-next-thin.woff') format('woff'), url('./assets/fonts/avenir-next-thin.ttf') format('truetype'), url('./assets/fonts/avenir-next-thin.svg#AvenirNextW01ThinRegular') format('svg');
+}
