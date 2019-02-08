@@ -7,8 +7,9 @@ import { Observable } from 'rxjs/Observable';
 import { LocalStorageService } from 'ng2-webstorage';
 import {
     ApplySearchModel, StudentApplyModel, ImportDataFullErrorModel, ImportDataLineErrorModel, ExportFilterModel,
-    InvoiceDiscountModel
+    InvoiceDiscountModel, StudentApplyGroupModel, ExtensionInvoiceModel, InvoiceModel, RefundInvoiceModel
 } from './apply.model';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 
 @Injectable()
 export class ApplyService {
@@ -26,6 +27,61 @@ export class ApplyService {
 
     downloadExcelFile(filterObj: ApplySearchModel): Observable<Response> {
         const url = 'app/admin/apply/studentexport';
+        if (this.configService.config) {
+            return this.createObservable(filterObj, this.configService.config, url);
+        } else {
+            return this.configService.loadConfiguration().mergeMap(() => {
+                return this.createObservable(filterObj, this.configService.config, url);
+            });
+        }
+    }
+
+    downloadPickUpExcelFile(filterObj: ApplySearchModel): Observable<Response> {
+        const url = 'app/admin/apply/pickupexport';
+        if (this.configService.config) {
+            return this.createObservable(filterObj, this.configService.config, url);
+        } else {
+            return this.configService.loadConfiguration().mergeMap(() => {
+                return this.createObservable(filterObj, this.configService.config, url);
+            });
+        }
+    }
+
+    downloadClassListFile(filterObj: ApplySearchModel): Observable<Response> {
+        const url = 'app/admin/apply/classlistexport';
+        if (this.configService.config) {
+            return this.createObservable(filterObj, this.configService.config, url);
+        } else {
+            return this.configService.loadConfiguration().mergeMap(() => {
+                return this.createObservable(filterObj, this.configService.config, url);
+            });
+        }
+    }
+
+    downloadInvoiceListFile(filterObj: ApplySearchModel): Observable<Response> {
+        const url = 'app/admin/apply/invoicelistexport';
+        if (this.configService.config) {
+            return this.createObservable(filterObj, this.configService.config, url);
+        } else {
+            return this.configService.loadConfiguration().mergeMap(() => {
+                return this.createObservable(filterObj, this.configService.config, url);
+            });
+        }
+    }
+
+    downloadGAInvoiceListFile(filterObj: ApplySearchModel): Observable<Response> {
+        const url = 'app/admin/apply/gainvoicelistexport';
+        if (this.configService.config) {
+            return this.createObservable(filterObj, this.configService.config, url);
+        } else {
+            return this.configService.loadConfiguration().mergeMap(() => {
+                return this.createObservable(filterObj, this.configService.config, url);
+            });
+        }
+    }
+
+    downloadCampExcelFile(filterObj: ApplySearchModel): Observable<Response> {
+        const url = 'app/admin/apply/campexport';
         if (this.configService.config) {
             return this.createObservable(filterObj, this.configService.config, url);
         } else {
@@ -91,6 +147,20 @@ export class ApplyService {
         });
     }
 
+    uploadCampData(file: File): Observable<Response> {
+        const url_apply = 'app/admin/apply/campimport';
+        const formData: FormData = new FormData();
+        formData.append('campimport', file);
+        if (this.configService.config) {
+            this.AppSettings = this.configService.config;
+            return this.http.post(this.AppSettings['API_ENDPOINT'] + url_apply, formData, this.options).map((res: Response) => res.json());
+        }
+        return this.configService.loadConfiguration().mergeMap(() => {
+            this.AppSettings = this.configService.config;
+            return this.http.post(this.AppSettings['API_ENDPOINT'] + url_apply, formData, this.options).map((res: Response) => res.json());
+        });
+    }
+
     downloadHotelData(filterObj: ApplySearchModel,hotelBookingId): Observable<Response> {
         const url = 'app/admin/apply/hotelbookingfiledownload';
         if (this.configService.config) {
@@ -102,10 +172,10 @@ export class ApplyService {
         }
     }
 
-    removeHotelReserved(hotelBookingId): Observable<Response> {
+    removeHotelReserved(accommodationName,hotelBookingId,applyId): Observable<Response> {
         const url_remove_reserved_hotel = 'app/admin/apply/delete-reserved-hotel';
         return this.checkConfigJson(() => {
-            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_remove_reserved_hotel + '/' + hotelBookingId, this.getHeader())
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_remove_reserved_hotel + '/' + accommodationName + '/' + hotelBookingId + '/' + applyId, this.getHeader())
                 .map((res: Response) => res)
                 .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
         });
@@ -123,6 +193,16 @@ export class ApplyService {
 
     getStaytypes() {
         return this.http.get('assets/data/stay-types.json')
+            .map(res => res.json());
+    }
+
+    getStaytypesItp() {
+        return this.http.get('assets/data/stay-types-itp.json')
+            .map(res => res.json());
+    }
+
+    getStaytypesSfc() {
+        return this.http.get('assets/data/stay-types-sfc.json')
             .map(res => res.json());
     }
 
@@ -161,6 +241,15 @@ export class ApplyService {
             .map(res => res.json());
     }
 
+    getYears(): Observable<Response> {
+        const url_get_years = 'app/admin/apply/get-years';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_get_years, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
     applyList(filterObj: ApplySearchModel): Observable<Response> {
 
         return this.checkConfigJson(() => {
@@ -174,6 +263,60 @@ export class ApplyService {
         const url_changelog = 'app/admin/apply/find-log';
         return this.checkConfigJson(() => {
             return this.http.get(this.AppSettings['API_ENDPOINT'] + url_changelog + '/' + applyId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    getRefundInvoice(applyId): Observable<Response> {
+        const url_refund_invoice = 'app/admin/apply/find-refund-invoice';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_refund_invoice + '/' + applyId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    getExtenionInvoice(applyId): Observable<Response> {
+        const url_extension_invoice = 'app/admin/apply/find-extension-invoice';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_extension_invoice + '/' + applyId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    getInvoice(applyId): Observable<Response> {
+        const url_invoice = 'app/admin/apply/find-invoice';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_invoice + '/' + applyId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    getRefundInvoicePhpRate(applyId): Observable<Response> {
+        const url_refund_invoice_php_rate = 'app/admin/apply/find-refund-invoice-php-rate';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_refund_invoice_php_rate + '/' + applyId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    getExtenionInvoicePhpRate(applyId): Observable<Response> {
+        const url_extension_invoice_php_rate = 'app/admin/apply/find-extension-invoice-php-rate';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_extension_invoice_php_rate + '/' + applyId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    getInvoicePhpRate(applyId): Observable<Response> {
+        const url_invoice_php_rate = 'app/admin/apply/find-invoice-php-rate';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_invoice_php_rate + '/' + applyId, this.getHeader())
                 .map((res: Response) => res)
                 .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
         });
@@ -195,11 +338,48 @@ export class ApplyService {
         });
     }
 
-    updateRoom(dormBldg,accommodationId,roomId,checkIn,checkOut,applyId): Observable<Response> {
+    updateRoom(roomMemo,reserveStatusId,dormBldg,vistorType,accommodationId,roomId,checkIn,checkOut,applyId): Observable<Response> {
         const url_update_room = 'app/admin/apply/update-room';
         return this.checkConfigJson(() => {
-            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_update_room + '/' + dormBldg +'/' + accommodationId + '/' + roomId +
-                '/' + checkIn + '/' + checkOut + '/' + applyId, this.getHeader())
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_update_room + '/' + roomMemo + '/' + reserveStatusId + '/' + dormBldg + '/' + vistorType +'/'
+                + accommodationId + '/' + roomId + '/' + checkIn + '/' + checkOut + '/' + applyId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    updateCourse(bldg,course,dateFrom,dateTo,applyId): Observable<Response> {
+        const url_add_course = 'app/admin/apply/add-course';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_add_course +'/'+ bldg + '/' + course +
+                '/' + dateFrom + '/' + dateTo + '/' + applyId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    deleteCourse(courseId,applyId): Observable<Response> {
+        const url_remove_course = 'app/admin/apply/delete-course';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_remove_course + '/' + courseId + '/' + applyId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    getCourseList(applyId): Observable<Response> {
+        const url_find_courses = 'app/admin/apply/find-courses';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_find_courses + '/' + applyId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    getCourseLogsList(applyId): Observable<Response> {
+        const url_find_course_logs = 'app/admin/apply/find-course-logs';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_find_course_logs + '/' + applyId, this.getHeader())
                 .map((res: Response) => res)
                 .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
         });
@@ -209,6 +389,42 @@ export class ApplyService {
         const url_find_reserved_rooms = 'app/admin/apply/find-reserved-rooms';
         return this.checkConfigJson(() => {
             return this.http.get(this.AppSettings['API_ENDPOINT'] + url_find_reserved_rooms + '/' + applyId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    getCondoReservedRoomsList(applyId): Observable<Response> {
+        const url_find_condo_reserved_rooms = 'app/admin/apply/find-condo-reserved-rooms';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_find_condo_reserved_rooms + '/' + applyId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    getHotelsReservedRoomsList(applyId): Observable<Response> {
+        const url_find_hotels_reserved_rooms = 'app/admin/apply/find-hotels-reserved-rooms';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_find_hotels_reserved_rooms + '/' + applyId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    getWalkinReservedRoomsList(applyId): Observable<Response> {
+        const url_find_walkin_reserved_rooms = 'app/admin/apply/find-walkin-reserved-rooms';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_find_walkin_reserved_rooms + '/' + applyId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    getReservedRoomsLogsList(applyId): Observable<Response> {
+        const url_find_reserved_rooms_logs = 'app/admin/apply/find-reserved-rooms-logs';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_find_reserved_rooms_logs + '/' + applyId, this.getHeader())
                 .map((res: Response) => res)
                 .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
         });
@@ -232,38 +448,101 @@ export class ApplyService {
         });
     }
 
-    updateApplyCommission(applyId, commission): Observable<Response> {
+    updateExtensionInvoiceDiscount(applyId, totalInvoice): Observable<Response> {
+        const url_update_ext_inv_discount = 'app/admin/apply/update-ext-invoice-discount';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_update_ext_inv_discount + '/' + applyId + '/' + totalInvoice, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    updateRefundInvoiceDiscount(applyId, totalInvoice): Observable<Response> {
+        const url_update_rfd_inv_discount = 'app/admin/apply/update-rfd-invoice-discount';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_update_rfd_inv_discount + '/' + applyId + '/' + totalInvoice, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    updateApplyCommission(commission_reason,commission,commission_percentage,applyId): Observable<Response> {
         const url_update_commission = 'app/admin/apply/update-apply-commission';
         return this.checkConfigJson(() => {
-            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_update_commission + '/' + applyId + '/' + commission, this.getHeader())
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_update_commission + '/' + commission_reason + '/' + commission + '/' + commission_percentage + '/' + applyId, this.getHeader())
                 .map((res: Response) => res)
                 .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
         });
     }
 
-    getApplyInvoice(invoiceId): Observable<Response> {
+    updateApplyExtensionInvCommission(applyId, commission, commission_percentage): Observable<Response> {
+        const url_update_ext_inv_commission = 'app/admin/apply/update-apply-ext-inv-commission';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_update_ext_inv_commission + '/' + applyId + '/' + commission + '/' + commission_percentage, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    updateApplyRefundInvCommission(applyId, commission, commission_percentage): Observable<Response> {
+        const url_update_rfd_inv_commission = 'app/admin/apply/update-apply-rfd-inv-commission';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_update_rfd_inv_commission + '/' + applyId + '/' + commission + '/' + commission_percentage, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    updateApplyGAPaymentStatus(applyId): Observable<Response> {
+        const url_update_ga_paymentstatus = 'app/admin/apply/update-apply-ga-paymentstatus';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_update_ga_paymentstatus + '/' + applyId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    updateApplyInvoicePaymentStatus(applyId): Observable<Response> {
+        const url_update_invoice_paymentstatus = 'app/admin/apply/update-apply-invoice-paymentstatus';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_update_invoice_paymentstatus + '/' + applyId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    updateApplyInvoiceDueDate(applyId): Observable<Response> {
+        const url_update_invoice_due_date = 'app/admin/apply/update-invoice-due-date';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_update_invoice_due_date + '/' + applyId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    getApplyInvoice(applyId, invoiceId): Observable<Response> {
         const url_apply_invoice = 'app/admin/apply/apply-invoice';
         return this.checkConfigJson(() => {
-            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_apply_invoice + '/' + invoiceId, this.getHeader())
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_apply_invoice + '/' + applyId + '/' + invoiceId, this.getHeader())
                 .map((res: Response) => res)
                 .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
         });
     }
 
-    getInvoiceDiscountList(invoiceId): Observable<Response> {
+    getInvoiceDiscountList(applyId, invoiceId): Observable<Response> {
         const url_find_invoice_discount = 'app/admin/apply/find-invoice-discount';
         return this.checkConfigJson(() => {
-            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_find_invoice_discount + '/' + invoiceId, this.getHeader())
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_find_invoice_discount  + '/' + applyId + '/' + invoiceId, this.getHeader())
                 .map((res: Response) => res)
                 .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
         });
     }
 
-    createInvoiceDiscount(discount,reason,invoiceNumber): Observable<Response> {
+    createInvoiceDiscount(applyId,discount,reason,invoiceNumber): Observable<Response> {
         const url_create_invoice_discount = 'app/admin/apply/create-invoice-discount';
         return this.checkConfigJson(() => {
-            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_create_invoice_discount + '/' + discount + '/'
-                + reason + '/' + invoiceNumber, this.getHeader())
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_create_invoice_discount + '/' + applyId + '/'
+                + discount + '/' + reason + '/' + invoiceNumber, this.getHeader())
                 .map((res: Response) => res)
                 .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
         });
@@ -278,36 +557,169 @@ export class ApplyService {
         });
     }
 
-    deleteInvoiceDiscount(Id,invoiceNumber,discountAmount): Observable<Response> {
+    deleteInvoiceDiscount(applyId, Id,invoiceNumber,discountAmount): Observable<Response> {
         const url_remove_invoice_discount = 'app/admin/apply/delete-invoice-discount';
         return this.checkConfigJson(() => {
-            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_remove_invoice_discount + '/' + Id + '/' + invoiceNumber + '/' + discountAmount, this.getHeader())
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_remove_invoice_discount + '/' + applyId + '/' + Id +
+                '/' + invoiceNumber + '/' + discountAmount, this.getHeader())
                 .map((res: Response) => res)
                 .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
         });
     }
 
-    getRoomListService(accommodationId,dormBldg,dormRoomType,checkInDate,checkOutDate,applyId) {
+    deleteExtInvoiceDiscount(applyId, Id,invoiceNumber,discountAmount): Observable<Response> {
+        const url_remove_ext_invoice_discount = 'app/admin/apply/delete-ext-invoice-discount';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_remove_ext_invoice_discount + '/' + applyId + '/' + Id +
+                '/' + invoiceNumber + '/' + discountAmount, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    deleteRfdInvoiceDiscount(applyId, Id,invoiceNumber,discountAmount): Observable<Response> {
+        const url_remove_rfd_invoice_discount = 'app/admin/apply/delete-rfd-invoice-discount';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_remove_rfd_invoice_discount + '/' + applyId + '/' + Id +
+                '/' + invoiceNumber + '/' + discountAmount, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    deleteWalkin(applyId): Observable<Response> {
+        const url_remove_walkin = 'app/admin/apply/delete-walkin';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_remove_walkin + '/' + applyId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    getRoomListService(accommodationId,dormBldg,dormRoomType,checkInDate,checkOutDate,visitorType,searchFilter,applyId) {
         const url_room_list = 'app/admin/apply/get-room-filter';
         return this.checkConfigJson(() => {
             return this.http.get(this.AppSettings['API_ENDPOINT'] + url_room_list + "/" + accommodationId +"/" + dormBldg + "/" + dormRoomType +
-                "/" + checkInDate + "/" + checkOutDate + "/" + applyId, this.getHeader()).map((res: Response) => res);
+                "/" + checkInDate + "/" + checkOutDate + "/" + visitorType + "/" + searchFilter + "/" + applyId, this.getHeader()).map((res: Response) => res);
         });
     }
 
-    removeReservedRoom(reservationId,applyId): Observable<Response> {
+    removeReservedRoom(reservedRoomName,reservedRoomType,reservationId,applyId): Observable<Response> {
         const url_remove_reserved_room = 'app/admin/apply/delete-reserved-room';
         return this.checkConfigJson(() => {
-            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_remove_reserved_room + '/' + reservationId + '/' + applyId, this.getHeader())
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_remove_reserved_room + '/' + reservedRoomName + '/' + reservedRoomType
+                + '/' + reservationId + '/' + applyId, this.getHeader())
                 .map((res: Response) => res)
                 .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
         });
     }
 
-    getRoomAvailableService(dateFrom, campus) {
+    removeCondoReservedRoom(reservedRoomName,reservedRoomType,reservationId,applyId): Observable<Response> {
+        const url_remove_reserved_room = 'app/admin/apply/delete-reserved-room-condo';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_remove_reserved_room + '/' + reservedRoomName + '/' + reservedRoomType
+                + '/' + reservationId + '/' + applyId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    removeHotelsReservedRoom(reservedRoomName,reservedRoomType,reservationId,applyId): Observable<Response> {
+        const url_remove_reserved_room = 'app/admin/apply/delete-reserved-room-hotels';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_remove_reserved_room + '/' + reservedRoomName + '/' + reservedRoomType
+                + '/' + reservationId + '/' + applyId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    removeWalkinReservedRoom(reservedRoomName,reservedRoomType,reservationId,applyId): Observable<Response> {
+        const url_remove_reserved_room = 'app/admin/apply/delete-reserved-room-walkin';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_remove_reserved_room + '/' + reservedRoomName + '/' + reservedRoomType
+                + '/' + reservationId + '/' + applyId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    changeToPresentStatus(reserveId): Observable<Response> {
+        const url_change_present_status = 'app/admin/apply/change-to-present';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_change_present_status + '/' + reserveId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    changeToReservedStatus(reserveId): Observable<Response> {
+        const url_change_reserved_status = 'app/admin/apply/change-to-reserved';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_change_reserved_status + '/' + reserveId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    changeToCondoPresentStatus(reserveId): Observable<Response> {
+        const url_change_condo_present_status = 'app/admin/apply/change-to-present-condo';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_change_condo_present_status + '/' + reserveId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    changeToCondoReservedStatus(reserveId): Observable<Response> {
+        const url_change_condo_reserved_status = 'app/admin/apply/change-to-reserved-condo';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_change_condo_reserved_status + '/' + reserveId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    changeToHotelsPresentStatus(reserveId): Observable<Response> {
+        const url_change_hotels_present_status = 'app/admin/apply/change-to-present-hotels';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_change_hotels_present_status + '/' + reserveId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    changeToHotelsReservedStatus(reserveId): Observable<Response> {
+        const url_change_hotels_reserved_status = 'app/admin/apply/change-to-reserved-hotels';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_change_hotels_reserved_status + '/' + reserveId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    changeToWalkinPresentStatus(reserveId): Observable<Response> {
+        const url_change_walkin_present_status = 'app/admin/apply/change-to-present-walkin';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_change_walkin_present_status + '/' + reserveId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    changeToWalkinReservedStatus(reserveId): Observable<Response> {
+        const url_change_walkin_reserved_status = 'app/admin/apply/change-to-reserved-walkin';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_change_walkin_reserved_status + '/' + reserveId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    getRoomAvailableService(dateFrom, campus, roomType, stayType) {
         const url_room_available = 'app/admin/apply/get-total-numbers-avail-room';
         return this.checkConfigJson(() => {
-            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_room_available + "/" + dateFrom + "/"  + campus, this.getHeader()).map((res: Response) => res);
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_room_available + "/" + dateFrom + "/"  + campus + "/" + stayType, this.getHeader()).map((res: Response) => res);
         });
     }
 
@@ -318,17 +730,111 @@ export class ApplyService {
         });
     }
 
-    getListOfChangingDormRoom(changeFrom) {
-        const url_changedormroom_list = 'app/admin/apply/get-list-change-dormroom';
+    getEmptyBedsService(dateFrom ,dateTo, campus, stayType) {
+        const url_empty_beds = 'app/admin/apply/get-total-numbers-empty-beds';
         return this.checkConfigJson(() => {
-            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_changedormroom_list + "/" + changeFrom, this.getHeader()).map((res: Response) => res);
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_empty_beds + "/" + dateFrom + "/" + dateTo + "/" + campus + "/" + stayType, this.getHeader()).map((res: Response) => res);
         });
     }
 
-    getListOfChangingHotelRoom(changeFrom) {
+    getListOfChangingDormRoom(changeFrom,changeTo,selectedCampus) {
+        const url_changedormroom_list = 'app/admin/apply/get-list-change-dormroom';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_changedormroom_list + "/" + changeFrom + "/" + changeTo + "/" + selectedCampus, this.getHeader()).map((res: Response) => res);
+        });
+    }
+
+    getListOfChangingHotelsRoom(changeFrom,changeTo,selectedCampus) {
+        const url_changehotelsroom_list = 'app/admin/apply/get-list-change-hotelsroom';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_changehotelsroom_list + "/" + changeFrom + "/" + changeTo + "/" + selectedCampus, this.getHeader()).map((res: Response) => res);
+        });
+    }
+
+    getListOfChangingWalkinsRoom(changeFrom,changeTo,selectedCampus) {
+        const url_changewalkinsroom_list = 'app/admin/apply/get-list-change-walkinsroom';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_changewalkinsroom_list + "/" + changeFrom + "/" + changeTo + "/" + selectedCampus, this.getHeader()).map((res: Response) => res);
+        });
+    }
+
+    getListOfChangingCondosRoom(changeFrom,changeTo,selectedCampus) {
+        const url_changecondosroom_list = 'app/admin/apply/get-list-change-condosroom';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_changecondosroom_list + "/" + changeFrom + "/" + changeTo + "/" + selectedCampus, this.getHeader()).map((res: Response) => res);
+        });
+    }
+
+    getListOfChangingHotelRoom(changeFrom,changeTo,selectedCampus) {
         const url_changehotelroom_list = 'app/admin/apply/get-list-change-hotelroom';
         return this.checkConfigJson(() => {
-            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_changehotelroom_list + "/" + changeFrom, this.getHeader()).map((res: Response) => res);
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_changehotelroom_list + "/" + changeFrom + "/" + changeTo + "/" + selectedCampus, this.getHeader()).map((res: Response) => res);
+        });
+    }
+
+    getListOfChangePlan(changePlanFrom,changePlanTo,selectedCampus) {
+        const url_changeplan_list = 'app/admin/apply/get-list-change-plan';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_changeplan_list + "/" + changePlanFrom + "/" + changePlanTo + "/" + selectedCampus, this.getHeader()).map((res: Response) => res);
+        });
+    }
+
+    getPlanCountListService(countPlanFrom,countPlanTo,countPlanCampus,countCntCode) {
+        const url_plan_count_list = 'app/admin/apply/get-plan-count';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_plan_count_list + "/" + countPlanFrom +"/" + countPlanTo +
+                "/" + countPlanCampus + "/" + countCntCode, this.getHeader()).map((res: Response) => res);
+        });
+    }
+
+    getCafeListService(cafeFrom,cafeTo,cafeCampus) {
+        const url_cafe_count_list = 'app/admin/apply/get-cafe-list';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_cafe_count_list + "/" + cafeFrom +"/" + cafeTo +
+                "/" + cafeCampus, this.getHeader()).map((res: Response) => res);
+        });
+    }
+
+    getWeeklyReportListService(weeklyFrom,selectedCampus) {
+        const url_cafe_count_list = 'app/admin/apply/get-weekly-report-list';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_cafe_count_list + "/" + weeklyFrom + "/" + selectedCampus, this.getHeader()).map((res: Response) => res);
+        });
+    }
+
+    getSalesReportService(salesFrom,salesTo) {
+        const url_sales_report_list = 'app/admin/apply/get-sales-report';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_sales_report_list + "/" + salesFrom + "/" + salesTo, this.getHeader()).map((res: Response) => res);
+        });
+    }
+
+    getCampBookReportService(campFrom,campTo,campus) {
+        const url_camp_book_report_list = 'app/admin/apply/get-camp-book-report';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_camp_book_report_list + "/" + campFrom + "/" + campTo + "/" + campus, this.getHeader()).map((res: Response) => res);
+        });
+    }
+
+    createGroupApply(data: StudentApplyGroupModel): Observable<Response> { /* This Service goes to store StudentApplyController function */
+        return this.checkConfigJson(() => {
+            return this.http.post(this.AppSettings['API_ENDPOINT'] + this.url, data, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    getTermsReportService(yearFrom) {
+        const url_number_of_weeks_report = 'app/admin/apply/get-numbers-weeks-report';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_number_of_weeks_report + "/" + yearFrom, this.getHeader()).map((res: Response) => res);
+        });
+    }
+
+    getStudentsCountService(dateFrom) {
+        const url_number_of_students_report = 'app/admin/apply/get-numbers-students-report';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_number_of_students_report + "/" + dateFrom, this.getHeader()).map((res: Response) => res);
         });
     }
 
@@ -368,9 +874,75 @@ export class ApplyService {
         });
     }
 
+    updateInvoiceNumber(Id): Observable<Response> {
+        const url_invoice_number = 'app/admin/apply/update-invoice-number';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_invoice_number + '/' + Id, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    updateExtInvoiceNumber(Id): Observable<Response> {
+        const url_ext_invoice_number = 'app/admin/apply/update-ext-invoice-number';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_ext_invoice_number + '/' + Id, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
     updateApply(ApplyId, data: StudentApplyModel): Observable<Response> {
         return this.checkConfigJson(() => {
             return this.http.put(this.AppSettings['API_ENDPOINT'] + this.url + '/' + ApplyId, data, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    updateInvoice(ApplyId, data: InvoiceModel): Observable<Response> {
+        return this.checkConfigJson(() => {
+            return this.http.put(this.AppSettings['API_ENDPOINT'] + this.url + '/' + ApplyId, data, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    createInvoice(data: InvoiceModel): Observable<Response> {
+        return this.checkConfigJson(() => {
+            return this.http.post(this.AppSettings['API_ENDPOINT'] + this.url, data, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    updateExtensionInvoice(ApplyId, data: ExtensionInvoiceModel): Observable<Response> {
+        return this.checkConfigJson(() => {
+            return this.http.put(this.AppSettings['API_ENDPOINT'] + this.url + '/' + ApplyId, data, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    createExtensionInvoice(data: ExtensionInvoiceModel): Observable<Response> {
+        return this.checkConfigJson(() => {
+            return this.http.post(this.AppSettings['API_ENDPOINT'] + this.url, data, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    updateRefundInvoice(ApplyId, data: RefundInvoiceModel): Observable<Response> {
+        return this.checkConfigJson(() => {
+            return this.http.put(this.AppSettings['API_ENDPOINT'] + this.url + '/' + ApplyId, data, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    createRefundInvoice(data: RefundInvoiceModel): Observable<Response> {
+        return this.checkConfigJson(() => {
+            return this.http.post(this.AppSettings['API_ENDPOINT'] + this.url, data, this.getHeader())
                 .map((res: Response) => res)
                 .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
         });
@@ -384,9 +956,74 @@ export class ApplyService {
         });
     }
 
-    deleteFlagApply(ApplyId, data: StudentApplyModel): Observable<Response> {
+    deleteFlagApply(ApplyId, delFlagOne): Observable<Response> {
+        const url_del_flag_update = 'app/admin/apply/del-flag-update';
         return this.checkConfigJson(() => {
-            return this.http.put(this.AppSettings['API_ENDPOINT'] + this.url + '/' + ApplyId, data, this.getHeader())
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_del_flag_update + '/' + ApplyId+ "/"  + delFlagOne, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    deleteInvoiceNumber(applyId): Observable<Response> {
+        const url_remove_invoice_number = 'app/admin/apply/delete-invoice-number';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_remove_invoice_number + '/' + applyId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    deleteExtendedInvoiceNumber(applyId): Observable<Response> {
+        const url_remove_ext_invoice_number = 'app/admin/apply/delete-extended-invoice-number';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_remove_ext_invoice_number + '/' + applyId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    deleteRefundInvoiceNumber(applyId): Observable<Response> {
+        const url_remove_rfd_invoice_number = 'app/admin/apply/delete-refund-invoice-number';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_remove_rfd_invoice_number + '/' + applyId, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    updateMultipleStudentStatus(checkedList,updateStatus): Observable<Response> {
+        const url_update_student_status = 'app/admin/apply/update-multiple-student-status';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_update_student_status + '/' + checkedList +
+                '/' + updateStatus, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    updateIsInvoiceConfirmedFlag(ApplyId, invoiceLockStatus): Observable<Response> {
+        const url_invoice_lock_update = 'app/admin/apply/is-invoice-confirmed-update';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_invoice_lock_update + '/' + ApplyId + "/"  + invoiceLockStatus, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    updateIsExtInvoiceConfirmedFlag(ApplyId, invoiceExtLockStatus): Observable<Response> {
+        const url_ext_invoice_lock_update = 'app/admin/apply/is-ext-invoice-confirmed-update';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_ext_invoice_lock_update + '/' + ApplyId + "/"  + invoiceExtLockStatus, this.getHeader())
+                .map((res: Response) => res)
+                .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
+        });
+    }
+
+    updateIsRfdInvoiceConfirmedFlag(ApplyId, invoiceRfdLockStatus): Observable<Response> {
+        const url_rfd_invoice_lock_update = 'app/admin/apply/is-rfd-invoice-confirmed-update';
+        return this.checkConfigJson(() => {
+            return this.http.get(this.AppSettings['API_ENDPOINT'] + url_rfd_invoice_lock_update + '/' + ApplyId + "/"  + invoiceRfdLockStatus, this.getHeader())
                 .map((res: Response) => res)
                 .catch((error: any) => Observable.throw(error.json().errors || 'Server error'));
         });
